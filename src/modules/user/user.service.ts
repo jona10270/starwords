@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from './data/user.entity';
@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { UserCreateDto } from './dtos/user.create.dto';
 import { UserModel } from './domain/user.model';
 import { UserRole } from '@app/shared/nestjs-auth/domain/user-role';
+import { UserEditDto } from './dtos/user.edit.dto';
 
 @Injectable()
 export class UserService {
@@ -44,10 +45,67 @@ export class UserService {
         await this.userRepository.delete(id)
     }
 
-    // Method for check user exists
+    // Method for check user exists only for check exist user
     public async getByIdUser(id: string): Promise<UserModel | null> {
         const user= await this.userRepository.findOneBy({ id })
-        if (!id) return null
+        if (!user) return null
         return user
+    }
+
+    // Method for get user only get 
+    public async getOneUser(id: string): Promise<UserModel | null> {
+        const user = await this.userRepository.findOneBy({ id })
+        if (!user) return null
+        return user
+    }
+
+    public async editUser(userId: string, toUpdate: UserEditDto): Promise<UserModel> {
+
+        // Check if user exists before updating
+        const existingUser = await this.getByIdUser(userId);
+
+        if (!existingUser) {
+            throw new NotFoundException('The user to be edited does not exist');
+        };
+
+        //Update the user if something is sent
+        const updateUser: UserEditDto & { updatedAt: Date } = { updatedAt: new Date(), 
+            ...toUpdate,
+        };
+
+        // Valido el usuario al crealo quitando los espacions
+        if (toUpdate.username) {
+            const fullname = toUpdate.username.trim()
+            updateUser.username = fullname
+        };
+
+        // Hasheo la contraseña si se cambia la contraseña del usuario
+        if (toUpdate.password) {
+            const hashedPassword = await bcrypt.hash(toUpdate.password, 10)
+            updateUser.password = hashedPassword
+        };
+
+        // Update the user in the database
+        await this.userRepository.update(userId, updateUser);
+
+        // Search the user by id and send it the user update
+        const newUpdateUser = await this.getByIdUser(userId);
+
+        if (!newUpdateUser) {
+            throw new NotFoundException('The user edited does not exist afeter the update user');
+        };
+        
+        return newUpdateUser;
+
+    }
+
+    // Method for list all users with pagination
+    public async paginationUsers(page: number, limit: number): Promise<[UserModel[], number]> {
+        const pusers= this.userRepository.findAndCount({ 
+            skip: ( page - 1 ) * limit,
+            take: limit,
+            order: { createdAt: 'DESC'}
+        })
+        return pusers;
     }
 }
