@@ -1,4 +1,11 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 import { UserRole } from '@app/shared/nestjs-auth/domain/user-role';
 import { UserModel } from '@app/modules/user/domain/user.model';
@@ -14,7 +21,7 @@ export class UserEntity extends BaseEntity implements UserModel {
   @Column('varchar', { unique: true })
   public username!: string;
 
-  @Column('varchar')
+  @Column('varchar', { select: false })
   public password!: string;
 
   @Column('varchar', { default: UserRole.MAPPER })
@@ -28,5 +35,4 @@ export class UserEntity extends BaseEntity implements UserModel {
 
   @UpdateDateColumn()
   public updatedAt!: Date;
-
 }

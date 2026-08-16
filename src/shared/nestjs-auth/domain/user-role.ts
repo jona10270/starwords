@@ -1,6 +1,6 @@
 export enum UserRole {
-    ADMIN= 'ADMIN',
-    MAPPER= 'MAPPER'
+  ADMIN = 'ADMIN',
+  MAPPER = 'MAPPER',
 }
 
-export const userRoles = [UserRole.ADMIN, UserRole.MAPPER]
+export const userRoles = [UserRole.ADMIN, UserRole.MAPPER];

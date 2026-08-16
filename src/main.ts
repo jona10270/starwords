@@ -14,15 +14,18 @@ async function bootstrap() {
     }),
   );
   const config = new DocumentBuilder()
-  .setTitle('Star Words API')
-  .setDescription('Api de star words de jonathan')
-  .setVersion('1.0')
-  .build();
+    .addBearerAuth()
+    .setTitle('Star Words API')
+    .setDescription('Api de star words de jonathan')
+    .setVersion('1.0')
+    // El orden de los addTag es el orden en el que Swagger pinta las secciones.
+    .addTag('auth')
+    .addTag('users')
+    .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document)
+  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(process.env.PORT ?? 3000);
-
 }
-bootstrap();
+void bootstrap();

@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { Nullable } from '@app/app/common/helper';
 import { UserModel } from '@app/modules/user/domain/user.model';
 import { UserRole, userRoles } from '@app/shared/nestjs-auth/domain/user-role';
 
@@ -25,6 +24,5 @@ export class UserVM {
     this.email = user.email;
     this.role = user.role;
     this.activated = user.activated;
-
   }
 }
