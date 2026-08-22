@@ -7,6 +7,7 @@ import { AuthApiModule } from '@app/app/rest/api/modules/auth/auth.api.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './shared/nestjs-auth/guard/jwt-auth.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { SwapiModule } from './modules/starwars/starwars.modules';
 
 @Module({
   imports: [
@@ -14,11 +15,12 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     PostgresDatabaseModule,
     ThrottlerModule.forRoot([{ // Limite de peticiones por IP para evitar ataques DDoS
       ttl: 60000,
-      limit: 10,
+      limit: 100,
     }]),
     UserModule,
     AuthModule,
     AuthApiModule,
+    SwapiModule,
   ],
   providers: [
     // Guardo el global de ThrottlerGuard para limitar las peticiones por IP y evitar ataques DDoS
