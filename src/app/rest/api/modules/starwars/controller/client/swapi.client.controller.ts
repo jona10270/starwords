@@ -4,9 +4,11 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 // Services
 import { PeopleService } from '@app/modules/starwars/people/people.service';
 import { FilmService } from '@app/modules/starwars/film/film.service';
+import { StarshipService } from '@app/modules/starwars/starships/starship.service';
 // Many response
 import { PeopleManyResponse } from './response/people/swapi.client.many.response';
 import { FilmManyResponse } from './response/film/film.client.many.response';
+import { StarshipManyResponse } from './response/starship/starship.client.many.response';
 // Single response
 import { PeopleSingleResponse } from './response/people/swapi.client.single.response';
 import { FilmSingleResponse } from './response/film/film.client.single.response';
@@ -21,6 +23,7 @@ export class StarwarsController {
   public constructor(
     private readonly peopleService: PeopleService,
     private readonly filmService: FilmService,
+    private readonly starship: StarshipService
   ) {}
 
   // =====================================================
@@ -69,6 +72,18 @@ export class StarwarsController {
     @Param('id') id: string
   ): Promise<FilmSingleResponse> {
     return this.filmService.getFilm(id)
+  }
+
+  // =====================================================
+  // GET STARSHIPS SWAPI
+  // =====================================================
+
+  @Get('starships')
+  @ApiOkResponse({
+    type: StarshipManyResponse,
+  })
+  public async getStarships(): Promise<StarshipManyResponse> {
+    return this.starship.getAllStarships()
   }
 
 }
