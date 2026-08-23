@@ -1,11 +1,16 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+// Services
 import { PeopleService } from '@app/modules/starwars/people/people.service';
 import { FilmService } from '@app/modules/starwars/film/film.service';
+// Many response
 import { PeopleManyResponse } from './response/people/swapi.client.many.response';
-import { PeopleSingleResponse } from './response/people/swapi.client.single.response';
 import { FilmManyResponse } from './response/film/film.client.many.response';
+// Single response
+import { PeopleSingleResponse } from './response/people/swapi.client.single.response';
+import { FilmSingleResponse } from './response/film/film.client.single.response';
+
 import { Public } from '@app/shared/nestjs-auth/decorator/public.decorator';
 
 @Public()
@@ -46,12 +51,24 @@ export class StarwarsController {
   // GET FILMS SWAPI
   // =====================================================
 
+  // Get all films of the swapi api
   @Get('films')
   @ApiOkResponse({
     type: PeopleManyResponse
   })
   public async getAllFilms(): Promise<FilmManyResponse> {
     return this.filmService.getAllFilms();
+  }
+
+  // Get one film 
+  @Get('films/:id')
+  @ApiOkResponse({
+    type: FilmSingleResponse,
+  })
+  public async getFilm(
+    @Param('id') id: string
+  ): Promise<FilmSingleResponse> {
+    return this.filmService.getFilm(id)
   }
 
 }
