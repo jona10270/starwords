@@ -11,8 +11,6 @@ export interface SpeciesAllDto {
   language: string,
   people: string[],
   films: string[],
-  created: string,
-  edited: string,
   url: string
 }
 

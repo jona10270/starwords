@@ -6,6 +6,7 @@ import { FilmService } from "./film/film.service";
 import { StarshipService } from "./starships/starship.service";
 import { VehiclesService } from "./vehicles/vehicles.service";
 import { SpecieService } from "./specie/specie.service";
+import { PlanetService } from "./planet/planet.service";
 
 
 @Module({
@@ -16,6 +17,7 @@ import { SpecieService } from "./specie/specie.service";
         StarshipService,
         VehiclesService,
         SpecieService,
+        PlanetService,
 
     ],
     controllers: [
@@ -27,6 +29,7 @@ import { SpecieService } from "./specie/specie.service";
         StarshipService,
         VehiclesService,
         SpecieService,
+        PlanetService,
     ]
 })
 

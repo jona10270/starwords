@@ -7,6 +7,7 @@ import { FilmService } from '@app/modules/starwars/film/film.service';
 import { StarshipService } from '@app/modules/starwars/starships/starship.service';
 import { VehiclesService } from '@app/modules/starwars/vehicles/vehicles.service';
 import { SpecieService } from '@app/modules/starwars/specie/specie.service';
+import { PlanetService } from '@app/modules/starwars/planet/planet.service';
 
 // Many response
 import { PeopleManyResponse } from './response/people/swapi.client.many.response';
@@ -14,16 +15,17 @@ import { FilmManyResponse } from './response/film/film.client.many.response';
 import { StarshipManyResponse } from './response/starship/starship.client.many.response';
 import { VehiclesManyResponse } from './response/vehicle/vehicles.client.many.response';
 import { SpecieManyResponse } from './response/specie/specie.client.many.response';
+import { PlanerManyResponse } from './response/planet/planet.client.many.response';
 
 // Single response
 import { PeopleSingleResponse } from './response/people/swapi.client.single.response';
 import { FilmSingleResponse } from './response/film/film.client.single.response';
 import { StarshipSingleResponse } from './response/starship/starship.client.single.response';
 import { VehicleSingleResponse } from './response/vehicle/vehicle.client.single.response';
-
+import { SpecieSingleResponse } from './response/specie/specie.client.single.response';
+import { PlanetSingleResponse } from './response/planet/planet.client.single.response';
 
 import { Public } from '@app/shared/nestjs-auth/decorator/public.decorator';
-import { SpecieSingleResponse } from './response/specie/specie.client.single.response';
 
 @Public()
 @ApiBearerAuth()
@@ -36,6 +38,7 @@ export class StarwarsController {
     private readonly starship: StarshipService,
     private readonly vehicle: VehiclesService,
     private readonly specie: SpecieService,
+    private readonly planet: PlanetService
   ) {}
 
   // =====================================================
@@ -156,4 +159,27 @@ export class StarwarsController {
     return this.specie.getSpecie(id)
   }
 
+  // =====================================================
+  // GET PLANETS SWAPI
+  // =====================================================
+
+  @Get('planets')
+  @ApiOkResponse({
+    type: PlanerManyResponse,
+  })
+
+  public async getAllPlanets(): Promise<PlanerManyResponse> {
+    return this.planet.getPlanets()
+  }
+
+  @Get('planets/:id')
+  @ApiOkResponse({
+    type: PlanetSingleResponse,
+  })
+
+  public async getSinglePlanet(
+    @Param('id') id: string
+  ): Promise<PlanetSingleResponse> {
+    return this.planet.getPlanet(id)
+  }
 }
