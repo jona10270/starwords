@@ -4,6 +4,7 @@ import { PeopleService } from "./people/people.service";
 import { StarwarsController } from "@app/app/rest/api/modules/starwars/controller/client/swapi.client.controller";
 import { FilmService } from "./film/film.service";
 import { StarshipService } from "./starships/starship.service";
+import { VehiclesService } from "./vehicles/vehicles.service";
 
 
 @Module({
@@ -12,6 +13,7 @@ import { StarshipService } from "./starships/starship.service";
         PeopleService,
         FilmService,
         StarshipService,
+        VehiclesService,
 
     ],
     controllers: [
@@ -21,6 +23,7 @@ import { StarshipService } from "./starships/starship.service";
         PeopleService,
         FilmService,
         StarshipService,
+        VehiclesService,
     ]
 })
 

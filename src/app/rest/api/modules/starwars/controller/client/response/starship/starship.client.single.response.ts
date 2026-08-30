@@ -2,15 +2,14 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StarshipVM } from "../../../../model/starship/starship.view-model";
 import { StarshipAllDto } from "@app/modules/starwars/starships/dto/starship.all.dto";
 
-export class StarshipManyResponse {
+export class StarshipSingleResponse{
     @ApiProperty({
-        type: [StarshipVM],
+        type: StarshipVM
     })
-    
-    public readonly starship: StarshipVM[]
 
-    public constructor(data: StarshipAllDto[]) {
-        this.starship = data.map(starship => new StarshipVM(starship))
+    public readonly starShip: StarshipVM
+
+    public constructor(data: StarshipAllDto) {
+        this.starShip = new StarshipVM(data)
     }
-
 }
