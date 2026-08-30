@@ -6,21 +6,24 @@ import { PeopleService } from '@app/modules/starwars/people/people.service';
 import { FilmService } from '@app/modules/starwars/film/film.service';
 import { StarshipService } from '@app/modules/starwars/starships/starship.service';
 import { VehiclesService } from '@app/modules/starwars/vehicles/vehicles.service';
+import { SpecieService } from '@app/modules/starwars/specie/specie.service';
 
 // Many response
 import { PeopleManyResponse } from './response/people/swapi.client.many.response';
 import { FilmManyResponse } from './response/film/film.client.many.response';
 import { StarshipManyResponse } from './response/starship/starship.client.many.response';
 import { VehiclesManyResponse } from './response/vehicle/vehicles.client.many.response';
+import { SpecieManyResponse } from './response/specie/specie.client.many.response';
 
 // Single response
 import { PeopleSingleResponse } from './response/people/swapi.client.single.response';
 import { FilmSingleResponse } from './response/film/film.client.single.response';
 import { StarshipSingleResponse } from './response/starship/starship.client.single.response';
+import { VehicleSingleResponse } from './response/vehicle/vehicle.client.single.response';
 
 
 import { Public } from '@app/shared/nestjs-auth/decorator/public.decorator';
-import { VehicleSingleResponse } from './response/vehicle/vehicle.client.single.response';
+import { SpecieSingleResponse } from './response/specie/specie.client.single.response';
 
 @Public()
 @ApiBearerAuth()
@@ -31,7 +34,8 @@ export class StarwarsController {
     private readonly peopleService: PeopleService,
     private readonly filmService: FilmService,
     private readonly starship: StarshipService,
-    private readonly vehicle: VehiclesService
+    private readonly vehicle: VehiclesService,
+    private readonly specie: SpecieService,
   ) {}
 
   // =====================================================
@@ -129,5 +133,27 @@ export class StarwarsController {
     return this.vehicle.getVehicle(id)
   }
 
+  // =====================================================
+  // GET SPECIES SWAPI
+  // =====================================================
+
+  @Get('species')
+  @ApiOkResponse({
+    type: SpecieManyResponse,
+  })
+  public async getAllSpecies(): Promise <SpecieManyResponse> {
+    return this.specie.getSpecies()
+  }
+
+  @Get('species/:id')
+  @ApiOkResponse({
+    type: SpecieSingleResponse,
+  })
+
+  public async getSingleSpecie(
+    @Param('id') id: string
+  ): Promise<SpecieSingleResponse> {
+    return this.specie.getSpecie(id)
+  }
 
 }

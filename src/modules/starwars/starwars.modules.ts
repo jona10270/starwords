@@ -5,6 +5,7 @@ import { StarwarsController } from "@app/app/rest/api/modules/starwars/controlle
 import { FilmService } from "./film/film.service";
 import { StarshipService } from "./starships/starship.service";
 import { VehiclesService } from "./vehicles/vehicles.service";
+import { SpecieService } from "./specie/specie.service";
 
 
 @Module({
@@ -14,6 +15,7 @@ import { VehiclesService } from "./vehicles/vehicles.service";
         FilmService,
         StarshipService,
         VehiclesService,
+        SpecieService,
 
     ],
     controllers: [
@@ -24,6 +26,7 @@ import { VehiclesService } from "./vehicles/vehicles.service";
         FilmService,
         StarshipService,
         VehiclesService,
+        SpecieService,
     ]
 })
 
