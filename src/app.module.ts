@@ -8,6 +8,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './shared/nestjs-auth/guard/jwt-auth.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { SwapiModule } from './modules/starwars/starwars.modules';
+import { FavoriteModule } from './modules/favorites/favorites.modules';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SwapiModule } from './modules/starwars/starwars.modules';
     AuthModule,
     AuthApiModule,
     SwapiModule,
+    FavoriteModule,
   ],
   providers: [
     // Guardo el global de ThrottlerGuard para limitar las peticiones por IP y evitar ataques DDoS

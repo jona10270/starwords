@@ -3,12 +3,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { UserRole } from '@app/shared/nestjs-auth/domain/user-role';
 import { UserModel } from '@app/modules/user/domain/user.model';
+import { FavoritesEntity } from '@app/modules/favorites/data/favorites.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity implements UserModel {
@@ -35,4 +37,7 @@ export class UserEntity extends BaseEntity implements UserModel {
 
   @UpdateDateColumn()
   public updatedAt!: Date;
+
+  @OneToMany(() => FavoritesEntity, favorite => favorite.user)
+  public favorites!: FavoritesEntity[];
 }

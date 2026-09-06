@@ -8,7 +8,7 @@ export class PaginationMetaVM {
   @ApiProperty({ type: Number, example: 100 })
   public total: number;
 
-  @ApiProperty({ type: Number, example: 2 })
+  @ApiProperty({ type: Number, example: 1 })
   public page: number;
 
   @ApiProperty({ type: Number, example: 10 })

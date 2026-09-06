@@ -19,6 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm:generate": "typeorm-ts-node-commonjs migration:generate -d src/infra/postgres/postgres-datasource.ts",
+    "typeorm:show": "typeorm-ts-node-commonjs migration:show -d src/infra/postgres/postgres-datasource.ts",
     "typeorm:create": "typeorm-ts-node-commonjs migration:create",
     "typeorm:run": "typeorm-ts-node-commonjs migration:run -d src/infra/postgres/postgres-datasource.ts",
     "typeorm:revert": "typeorm-ts-node-commonjs migration:revert -d src/infra/postgres/postgres-datasource.ts"
