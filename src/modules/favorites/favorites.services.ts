@@ -29,6 +29,10 @@ export class FavoritesService {
         private readonly starshipService: StarshipService
     ) {}
 
+// =====================================================
+// CRUD OF FAVORITES
+// =====================================================
+
     // Function to add a favorite resource for a user
     public async addFavorite(
         userId: string,
@@ -62,9 +66,29 @@ export class FavoritesService {
         return newFavorite.save();
     }
 
-// =====================================================
-// PAGINATION  OF FAVORITES
-// =====================================================
+    public async deleteFavorite(
+        id: string,
+        userId: string
+    ): Promise<FavoriteModel> {
+
+        // Check de favorite exist and belong to the user
+        const favorite = await this.favoriteRepository.findOne({
+            where: { id, userId }
+        })
+
+        if (!favorite) {
+            throw new NotFoundException('Favorite not exist or not belong to the user');
+        }
+
+        // If exist the user and the favorite belong to the user, then delete it
+        await favorite.remove();
+        return favorite;
+    }
+
+
+    // =====================================================
+    // PAGINATION  OF FAVORITES
+    // =====================================================
 
     // Pagination of favorites
     public async paginationFavorite(
@@ -81,9 +105,9 @@ export class FavoritesService {
         return pfavorites;
     }
 
-  // =====================================================
-  // PRIVATE FUNCTIONS
-  // =====================================================
+// =====================================================
+// PRIVATE FUNCTIONS
+// =====================================================
 
     // Verifico si le tengo ya en favoritos
     private async getFavorite(
