@@ -3,11 +3,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useRegister } from "../hooks/useRegister";
 import { registerSchema, type RegisterFormValue } from "../schemas/authSchema";
+import { useAuthPaths } from "../hooks/useAuthPaths";
 import { AuthCard } from "@/ui/organisms/AuthCard";
 import { Button, TextField } from "@/ui/atoms";
 
 export const RegisterPage = () => {
     const registerUser = useRegister();
+    const { loginPath, registerPath } = useAuthPaths();
 
     const {
         register,
@@ -27,7 +29,12 @@ export const RegisterPage = () => {
     const onSubmit = (values: RegisterFormValue) => registerUser.mutate(values)
 
     return (
-        <AuthCard title="CREAR CUENTA" activeTab="register">
+        <AuthCard
+            title="CREAR CUENTA"
+            activeTab="register"
+            loginPath={loginPath}
+            registerPath={registerPath}
+        >
             <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
                 <TextField
                     label="NOMBRE DE USUARIO"

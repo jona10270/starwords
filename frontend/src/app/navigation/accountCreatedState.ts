@@ -1,6 +1,6 @@
 export const accountCreatedState = { accountCreated: true}
 
-export const isAccountCreatedSatate = (state: unknown): boolean => {
+export const isAccountCreatedState = (state: unknown): boolean => {
     return typeof state === 'object' &&
     state !== null &&
     'accountCreated' in state &&

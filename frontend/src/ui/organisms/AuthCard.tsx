@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 interface AuthCardProps {
     title: string;
     activeTab: "login" | "register";
+    // Recibo las rutas de fuera para que la ui no dependa del router de la app
+    loginPath: string;
+    registerPath: string;
     children: ReactNode;
 }
 
-export const AuthCard = ({ title, activeTab, children }: AuthCardProps) => {
+export const AuthCard = ({ title, activeTab, loginPath, registerPath, children }: AuthCardProps) => {
     const isLogin = activeTab === "login";
 
     return (
@@ -19,7 +22,7 @@ export const AuthCard = ({ title, activeTab, children }: AuthCardProps) => {
 
                 <div className="mb-6 flex gap-2">
                     <Link
-                        to="/login"
+                        to={loginPath}
                         className={`flex-1 border px-3 py-2 text-center font-terminal text-[10px] tracking-[0.2em] uppercase ${
                             isLogin
                                 ? "border-accent bg-[#131109] text-accent"
@@ -29,7 +32,7 @@ export const AuthCard = ({ title, activeTab, children }: AuthCardProps) => {
                         INICIAR SESIÓN
                     </Link>
                     <Link
-                        to="/register"
+                        to={registerPath}
                         className={`flex-1 border px-3 py-2 text-center font-terminal text-[10px] tracking-[0.2em] uppercase ${
                             !isLogin
                                 ? "border-accent bg-[#131109] text-accent"

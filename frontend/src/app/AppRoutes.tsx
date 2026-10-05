@@ -4,11 +4,12 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { HomePage } from "./pages/HomePage";
 import { AuthRoute, GuestRoute } from "./ProtectedRoutes";
+import { ROUTES } from "./navigation/routes";
 
 export const AppRoutes = () => (
     <Routes>
         <Route
-            path="/"
+            path={ROUTES.home}
             element={
                 <AuthRoute>
                     <HomePage />
@@ -16,7 +17,7 @@ export const AppRoutes = () => (
             } 
         />
         <Route
-            path="/login"
+            path={ROUTES.login}
             element={
                 <GuestRoute>
                     <LoginPage />
@@ -24,7 +25,7 @@ export const AppRoutes = () => (
             } 
         />
         <Route
-            path="/register"
+            path={ROUTES.register}
             element={
                 <GuestRoute>
                     <RegisterPage />
