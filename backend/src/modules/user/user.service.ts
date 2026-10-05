@@ -23,6 +23,12 @@ export class UserService {
   // Only create user MAPPER
   public async create(user: UserCreateDto): Promise<UserModel> {
     const { email, username } = user;
+    
+    const existingUser = await this.getByEmail(email);
+    if (existingUser) {
+      throw new ConflictException('Email already exists');
+    }
+
     const hashedPasword = await bcrypt.hash(user.password, 10);
     const role = user?.role ?? UserRole.MAPPER;
 
@@ -47,19 +53,15 @@ export class UserService {
     return user;
   }
 
-  // Check only email and username exists
-  public async checkEmailAndUsernameExists(
+  // Check only if the email exists because the username can be repeated
+  public async checkEmailExists(
     email: string,
-    username: string,
     excludeUserId?: string,
   ): Promise<UserCheckDto> {
     const query = this.userRepository
       .createQueryBuilder('user')
-      .select(['user.email', 'user.username'])
-      .where('(user.email = :email OR user.username = :username)', {
-        email,
-        username,
-      });
+      .select(['user.email'])
+      .where('user.email = :email', { email });
 
     if (excludeUserId) {
       query.andWhere('user.id != :excludeUserId', { excludeUserId });
@@ -97,14 +99,13 @@ export class UserService {
       throw new NotFoundException('The user to be edited does not exist');
     }
 
-    const existData = await this.checkEmailAndUsernameExists(
+    const existData = await this.checkEmailExists(
       toUpdate.email ?? '',
-      toUpdate.username ?? '',
       userId,
     );
 
-    if (existData.email || existData.username) {
-      throw new ConflictException('Email or username already exists');
+    if (existData.email) {
+      throw new ConflictException('Email already exists');
     }
 
     //Update the user if something is sent

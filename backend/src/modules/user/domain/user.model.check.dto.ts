@@ -1,5 +1,4 @@
-// Check if email or username exists the edit dto for user
+// Check if the email exists when editing a user
 export interface UserCheckDto {
   email?: string;
-  username?: string;
 }

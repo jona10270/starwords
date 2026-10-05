@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  a { color: #ffffff; text-decoration: none; }
+  a:hover { color: #f7d92b; }
+  @keyframes sweep { 0% { transform: translateX(-100%) } 100% { transform: translateX(400%) } }
+</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; background: #000000; font-family: 'Chakra Petch', system-ui, sans-serif; color: #fff;">
+
+  <div style="position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(1.2px 1.2px at 14px 22px, rgba(255,255,255,.7), transparent), radial-gradient(1px 1px at 96px 58px, rgba(255,255,255,.45), transparent), radial-gradient(1.5px 1.5px at 160px 130px, rgba(255,255,255,.55), transparent), radial-gradient(1px 1px at 232px 40px, rgba(255,255,255,.3), transparent), radial-gradient(1px 1px at 300px 210px, rgba(255,255,255,.3), transparent); background-size: 340px 260px; opacity: .55;"></div>
+
+  <div style="position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 40; background: #0d0d0d; overflow: hidden; opacity: {{ loadingOpacity }};">
+    <div style="width: 25%; height: 100%; background: {{ accent }}; box-shadow: 0 0 14px {{ accent }}; animation: sweep 1.1s linear infinite;"></div>
+  </div>
+
+  <section style="position: relative; z-index: 10; max-width: 1280px; margin: 0 auto; padding: 56px 28px 96px;">
+
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; padding-bottom: 20px; border-bottom: 1px solid #1c1c1c;">
+      <div>
+        <p style="margin: 0 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .42em; text-transform: uppercase; color: #6f747c;">SWAPI · ARCHIVO CENTRAL</p>
+        <h1 style="margin: 0; font-size: 40px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; line-height: 1; color: #ffffff;">{{ categoryLabel }}</h1>
+      </div>
+      <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: {{ accent }}; text-shadow: 0 0 14px rgba(247,217,43,.35);">{{ counterText }}</p>
+    </div>
+
+    <nav style="display: flex; flex-wrap: wrap; gap: 10px; padding: 18px 0;">
+      <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="6">
+        <button onClick="{{ cat.select }}" style="padding: 8px 16px; cursor: pointer; background: {{ cat.bg }}; border: 1px solid {{ cat.border }}; color: {{ cat.color }}; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; transition: border-color .18s, color .18s;" style-hover="border-color: #f7d92b; color: #ffffff">{{ cat.label }}</button>
+      </sc-for>
+    </nav>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 14px 16px; background: #070707; border: 1px solid #1c1c1c;">
+      <div style="display: flex; align-items: center; gap: 10px; flex: 1 1 260px; min-width: 200px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c8ccd2" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+        <input value="{{ query }}" onChange="{{ onQuery }}" placeholder="FILTRAR REGISTROS EN TIEMPO REAL" style="flex: 1; border: 0; outline: 0; background: transparent; color: #ffffff; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase;" />
+      </div>
+      <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: #6f747c;">{{ statusText }}</p>
+      <div style="display: flex; gap: 8px;">
+        <button onClick="{{ setGrid }}" style="padding: 7px 14px; cursor: pointer; background: {{ gridBg }}; border: 1px solid {{ gridBorder }}; color: {{ gridColor }}; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase;">GRID</button>
+        <button onClick="{{ setList }}" style="padding: 7px 14px; cursor: pointer; background: {{ listBg }}; border: 1px solid {{ listBorder }}; color: {{ listColor }}; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase;">LISTA</button>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: {{ gridColumns }}; gap: 16px; margin-top: 22px;">
+      <sc-for list="{{ records }}" as="rec" hint-placeholder-count="9">
+        <article style="display: flex; flex-direction: column; gap: 14px; padding: 18px; background: #060606; border: 1px solid #1c1c1c; transition: border-color .2s, box-shadow .2s, background .2s;" style-hover="border-color: #f7d92b; box-shadow: 0 0 28px rgba(247,217,43,.16); background: #0a0a0a">
+          <header style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
+            <h2 style="margin: 0; font-size: 17px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.2; color: {{ accent }};">{{ rec.name }}</h2>
+            <span style="flex: 0 0 auto; padding: 4px 8px; border: 1px solid #262626; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: #8b9098; white-space: nowrap;">{{ rec.badge }}</span>
+          </header>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 18px; padding-top: 12px; border-top: 1px solid #141414;">
+            <sc-for list="{{ rec.rows }}" as="row" hint-placeholder-count="4">
+              <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: #6a6f78;">{{ row.label }}</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .06em; color: #e8eaee; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ row.value }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <a href="#" style="display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid #141414; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: #8b9098; transition: color .18s, text-shadow .18s;" style-hover="color: #f7d92b; text-shadow: 0 0 12px rgba(247,217,43,.6)">VER REGISTRO COMPLETO ▸</a>
+        </article>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ showEmpty }}" hint-placeholder-val="{{ false }}">
+      <p style="margin: 48px 0 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: #6a6f78;">SIN COINCIDENCIAS EN EL ARCHIVO</p>
+    </sc-if>
+
+    <p style="margin: 32px 0 0; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: #55595f;">{{ footerText }}</p>
+  </section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#f7d92b&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#f7d92b&quot;,&quot;#4fd1ff&quot;,&quot;#ff5a5a&quot;,&quot;#8ef58a&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;defaultCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;people&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;people&quot;,&quot;planets&quot;,&quot;starships&quot;,&quot;vehicles&quot;,&quot;species&quot;,&quot;films&quot;],&quot;section&quot;:&quot;Data&quot;},&quot;defaultView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;grid&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;grid&quot;,&quot;list&quot;],&quot;section&quot;:&quot;Data&quot;}}">
+const FALLBACK = {
+  people: [
+    { name: "Luke Skywalker", birth_year: "19BBY", gender: "male", height: "172", mass: "77", eye_color: "blue" },
+    { name: "C-3PO", birth_year: "112BBY", gender: "n/a", height: "167", mass: "75", eye_color: "yellow" },
+    { name: "R2-D2", birth_year: "33BBY", gender: "n/a", height: "96", mass: "32", eye_color: "red" },
+    { name: "Darth Vader", birth_year: "41.9BBY", gender: "male", height: "202", mass: "136", eye_color: "yellow" },
+    { name: "Leia Organa", birth_year: "19BBY", gender: "female", height: "150", mass: "49", eye_color: "brown" },
+    { name: "Owen Lars", birth_year: "52BBY", gender: "male", height: "178", mass: "120", eye_color: "blue" },
+    { name: "Obi-Wan Kenobi", birth_year: "57BBY", gender: "male", height: "182", mass: "77", eye_color: "blue-gray" },
+    { name: "Chewbacca", birth_year: "200BBY", gender: "male", height: "228", mass: "112", eye_color: "blue" },
+    { name: "Han Solo", birth_year: "29BBY", gender: "male", height: "180", mass: "80", eye_color: "brown" },
+    { name: "Yoda", birth_year: "896BBY", gender: "male", height: "66", mass: "17", eye_color: "brown" },
+    { name: "Padmé Amidala", birth_year: "46BBY", gender: "female", height: "185", mass: "45", eye_color: "brown" },
+    { name: "Boba Fett", birth_year: "31.5BBY", gender: "male", height: "183", mass: "78.2", eye_color: "brown" }
+  ],
+  planets: [
+    { name: "Tatooine", climate: "arid", terrain: "desert", population: "200000", diameter: "10465" },
+    { name: "Alderaan", climate: "temperate", terrain: "grasslands, mountains", population: "2000000000", diameter: "12500" },
+    { name: "Yavin IV", climate: "temperate, tropical", terrain: "jungle, rainforests", population: "1000", diameter: "10200" },
+    { name: "Hoth", climate: "frozen", terrain: "tundra, ice caves", population: "unknown", diameter: "7200" },
+    { name: "Dagobah", climate: "murky", terrain: "swamp, jungles", population: "unknown", diameter: "8900" },
+    { name: "Bespin", climate: "temperate", terrain: "gas giant", population: "6000000", diameter: "118000" },
+    { name: "Endor", climate: "temperate", terrain: "forests, mountains", population: "30000000", diameter: "4900" },
+    { name: "Naboo", climate: "temperate", terrain: "grassy hills, swamps", population: "4500000000", diameter: "12120" },
+    { name: "Coruscant", climate: "temperate", terrain: "cityscape, mountains", population: "1000000000000", diameter: "12240" }
+  ],
+  starships: [
+    { name: "CR90 corvette", model: "CR90 corvette", starship_class: "corvette", manufacturer: "Corellian Engineering", max_atmosphering_speed: "950" },
+    { name: "Star Destroyer", model: "Imperial I-class", starship_class: "Star Destroyer", manufacturer: "Kuat Drive Yards", max_atmosphering_speed: "975" },
+    { name: "Millennium Falcon", model: "YT-1300 freighter", starship_class: "Light freighter", manufacturer: "Corellian Engineering", max_atmosphering_speed: "1050" },
+    { name: "Y-wing", model: "BTL Y-wing", starship_class: "assault starfighter", manufacturer: "Koensayr", max_atmosphering_speed: "1000km" },
+    { name: "X-wing", model: "T-65 X-wing", starship_class: "Starfighter", manufacturer: "Incom Corporation", max_atmosphering_speed: "1050" },
+    { name: "Executor", model: "Executor-class", starship_class: "Star dreadnought", manufacturer: "Kuat Drive Yards", max_atmosphering_speed: "n/a" }
+  ],
+  vehicles: [
+    { name: "Sand Crawler", model: "Digger Crawler", vehicle_class: "wheeled", manufacturer: "Corellia Mining Corp", max_atmosphering_speed: "30" },
+    { name: "T-16 skyhopper", model: "T-16 skyhopper", vehicle_class: "repulsorcraft", manufacturer: "Incom Corporation", max_atmosphering_speed: "1200" },
+    { name: "Snowspeeder", model: "t-47 airspeeder", vehicle_class: "airspeeder", manufacturer: "Incom Corporation", max_atmosphering_speed: "650" },
+    { name: "AT-AT", model: "All Terrain Armored Transport", vehicle_class: "assault walker", manufacturer: "Kuat Drive Yards", max_atmosphering_speed: "60" },
+    { name: "AT-ST", model: "All Terrain Scout Transport", vehicle_class: "walker", manufacturer: "Kuat Drive Yards", max_atmosphering_speed: "90" },
+    { name: "Speeder bike", model: "74-Z speeder bike", vehicle_class: "speeder", manufacturer: "Aratech Repulsor", max_atmosphering_speed: "360" }
+  ],
+  species: [
+    { name: "Human", classification: "mammal", designation: "sentient", language: "Galactic Basic", average_lifespan: "120" },
+    { name: "Droid", classification: "artificial", designation: "sentient", language: "n/a", average_lifespan: "indefinite" },
+    { name: "Wookie", classification: "mammal", designation: "sentient", language: "Shyriiwook", average_lifespan: "400" },
+    { name: "Rodian", classification: "sentient", designation: "reptilian", language: "Galactic Basic", average_lifespan: "unknown" },
+    { name: "Hutt", classification: "gastropod", designation: "sentient", language: "Huttese", average_lifespan: "1000" },
+    { name: "Yoda's species", classification: "mammal", designation: "sentient", language: "Galactic Basic", average_lifespan: "900" }
+  ],
+  films: [
+    { title: "A New Hope", episode_id: 4, director: "George Lucas", release_date: "1977-05-25", producer: "Gary Kurtz, Rick McCallum" },
+    { title: "The Empire Strikes Back", episode_id: 5, director: "Irvin Kershner", release_date: "1980-05-17", producer: "Gary Kurtz, Rick McCallum" },
+    { title: "Return of the Jedi", episode_id: 6, director: "Richard Marquand", release_date: "1983-05-25", producer: "Howard Kazanjian, George Lucas" },
+    { title: "The Phantom Menace", episode_id: 1, director: "George Lucas", release_date: "1999-05-19", producer: "Rick McCallum" },
+    { title: "Attack of the Clones", episode_id: 2, director: "George Lucas", release_date: "2002-05-16", producer: "Rick McCallum" },
+    { title: "Revenge of the Sith", episode_id: 3, director: "George Lucas", release_date: "2005-05-19", producer: "Rick McCallum" }
+  ]
+};
+
+const CATS = [
+  { key: "people", label: "PEOPLE" },
+  { key: "planets", label: "PLANETS" },
+  { key: "starships", label: "STARSHIPS" },
+  { key: "vehicles", label: "VEHICLES" },
+  { key: "species", label: "SPECIES" },
+  { key: "films", label: "FILMS" }
+];
+
+const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
+
+class Component extends DCLogic {
+  state = { cat: null, view: null, query: "", data: {}, loading: false, live: false };
+
+  componentDidMount() { this.load(this.cat()); }
+
+  cat() { return this.state.cat ?? (this.props.defaultCategory ?? "people"); }
+
+  // Fetch acumulativo: sigue `next` hasta agotar el recurso. Sin paginación en UI.
+  async load(cat) {
+    if (this.state.data[cat]) return;
+    this.setState({ loading: true });
+    const out = [];
+    let url = "https://swapi.dev/api/" + cat + "/?page=1";
+    try {
+      while (url) {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(res.status);
+        const json = await res.json();
+        out.push(...(json.results || []));
+        url = json.next;
+        this.setState(s => ({ data: { ...s.data, [cat]: out.slice() }, live: true }));
+      }
+      this.setState({ loading: false });
+    } catch (e) {
+      this.setState(s => ({ data: { ...s.data, [cat]: FALLBACK[cat] }, loading: false, live: false }));
+    }
+  }
+
+  rowsFor(cat, r) {
+    const pop = (v) => (v && /^\d+$/.test(v) ? Number(v).toLocaleString("es-ES") : (v || "—"));
+    if (cat === "people") return [
+      { label: "NACIMIENTO", value: r.birth_year || "—" }, { label: "GÉNERO", value: r.gender || "—" },
+      { label: "ALTURA", value: (r.height || "—") + " cm" }, { label: "MASA", value: (r.mass || "—") + " kg" },
+      { label: "OJOS", value: r.eye_color || "—" }, { label: "PELO", value: r.hair_color || "—" }
+    ];
+    if (cat === "planets") return [
+      { label: "CLIMA", value: r.climate || "—" }, { label: "TERRENO", value: r.terrain || "—" },
+      { label: "POBLACIÓN", value: pop(r.population) }, { label: "DIÁMETRO", value: pop(r.diameter) + " km" }
+    ];
+    if (cat === "starships" || cat === "vehicles") return [
+      { label: "MODELO", value: r.model || "—" }, { label: "CLASE", value: r.starship_class || r.vehicle_class || "—" },
+      { label: "FABRICANTE", value: r.manufacturer || "—" }, { label: "VEL. MÁX", value: r.max_atmosphering_speed || "—" }
+    ];
+    if (cat === "species") return [
+      { label: "CLASIFICACIÓN", value: r.classification || "—" }, { label: "DESIGNACIÓN", value: r.designation || "—" },
+      { label: "LENGUA", value: r.language || "—" }, { label: "LONGEVIDAD", value: r.average_lifespan || "—" }
+    ];
+    return [
+      { label: "EPISODIO", value: ROMAN[r.episode_id] || String(r.episode_id) }, { label: "DIRECTOR", value: r.director || "—" },
+      { label: "ESTRENO", value: r.release_date || "—" }, { label: "PRODUCTOR", value: r.producer || "—" }
+    ];
+  }
+
+  renderVals() {
+    const accent = this.props.accentColor ?? "#f7d92b";
+    const cat = this.cat();
+    const view = this.state.view ?? (this.props.defaultView ?? "grid");
+    const q = this.state.query.trim().toLowerCase();
+    const all = this.state.data[cat] || [];
+
+    const records = all
+      .map((r, i) => ({ r, i }))
+      .filter(({ r }) => !q || JSON.stringify(r).toLowerCase().includes(q))
+      .map(({ r, i }) => ({
+        name: r.name || r.title,
+        badge: "#" + String(i + 1).padStart(2, "0") + " · " + (cat === "films" ? "FILM" : cat.toUpperCase()),
+        rows: this.rowsFor(cat, r)
+      }));
+
+    const chip = (on) => ({ bg: on ? "#131109" : "transparent", border: on ? accent : "#262626", color: on ? accent : "#8b9098" });
+    const g = chip(view === "grid"), l = chip(view === "list");
+
+    return {
+      accent,
+      categoryLabel: (CATS.find(c => c.key === cat) || {}).label,
+      counterText: records.length + " REGISTROS DESCODIFICADOS",
+      loadingOpacity: this.state.loading ? 1 : 0,
+      statusText: this.state.loading ? "DESCODIFICANDO BASE DE DATOS GALÁCTICA…" : (this.state.live ? "ENLACE SWAPI ACTIVO" : "CACHÉ LOCAL DEL ARCHIVO"),
+      footerText: "FIN DEL VOLCADO · " + all.length + " REGISTROS CARGADOS SIN PAGINACIÓN",
+      showEmpty: !this.state.loading && records.length === 0,
+      gridColumns: view === "grid" ? "repeat(auto-fill, minmax(300px, 1fr))" : "minmax(0, 1fr)",
+      query: this.state.query,
+      onQuery: (e) => this.setState({ query: e.target.value }),
+      setGrid: () => this.setState({ view: "grid" }),
+      setList: () => this.setState({ view: "list" }),
+      gridBg: g.bg, gridBorder: g.border, gridColor: g.color,
+      listBg: l.bg, listBorder: l.border, listColor: l.color,
+      records,
+      categories: CATS.map(c => {
+        const s = chip(c.key === cat);
+        return { label: c.label, bg: s.bg, border: s.border, color: s.color, select: () => { this.setState({ cat: c.key, query: "" }); this.load(c.key); } };
+      })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

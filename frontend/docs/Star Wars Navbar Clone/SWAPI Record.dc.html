@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  a { color: #ffffff; text-decoration: none; }
+  a:hover { color: #f7d92b; }
+  @keyframes twinkle { 0%, 100% { opacity: .35 } 50% { opacity: .9 } }
+  @media (max-width: 900px) { [data-hide-mobile] { display: none !important; } }
+</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; background: #000000; font-family: 'Chakra Petch', system-ui, sans-serif; color: #fff; overflow-x: hidden;">
+
+  <div style="position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(1.2px 1.2px at 14px 22px, rgba(255,255,255,.75), transparent), radial-gradient(1px 1px at 96px 58px, rgba(255,255,255,.45), transparent), radial-gradient(1.5px 1.5px at 160px 130px, rgba(255,255,255,.55), transparent), radial-gradient(1px 1px at 232px 40px, rgba(255,255,255,.3), transparent), radial-gradient(1px 1px at 300px 210px, rgba(255,255,255,.3), transparent); background-size: 340px 260px; opacity: .6;"></div>
+  <div style="position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(2px 2px at 40px 80px, rgba(255,255,255,.65), transparent); background-size: 620px 440px; animation: twinkle 5.5s ease-in-out infinite;"></div>
+
+  <header style="position: relative; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 28px; border-bottom: 1px solid #1a1a1a; background: linear-gradient(#000, rgba(0,0,0,.85));">
+    <a href="#" onClick="{{ onBack }}" style="display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: #8b9098; transition: color .18s, text-shadow .18s;" style-hover="color: #f7d92b; text-shadow: 0 0 12px rgba(247,217,43,.7)">◄ VOLVER AL ARCHIVO CENTRAL</a>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+      <span style="font-size: 24px; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; line-height: 1; color: {{ accent }};">SWAPI</span>
+      <span data-hide-mobile style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: .38em; text-transform: uppercase; color: #6f747c;">GALACTIC DATABASE</span>
+    </div>
+    <span style="padding: 6px 10px; border: 1px solid #262626; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: {{ accent }}; white-space: nowrap;">{{ recordBadge }}</span>
+  </header>
+
+  <section style="position: relative; z-index: 10; max-width: 1200px; margin: 0 auto; padding: 34px 28px 96px;">
+
+    <p style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .26em; text-transform: uppercase; color: #6a6f78;">{{ breadcrumb }}</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 0;">
+      <sc-for list="{{ picker }}" as="p" hint-placeholder-count="6">
+        <button onClick="{{ p.select }}" style="padding: 7px 13px; cursor: pointer; background: {{ p.bg }}; border: 1px solid {{ p.border }}; color: {{ p.color }}; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; transition: border-color .18s, color .18s;" style-hover="border-color: #f7d92b; color: #ffffff">{{ p.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="margin-top: 30px; padding: 30px; border: 1px solid #1c1c1c; background: linear-gradient(#080808, #030303);">
+      <h1 style="margin: 0; font-size: 42px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.05; color: {{ accent }}; text-shadow: 0 0 26px rgba(247,217,43,.25);">{{ record.name }}</h1>
+      <p style="margin: 14px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #9a9ea6;">{{ record.subtitle }}</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 26px;">
+        <sc-for list="{{ record.quick }}" as="q" hint-placeholder-count="4">
+          <div style="display: flex; flex-direction: column; gap: 7px; padding: 16px; background: #060606; border: 1px solid #1c1c1c; transition: border-color .2s, box-shadow .2s;" style-hover="border-color: #f7d92b; box-shadow: 0 0 22px rgba(247,217,43,.14)">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .24em; text-transform: uppercase; color: #6a6f78;">{{ q.label }}</span>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 19px; letter-spacing: .04em; color: #ffffff;">{{ q.value }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 16px;">
+      <sc-for list="{{ record.panels }}" as="panel" hint-placeholder-count="2">
+        <section style="padding: 22px; background: #060606; border: 1px solid #1c1c1c;">
+          <h2 style="margin: 0 0 18px; padding-bottom: 12px; border-bottom: 1px solid #161616; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: {{ accent }};">{{ panel.title }}</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px 20px;">
+            <sc-for list="{{ panel.rows }}" as="row" hint-placeholder-count="6">
+              <div style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: #6a6f78;">{{ row.label }}</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: .04em; color: #e8eaee; overflow-wrap: break-word;">{{ row.value }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ record.hasCrawl }}" hint-placeholder-val="{{ false }}">
+      <section style="margin-top: 16px; padding: 26px; background: #040404; border: 1px solid #1c1c1c; border-left: 3px solid {{ accent }};">
+        <h2 style="margin: 0 0 16px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: {{ accent }};">OPENING CRAWL · TRANSCRIPCIÓN ÍNTEGRA</h2>
+        <p style="margin: 0; white-space: pre-line; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.9; letter-spacing: .04em; color: #cfd3d8; text-wrap: pretty;">{{ record.crawl }}</p>
+      </section>
+    </sc-if>
+
+    <section style="margin-top: 16px; padding: 24px; background: #060606; border: 1px solid #1c1c1c;">
+      <h2 style="margin: 0 0 6px; font-size: 15px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #ffffff;">ARCHIVOS VINCULADOS EN LA BASE DE DATOS</h2>
+      <p style="margin: 0 0 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #6a6f78;">{{ record.relationsCount }}</p>
+      <div style="display: flex; flex-direction: column; gap: 22px;">
+        <sc-for list="{{ record.relations }}" as="rel" hint-placeholder-count="3">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: {{ accent }};">{{ rel.title }}</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <sc-for list="{{ rel.items }}" as="chip" hint-placeholder-count="5">
+                <a href="#" style="padding: 8px 13px; background: #0b0b0b; border: 1px solid #262626; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .12em; color: #cfd3d8; transition: border-color .18s, color .18s, box-shadow .18s;" style-hover="border-color: #f7d92b; color: #f7d92b; box-shadow: 0 0 18px rgba(247,217,43,.2)">{{ chip }}</a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <footer style="display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 16px; padding: 16px 20px; background: #040404; border: 1px solid #161616;">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #55595f;">{{ record.createdText }}</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #55595f;">{{ record.editedText }}</span>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #55595f;">{{ sourceText }}</span>
+    </footer>
+  </section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#f7d92b&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#f7d92b&quot;,&quot;#4fd1ff&quot;,&quot;#ff5a5a&quot;,&quot;#8ef58a&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;recordType&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;people&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;people&quot;,&quot;films&quot;,&quot;starships&quot;,&quot;vehicles&quot;,&quot;species&quot;,&quot;planets&quot;],&quot;section&quot;:&quot;Data&quot;}}">
+const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
+
+const DATA = {
+  people: {
+    label: "PEOPLE", code: "INDIVIDUAL FILE", id: 1,
+    name: "Luke Skywalker", subtitle: "Nacido en 19BBY · Tatooine · Human",
+    quick: [["ALTURA", "172 cm"], ["MASA", "77 kg"], ["GÉNERO", "male"], ["MUNDO NATAL", "Tatooine"]],
+    panels: [
+      { title: "BIOMETRÍA", rows: [["HEIGHT", "172 cm"], ["MASS", "77 kg"], ["HAIR COLOR", "blond"], ["SKIN COLOR", "fair"], ["EYE COLOR", "blue"]] },
+      { title: "REGISTRO CIVIL", rows: [["BIRTH YEAR", "19BBY"], ["GENDER", "male"], ["HOMEWORLD", "Tatooine"], ["SPECIES", "Human"]] }
+    ],
+    relations: [
+      { title: "PELÍCULAS", items: ["A New Hope", "The Empire Strikes Back", "Return of the Jedi", "Revenge of the Sith"] },
+      { title: "NAVES PILOTADAS", items: ["X-wing", "Imperial shuttle"] },
+      { title: "VEHÍCULOS", items: ["Snowspeeder", "Imperial Speeder Bike"] },
+      { title: "ESPECIE", items: ["Human"] }
+    ],
+    created: "2014-12-09T13:50:51.644Z", edited: "2014-12-20T21:17:56.891Z"
+  },
+  films: {
+    label: "FILMS", code: "ARCHIVE REEL", id: 1,
+    name: "A New Hope", subtitle: "Episodio IV · 1977-05-25 · Dir. George Lucas",
+    quick: [["EPISODIO", "IV"], ["DIRECTOR", "George Lucas"], ["ESTRENO", "1977-05-25"], ["PERSONAJES", "18"]],
+    panels: [
+      { title: "PRODUCCIÓN", rows: [["EPISODE ID", "IV"], ["DIRECTOR", "George Lucas"], ["PRODUCER", "Gary Kurtz, Rick McCallum"], ["RELEASE DATE", "1977-05-25"]] }
+    ],
+    crawl: "TEXTO NO DISPONIBLE SIN ENLACE SWAPI · EL CAMPO opening_crawl SE CARGA DESDE LA API EN TIEMPO DE EJECUCIÓN.",
+    relations: [
+      { title: "PERSONAJES", items: ["Luke Skywalker", "C-3PO", "R2-D2", "Darth Vader", "Leia Organa", "Obi-Wan Kenobi", "Chewbacca", "Han Solo"] },
+      { title: "PLANETAS", items: ["Tatooine", "Alderaan", "Yavin IV"] },
+      { title: "NAVES", items: ["CR90 corvette", "Star Destroyer", "Millennium Falcon", "X-wing", "Y-wing", "TIE Advanced x1"] },
+      { title: "VEHÍCULOS", items: ["Sand Crawler", "T-16 skyhopper", "X-34 landspeeder"] },
+      { title: "ESPECIES", items: ["Human", "Droid", "Wookie", "Rodian", "Hutt"] }
+    ],
+    created: "2014-12-10T14:23:31.880Z", edited: "2014-12-20T19:49:45.256Z"
+  },
+  starships: {
+    label: "STARSHIPS", code: "VESSEL FILE", id: 10,
+    name: "Millennium Falcon", subtitle: "Clase: Light freighter · Corellian Engineering Corporation",
+    quick: [["HIPERIMPULSOR", "0.5"], ["MGLT", "75"], ["TRIPULACIÓN", "4"], ["ESLORA", "34.37 m"]],
+    panels: [
+      { title: "IDENTIFICACIÓN", rows: [["MODEL", "YT-1300 light freighter"], ["MANUFACTURER", "Corellian Engineering Corporation"], ["STARSHIP CLASS", "Light freighter"], ["COST IN CREDITS", "100.000"]] },
+      { title: "RENDIMIENTO", rows: [["LENGTH", "34.37 m"], ["MAX SPEED", "1050 km/h"], ["HYPERDRIVE", "0.5"], ["MGLT", "75"]] },
+      { title: "CAPACIDAD", rows: [["CREW", "4"], ["PASSENGERS", "6"], ["CARGO CAPACITY", "100.000 kg"], ["CONSUMABLES", "2 months"]] }
+    ],
+    relations: [
+      { title: "PILOTOS CONOCIDOS", items: ["Han Solo", "Chewbacca", "Lando Calrissian", "Nien Nunb"] },
+      { title: "PELÍCULAS", items: ["A New Hope", "The Empire Strikes Back", "Return of the Jedi"] }
+    ],
+    created: "2014-12-10T16:59:45.094Z", edited: "2014-12-20T21:23:49.880Z"
+  },
+  vehicles: {
+    label: "VEHICLES", code: "GROUND UNIT FILE", id: 14,
+    name: "Snowspeeder", subtitle: "Clase: airspeeder · Incom Corporation",
+    quick: [["VEL. MÁX", "650 km/h"], ["TRIPULACIÓN", "2"], ["ESLORA", "4.5 m"], ["CARGA", "10 kg"]],
+    panels: [
+      { title: "IDENTIFICACIÓN", rows: [["MODEL", "t-47 airspeeder"], ["MANUFACTURER", "Incom Corporation"], ["VEHICLE CLASS", "airspeeder"], ["COST IN CREDITS", "unknown"]] },
+      { title: "RENDIMIENTO Y CAPACIDAD", rows: [["LENGTH", "4.5 m"], ["MAX SPEED", "650 km/h"], ["CREW", "2"], ["PASSENGERS", "0"], ["CARGO CAPACITY", "10 kg"], ["CONSUMABLES", "none"]] }
+    ],
+    relations: [
+      { title: "PILOTOS CONOCIDOS", items: ["Luke Skywalker", "Wedge Antilles"] },
+      { title: "PELÍCULAS", items: ["The Empire Strikes Back"] }
+    ],
+    created: "2014-12-15T12:22:12Z", edited: "2014-12-20T21:30:21.672Z"
+  },
+  species: {
+    label: "SPECIES", code: "TAXONOMY FILE", id: 1,
+    name: "Human", subtitle: "Clasificación: mammal · Designación: sentient",
+    quick: [["ALTURA MEDIA", "180 cm"], ["LONGEVIDAD", "120 años"], ["LENGUA", "Galactic Basic"], ["MUNDO NATAL", "Coruscant"]],
+    panels: [
+      { title: "TAXONOMÍA", rows: [["CLASSIFICATION", "mammal"], ["DESIGNATION", "sentient"], ["LANGUAGE", "Galactic Basic"], ["HOMEWORLD", "Coruscant"]] },
+      { title: "MORFOLOGÍA", rows: [["AVERAGE HEIGHT", "180 cm"], ["AVERAGE LIFESPAN", "120"], ["SKIN COLORS", "caucasian, black, asian, hispanic"], ["HAIR COLORS", "blonde, brown, black, red"], ["EYE COLORS", "brown, blue, green, hazel, grey, amber"]] }
+    ],
+    relations: [
+      { title: "PERSONAJES DE ESTA ESPECIE", items: ["Luke Skywalker", "Leia Organa", "Han Solo", "Obi-Wan Kenobi", "Padmé Amidala", "Owen Lars", "Biggs Darklighter"] },
+      { title: "PELÍCULAS", items: ["A New Hope", "The Empire Strikes Back", "Return of the Jedi", "The Phantom Menace"] }
+    ],
+    created: "2014-12-10T13:52:11.567Z", edited: "2014-12-20T21:36:42.136Z"
+  },
+  planets: {
+    label: "PLANETS", code: "PLANETARY FILE", id: 1,
+    name: "Tatooine", subtitle: "Clima: arid · Terreno: desert · Orbita Tatoo I",
+    quick: [["POBLACIÓN", "200.000"], ["DIÁMETRO", "10.465 km"], ["GRAVEDAD", "1 standard"], ["AGUA SUPERFICIAL", "1 %"]],
+    panels: [
+      { title: "MECÁNICA ORBITAL", rows: [["ROTATION PERIOD", "23 h"], ["ORBITAL PERIOD", "304 días"], ["DIAMETER", "10.465 km"], ["GRAVITY", "1 standard"]] },
+      { title: "SUPERFICIE", rows: [["CLIMATE", "arid"], ["TERRAIN", "desert"], ["SURFACE WATER", "1 %"], ["POPULATION", "200.000"]] }
+    ],
+    relations: [
+      { title: "RESIDENTES NOTABLES", items: ["Luke Skywalker", "C-3PO", "Owen Lars", "Beru Whitesun Lars", "Darth Vader", "Biggs Darklighter", "Anakin Skywalker", "Shmi Skywalker"] },
+      { title: "PELÍCULAS", items: ["A New Hope", "Return of the Jedi", "The Phantom Menace", "Attack of the Clones", "Revenge of the Sith"] }
+    ],
+    created: "2014-12-09T13:50:49.641Z", edited: "2014-12-20T20:58:18.411Z"
+  }
+};
+
+const KEYS = ["people", "films", "starships", "vehicles", "species", "planets"];
+
+class Component extends DCLogic {
+  state = { cat: null, crawl: null };
+
+  componentDidMount() { this.fetchCrawl(); }
+
+  // El opening_crawl se pide a SWAPI; sin conexión queda el aviso de fallback.
+  async fetchCrawl() {
+    try {
+      const res = await fetch("https://swapi.dev/api/films/1/");
+      if (!res.ok) return;
+      const json = await res.json();
+      if (json && json.opening_crawl) this.setState({ crawl: json.opening_crawl });
+    } catch (e) { /* sin enlace: se mantiene el fallback */ }
+  }
+
+  stamp(iso) {
+    const d = new Date(iso);
+    return isNaN(d) ? iso : d.toISOString().replace("T", " ").slice(0, 19) + " GST";
+  }
+
+  renderVals() {
+    const accent = this.props.accentColor ?? "#f7d92b";
+    const cat = this.state.cat ?? (this.props.recordType ?? "people");
+    const d = DATA[cat];
+    const relCount = d.relations.reduce((n, r) => n + r.items.length, 0);
+
+    return {
+      accent,
+      recordBadge: "#RECORD-" + String(d.id).padStart(2, "0") + " · " + d.code,
+      breadcrumb: "SWAPI · ARCHIVO CENTRAL / " + d.label + " / " + d.name.toUpperCase(),
+      sourceText: "FUENTE · SWAPI MIRROR LOCAL",
+      onBack: (e) => { e.preventDefault(); },
+      picker: KEYS.map(k => {
+        const on = k === cat;
+        return {
+          label: DATA[k].label,
+          bg: on ? "#131109" : "transparent",
+          border: on ? accent : "#262626",
+          color: on ? accent : "#8b9098",
+          select: () => this.setState({ cat: k })
+        };
+      }),
+      record: {
+        name: d.name,
+        subtitle: d.subtitle,
+        quick: d.quick.map(q => ({ label: q[0], value: q[1] })),
+        panels: d.panels.map(p => ({ title: p.title, rows: p.rows.map(r => ({ label: r[0], value: r[1] })) })),
+        hasCrawl: !!d.crawl,
+        crawl: (cat === "films" ? (this.state.crawl || d.crawl) : d.crawl) || "",
+        relations: d.relations,
+        relationsCount: relCount + " REFERENCIAS CRUZADAS EN " + d.relations.length + " BLOQUES",
+        createdText: "CREATED · " + this.stamp(d.created),
+        editedText: "EDITED · " + this.stamp(d.edited)
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

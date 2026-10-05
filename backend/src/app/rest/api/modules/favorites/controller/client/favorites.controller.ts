@@ -1,5 +1,5 @@
 import { ApiTags, ApiBearerAuth, ApiOkResponse, ApiBody } from "@nestjs/swagger";
-import { Body, Controller, Get, Post, Query, Param, Delete } from "@nestjs/common";
+import { Body, Controller, Get, Post, Query, Param, Delete, ParseUUIDPipe } from "@nestjs/common";
 import { FavoriteRequestDto } from "./request/favorites.client.add.request";
 import { FavoriterResponse } from "./response/favorite.client.response";
 import { FavoritesService } from "@app/modules/favorites/favorites.services";
@@ -32,10 +32,11 @@ export class FavoriteController {
     @ApiBody({ type: FavoriteRequestDto})
     @ApiOkResponse({ type: FavoriterResponse})
     public async addFavorite(
+        @CurrentUser() user: UserModel,
         @Body() client: FavoriteRequestDto
     ): Promise<FavoriterResponse> {
         const data = await this.favoriteService.addFavorite(
-            client.userId, client.resourceId, client.resourceType
+            user.id, client.resourceId, client.resourceType
         )
 
         return new FavoriterResponse(data)
@@ -45,7 +46,7 @@ export class FavoriteController {
     @ApiOkResponse({ type: FavoriterResponse})
     public async removeFavorite(
         @CurrentUser() user: UserModel,
-        @Param('id') id: string
+        @Param('id', ParseUUIDPipe) id: string
     ): Promise<FavoriterResponse> {
         const data = await this.favoriteService.deleteFavorite(id, user.id);
 

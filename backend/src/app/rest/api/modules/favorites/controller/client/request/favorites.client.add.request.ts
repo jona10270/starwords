@@ -1,12 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ResourceTypeEnum } from "@app/modules/favorites/enum/resource-type.enum";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, IsEnum } from "class-validator";
 
 export class FavoriteRequestDto {
-    @ApiProperty({ type: String, example: '1'})
-    @IsNotEmpty()
-    @IsString()
-    public userId!: string;
 
     @ApiProperty({ type: String, example: '1'})
     @IsNotEmpty()
@@ -15,6 +11,6 @@ export class FavoriteRequestDto {
 
     @ApiProperty({ type: String, example: 'PEOPLE'})
     @IsNotEmpty()
-    @IsString()
+    @IsEnum(ResourceTypeEnum, { message: 'Invalid resource type' })
     public resourceType!: ResourceTypeEnum;
 }

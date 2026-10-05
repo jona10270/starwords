@@ -20,7 +20,7 @@ export class UserEntity extends BaseEntity implements UserModel {
   @Column('varchar', { unique: true })
   public email!: string;
 
-  @Column('varchar', { unique: true })
+  @Column('varchar')
   public username!: string;
 
   @Column('varchar', { select: false })
