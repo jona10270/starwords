@@ -38,6 +38,6 @@ export class UserEntity extends BaseEntity implements UserModel {
   @UpdateDateColumn()
   public updatedAt!: Date;
 
-  @OneToMany(() => FavoritesEntity, favorite => favorite.user)
+  @OneToMany(() => FavoritesEntity, (favorite) => favorite.user)
   public favorites!: FavoritesEntity[];
 }

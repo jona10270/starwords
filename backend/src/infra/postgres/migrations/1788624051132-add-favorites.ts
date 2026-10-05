@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class AddFavorites1788624051132 implements MigrationInterface {
-    public name = 'AddFavorites1788624051132';
+  public name = 'AddFavorites1788624051132';
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             CREATE TABLE "favorites" (
                 "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
                 "userId" uuid NOT NULL,
@@ -25,19 +25,19 @@ export class AddFavorites1788624051132 implements MigrationInterface {
             )
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
             CREATE INDEX "IDX_favorites_userId"
             ON "favorites" ("userId")
         `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
             DROP INDEX IF EXISTS "IDX_favorites_userId"
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
             DROP TABLE "favorites"
         `);
-    }
+  }
 }

@@ -38,7 +38,7 @@ export class StarwarsController {
     private readonly starship: StarshipService,
     private readonly vehicle: VehiclesService,
     private readonly specie: SpecieService,
-    private readonly planet: PlanetService
+    private readonly planet: PlanetService,
   ) {}
 
   // =====================================================
@@ -60,9 +60,9 @@ export class StarwarsController {
     type: PeopleSingleResponse,
   })
   public async getPeople(
-    @Param('id') id: string
-  ): Promise<PeopleSingleResponse>{
-    return this.peopleService.getPeople(id)
+    @Param('id') id: string,
+  ): Promise<PeopleSingleResponse> {
+    return this.peopleService.getPeople(id);
   }
 
   // =====================================================
@@ -72,21 +72,19 @@ export class StarwarsController {
   // Get all films of the swapi api
   @Get('films')
   @ApiOkResponse({
-    type: PeopleManyResponse
+    type: PeopleManyResponse,
   })
   public async getAllFilms(): Promise<FilmManyResponse> {
     return this.filmService.getAllFilms();
   }
 
-  // Get one film 
+  // Get one film
   @Get('films/:id')
   @ApiOkResponse({
     type: FilmSingleResponse,
   })
-  public async getFilm(
-    @Param('id') id: string
-  ): Promise<FilmSingleResponse> {
-    return this.filmService.getFilm(id)
+  public async getFilm(@Param('id') id: string): Promise<FilmSingleResponse> {
+    return this.filmService.getFilm(id);
   }
 
   // =====================================================
@@ -98,18 +96,17 @@ export class StarwarsController {
     type: StarshipManyResponse,
   })
   public async getStarships(): Promise<StarshipManyResponse> {
-    return this.starship.getAllStarships()
+    return this.starship.getAllStarships();
   }
 
   @Get('starships/:id')
   @ApiOkResponse({
     type: StarshipSingleResponse,
   })
-
   public async getStarship(
-    @Param( 'id' ) id : string
+    @Param('id') id: string,
   ): Promise<StarshipSingleResponse> {
-    return this.starship.getSingleStarship(id)
+    return this.starship.getSingleStarship(id);
   }
 
   // =====================================================
@@ -120,20 +117,18 @@ export class StarwarsController {
   @ApiOkResponse({
     type: VehiclesManyResponse,
   })
-
   public async getAllVehicles(): Promise<VehiclesManyResponse> {
-    return this.vehicle.getAllVehicles()
+    return this.vehicle.getAllVehicles();
   }
 
   @Get('vehicles/:id')
   @ApiOkResponse({
     type: VehicleSingleResponse,
   })
-
   public async getVehicle(
-    @Param('id') id: string
+    @Param('id') id: string,
   ): Promise<VehicleSingleResponse> {
-    return this.vehicle.getVehicle(id)
+    return this.vehicle.getVehicle(id);
   }
 
   // =====================================================
@@ -144,19 +139,18 @@ export class StarwarsController {
   @ApiOkResponse({
     type: SpecieManyResponse,
   })
-  public async getAllSpecies(): Promise <SpecieManyResponse> {
-    return this.specie.getSpecies()
+  public async getAllSpecies(): Promise<SpecieManyResponse> {
+    return this.specie.getSpecies();
   }
 
   @Get('species/:id')
   @ApiOkResponse({
     type: SpecieSingleResponse,
   })
-
   public async getSingleSpecie(
-    @Param('id') id: string
+    @Param('id') id: string,
   ): Promise<SpecieSingleResponse> {
-    return this.specie.getSpecie(id)
+    return this.specie.getSpecie(id);
   }
 
   // =====================================================
@@ -167,19 +161,17 @@ export class StarwarsController {
   @ApiOkResponse({
     type: PlanerManyResponse,
   })
-
   public async getAllPlanets(): Promise<PlanerManyResponse> {
-    return this.planet.getPlanets()
+    return this.planet.getPlanets();
   }
 
   @Get('planets/:id')
   @ApiOkResponse({
     type: PlanetSingleResponse,
   })
-
   public async getSinglePlanet(
-    @Param('id') id: string
+    @Param('id') id: string,
   ): Promise<PlanetSingleResponse> {
-    return this.planet.getPlanet(id)
+    return this.planet.getPlanet(id);
   }
 }

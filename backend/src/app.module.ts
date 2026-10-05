@@ -14,10 +14,13 @@ import { FavoriteModule } from './modules/favorites/favorites.modules';
   imports: [
     ConfigModule.forRoot(),
     PostgresDatabaseModule,
-    ThrottlerModule.forRoot([{ // Limite de peticiones por IP para evitar ataques DDoS
-      ttl: 60000,
-      limit: 100,
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        // Limite de peticiones por IP para evitar ataques DDoS
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
     UserModule,
     AuthModule,
     AuthApiModule,

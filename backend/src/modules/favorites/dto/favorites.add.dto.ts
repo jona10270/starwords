@@ -1,7 +1,7 @@
-import { ResourceTypeEnum } from "../enum/resource-type.enum";
+import { ResourceTypeEnum } from '../enum/resource-type.enum';
 
 export interface FavoritesAddDto {
-    userId: string;
-    resourceId: string;
-    resourceType: ResourceTypeEnum;
+  userId: string;
+  resourceId: string;
+  resourceType: ResourceTypeEnum;
 }

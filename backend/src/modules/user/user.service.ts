@@ -23,7 +23,7 @@ export class UserService {
   // Only create user MAPPER
   public async create(user: UserCreateDto): Promise<UserModel> {
     const { email, username } = user;
-    
+
     const existingUser = await this.getByEmail(email);
     if (existingUser) {
       throw new ConflictException('Email already exists');
@@ -99,10 +99,7 @@ export class UserService {
       throw new NotFoundException('The user to be edited does not exist');
     }
 
-    const existData = await this.checkEmailExists(
-      toUpdate.email ?? '',
-      userId,
-    );
+    const existData = await this.checkEmailExists(toUpdate.email ?? '', userId);
 
     if (existData.email) {
       throw new ConflictException('Email already exists');

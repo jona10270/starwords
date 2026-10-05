@@ -16,8 +16,7 @@ export class StarshipVM {
 
   @ApiProperty({
     type: String,
-    example:
-      'Imperial Department of Military Research, Sienar Fleet Systems',
+    example: 'Imperial Department of Military Research, Sienar Fleet Systems',
   })
   public readonly manufacturer: string;
 
