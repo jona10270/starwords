@@ -3,6 +3,7 @@ export type AuthErrorCode =
     | 'INVALID_CREDENTIALS'
     | 'EMAIL_TAKEN'
     | 'TOO_MANY_REQUESTS'
+    | 'SESSION_INVALID'
     | 'NETWORK'
     | 'UNKNOWN';
 

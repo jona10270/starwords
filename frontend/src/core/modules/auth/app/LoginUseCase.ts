@@ -28,10 +28,16 @@ export class LoginUseCase implements UseCase<LoginCredentials, void > {
         const session = await this.authRepository.login(credentials);
         // Guardo la session en el navegador para que sobreviva a la recarga
         this.authSessionStorage.save(session);
-        // Pido mi datos de usuario actual al backend con toda mi info de usario
-        const user = await this.authRepository.getMe();
-        // Cambio el estado a autenticado y aviso a toda la app
-        this.authStore.getState().setSession(session, user);
+        try {
+            // Pido mi datos de usuario actual al backend con toda mi info de usario
+            const user = await this.authRepository.getMe();
+            // Cambio el estado a autenticado y aviso a toda la app
+            this.authStore.getState().setSession(session, user);
+        } catch (error) {
+            // Si no consigo mi usuario borro el token para no dejar la sesion a medias
+            this.authSessionStorage.clear();
+            throw error;
+        }
     }
 
 }

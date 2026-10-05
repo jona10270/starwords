@@ -2,7 +2,7 @@ import { HttpError } from "../../common";
 
 import { AuthError } from "../domain/AuthError";
 
-// Traduzco los errores que son iguales en login y register
+// Traduzco los errores que son iguales en todas las peticiones de auth
 const toCommonError = (error: HttpError): AuthError => {
     if (error.status === null) {
         return new AuthError('NETWORK', 'No se puede conectar con el servidor');
@@ -36,6 +36,16 @@ export const AuthErrorMapper = {
             return new AuthError('EMAIL_TAKEN', 'Ese email ya esta registrado');
         }
         return toCommonError(error);
-    }
+    },
+
+    // Un 401 al pedir mi perfil significa que mi sesion ya no vale
+    toProfileError: (error: unknown): Error => {
+        if(!(error instanceof HttpError)) return toUnexpectedError(error);
+
+        if (error.status === 401) {
+            return new AuthError('SESSION_INVALID', 'Tu sesión ya no es válida, inicia sesión de nuevo');
+        }
+        return toCommonError(error)
+    },
 }
 

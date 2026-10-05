@@ -48,13 +48,17 @@ export class AuthHTTPRepository implements AuthRepository {
         }
     }
 
+    // Pido al backend quien soy con el token actual
     async getMe(): Promise<AuthUser> {
         let data: MeResponseDTO;
 
-        data = await this.httpClient.get<MeResponseDTO>(
-            'users/me'
-        )
-
+        try {
+            data = await this.httpClient.get<MeResponseDTO>(
+                '/users/me'
+            )
+        } catch (error) {
+            throw AuthErrorMapper.toProfileError(error)
+        }
         return AuthMapper.toAuthUser(data)
     }
         
