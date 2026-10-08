@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { generatePath } from "react-router-dom";
+import { ROUTES } from "../navigation/routes";
 
 import { ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ArchiveHeading, ErrorPanel, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
@@ -20,6 +22,7 @@ const toRecord = (character: Character, index: number): RecordItem => ({
         { label: "Altura", value: `${character.height ?? "—"} cm` },
         { label: "Masa", value: `${character.mass ?? "—"} kg` },
     ],
+    detailPath: generatePath(ROUTES.characterDetail, { id: character.id }),
 });
 
 // Archivo de personajes con la cabecera fija y el contenido segun el estado de la peticion

@@ -7,6 +7,7 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { GuestRoute } from "./ProtectedRoutes";
 import { ROUTES } from "./navigation/routes";
 import { CharacterPage } from './pages/CharacterPage'
+import { CharacterDetailPage } from "./pages/CharacterDetailPage";
 import { AppLayout } from "./layouts/AppLayout";
 
 export const AppRoutes = () => (
@@ -15,6 +16,7 @@ export const AppRoutes = () => (
         <Route element={<AppLayout />}>
             <Route path={ROUTES.home} element={<HomePage />} />
             <Route path={ROUTES.characters} element={<CharacterPage />} />
+            <Route path={ROUTES.characterDetail} element={<CharacterDetailPage />} />
             <Route
                 path={ROUTES.login}
                 element={

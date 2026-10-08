@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export interface RecordStat {
     label: string;
     value: string;
@@ -9,10 +11,11 @@ export interface RecordCardProps {
     stats: RecordStat[];
     // En la vista de lista reparto los datos en una sola fila
     wide?: boolean;
+    detailPath?: string;
 }
 
 // Tarjeta de un registro del archivo con su nombre y sus datos
-export const RecordCard = ({ title, badge, stats, wide = false }: RecordCardProps) => (
+export const RecordCard = ({ title, badge, detailPath, stats, wide = false }: RecordCardProps) => (
     <article className="flex h-full flex-col gap-3.5 border border-line bg-surface p-[18px] transition-[border-color,box-shadow,background-color] duration-200 hover:border-accent hover:bg-[#0a0a0a] hover:shadow-[0_0_28px_rgba(247,217,43,0.16)]">
         <header className="flex items-start justify-between gap-3">
             <h2 className="min-w-0 text-[17px] leading-tight font-bold tracking-[0.1em] break-words text-accent uppercase">
@@ -32,5 +35,15 @@ export const RecordCard = ({ title, badge, stats, wide = false }: RecordCardProp
                 </div>
             ))}
         </dl>
+        { detailPath && (
+            <Link
+                to={detailPath}
+                className="mt-auto flex items-center gap-2 border-t border-divider pt-3 font-terminal text-[10px] 
+                tracking-[0.24em] text-dim uppercase transition-[color,text-shadow] duration-200 hover:text-accent 
+                hover:[text-shadow:0_0_12px_rgba(247,217,43,0.6)]"
+            >
+                Ver registro completo
+            </Link>
+        )}
     </article>
 );

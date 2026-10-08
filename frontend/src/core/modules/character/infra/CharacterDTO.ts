@@ -20,3 +20,7 @@ export interface CharacterDTO {
 export interface CharacterListResponseDTO {
     people: CharacterDTO[];
 }
+
+export interface CharacterResponseDTO {
+    people: CharacterDTO;
+}

@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PeopleAllDto } from '@app/modules/starwars/people/dto/people.all.dto';
 
 export class PeopleVM {
+  @ApiProperty({ type: String, example: '2' })
+  public readonly id: string;
+
   @ApiProperty({ type: String, example: 'Luke Skywalker' })
   public readonly name: string;
 
@@ -63,6 +66,7 @@ export class PeopleVM {
   public readonly url: string;
 
   public constructor(people: PeopleAllDto) {
+    this.id = people.id,
     this.name = people.name;
     this.height = people.height;
     this.mass = people.mass;

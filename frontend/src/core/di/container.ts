@@ -12,6 +12,7 @@ import {
 import { 
     CharacterHTTPRepository,
     GetCharacterUseCase,
+    GetOneCharacterUseCase,
  } from "../modules/character";
 
 import { HttpClient } from "@/core/modules/common";
@@ -52,5 +53,9 @@ export const restoreSessionUseCase = new RestoreSessionUseCase({
 })
 
 export const getCharacterUseCase = new GetCharacterUseCase({
+    characterRepository
+})
+
+export const getOneCharacterUseCase = new GetOneCharacterUseCase({
     characterRepository
 })

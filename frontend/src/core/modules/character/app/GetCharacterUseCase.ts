@@ -15,6 +15,6 @@ export class GetCharacterUseCase implements UseCase<void, Character[]> {
     }
 
     async execute(): Promise<Character[]> {
-    return this.characterRepository.getAll();
-}
+        return this.characterRepository.getAll();
+    }
 }

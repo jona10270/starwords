@@ -1,6 +1,6 @@
 import type { CharacterRepository } from "../domain/CharacterRepository"
 import { HttpClient } from "../../common"
-import type { CharacterListResponseDTO } from "./CharacterDTO";
+import type { CharacterResponseDTO, CharacterListResponseDTO } from "./CharacterDTO";
 import { CharacterMapper } from "./CharacterMapper";
 import type { Character } from "../domain/Character";
 import { CharacterErrorMapper } from "./CharacterErrorMapper";
@@ -28,6 +28,16 @@ export class CharacterHTTPRepository implements CharacterRepository {
         }
 
         return data.people.map((CharacterMapper.toCharacter));
+    }
+
+    async getCharacter(id: string): Promise<Character> {
+        let data: CharacterResponseDTO;
+        try {
+            data = await this.httpClient.get<CharacterResponseDTO>(`/starwars/people/${id}`)
+        } catch (error) {
+            throw CharacterErrorMapper.toDetailError(error)
+        }
+        return CharacterMapper.toOneCharacter(data)
     }
 
 }

@@ -12,8 +12,11 @@ export class PeopleService {
   // Request for view all peoples
   public async getAllPeople(): Promise<PeopleManyResponse> {
     const data = await this.swapiRequest.request<PeopleAllDto[]>('/people');
-
-    return new PeopleManyResponse(data);
+    const characters = data.map((person) => ({
+      ...person,
+      id: new URL(person.url).pathname.split("/").filter(Boolean).pop()!,
+    }))
+    return new PeopleManyResponse(characters);
   }
 
   // Request only one people
@@ -22,6 +25,11 @@ export class PeopleService {
       `/people/${peopeleId}`,
     );
 
-    return new PeopleSingleResponse(people);
+    const character = {
+      ...people,
+      id: new URL(people.url).pathname.split("/").filter(Boolean).pop()!,
+    };
+
+    return new PeopleSingleResponse(character);
   }
 }

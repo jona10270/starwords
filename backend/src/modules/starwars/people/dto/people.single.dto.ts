@@ -1,5 +1,6 @@
 // Dto Promise get all people swapi
 export interface PeopleSingleDto {
+  id: string;
   name: string;
   height: string;
   mass: string;
