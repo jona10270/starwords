@@ -1,10 +1,4 @@
-import {
-  Body,
-  Controller,
-  ForbiddenException,
-  Post,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Post } from '@nestjs/common';
 import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '@app/modules/user/user.service';
 import { UserRole } from '@app/shared/nestjs-auth/domain/user-role';
@@ -28,10 +22,7 @@ export class UserPublicController {
     if (client?.role === UserRole.ADMIN)
       throw new ForbiddenException('The user cannot have the ADMIN role');
 
-    // I check exists if email
-    if (await this.userService.getByEmail(client.email))
-      throw new UnprocessableEntityException('The email of new user exists');
-
+    // El servicio comprueba el email repetido y responde 409 tambien si dos registros llegan a la vez
     return new UsersClientResponse(await this.userService.create(client));
   }
 }

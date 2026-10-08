@@ -9,6 +9,11 @@ import {
     RestoreSessionUseCase,
 } from "@/core/modules/auth";
 
+import { 
+    CharacterHTTPRepository,
+    GetCharacterUseCase,
+ } from "../modules/character";
+
 import { HttpClient } from "@/core/modules/common";
 
 export const authStore = createAuthStore();
@@ -28,6 +33,7 @@ const httpClient = new HttpClient({
 
 // Conecto el puerto authrepository con el adaptador que habla con el backend
 const authRepository = new AuthHTTPRepository({ httpClient });
+const characterRepository = new CharacterHTTPRepository({ httpClient });
 
 export const loginUseCase = new LoginUseCase({
     authRepository,
@@ -43,4 +49,8 @@ export const restoreSessionUseCase = new RestoreSessionUseCase({
     authSessionStorage,
     authStore,
     authRepository,
+})
+
+export const getCharacterUseCase = new GetCharacterUseCase({
+    characterRepository
 })

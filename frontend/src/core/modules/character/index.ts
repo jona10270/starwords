@@ -1,0 +1,6 @@
+export * from './domain/CharacterRepository'
+export * from './domain/Character'
+export * from './domain/CharacterError'
+export * from './infra/CharacterDTO'
+export * from './infra/CharacterHTTPRepository'
+export * from './app/GetCharacterUseCase'

@@ -3,6 +3,7 @@ export const ROUTES = {
     home: "/",
     login: "/login",
     register: "/register",
+    characters: "/characters"
 } as const;
 
 // Nombre del parametro donde viaja la ruta a la que vuelvo tras el login

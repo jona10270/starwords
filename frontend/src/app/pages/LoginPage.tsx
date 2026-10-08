@@ -6,6 +6,7 @@ import { useLogin } from "../hooks/useLogin";
 import { loginSchema, type LoginFormValues } from "../schemas/authSchema";
 import { AuthCard } from "@/ui/organisms/AuthCard";
 import { Button, TextField } from "@/ui/atoms";
+import { PasswordField } from "@/ui/molecules";
 import { useEffect, useState } from "react";
 import { isAccountCreatedState } from "../navigation/accountCreatedState";
 import { useAuthPaths } from "../hooks/useAuthPaths";
@@ -57,12 +58,13 @@ export const LoginPage = () => {
                 <TextField
                     label="EMAIL"
                     type="email"
+                    autoComplete="username"
                     error={errors.email?.message}
                     {...register("email")}
                 />
-                <TextField
+                <PasswordField
                     label="CONTRASEÑA"
-                    type="password"
+                    autoComplete="current-password"
                     error={errors.password?.message}
                     {...register("password")}
                 />

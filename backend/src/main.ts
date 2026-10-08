@@ -3,11 +3,12 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { AppConfig } from './config/app.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // Dejo entrar al frontend de vite para que el navegador no bloquee las peticiones
-  app.enableCors({ origin: 'http://localhost:5173' });
+  app.enableCors({ origin: AppConfig.CORS_ORIGIN });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

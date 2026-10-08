@@ -12,6 +12,7 @@ import { UserModel } from './domain/user.model';
 import { UserRole } from '@app/shared/nestjs-auth/domain/user-role';
 import { UserEditDto } from './dtos/user.edit.dto';
 import { UserCheckDto } from './domain/user.model.check.dto';
+import { isUniqueViolation } from '@app/infra/postgres/postgres-errors';
 
 @Injectable()
 export class UserService {
@@ -39,7 +40,16 @@ export class UserService {
       role,
       activated: true,
     });
-    return newUser.save();
+
+    try {
+      return await newUser.save();
+    } catch (error) {
+      // Si otro registro con el mismo email entra a la vez lo para el indice unico
+      if (isUniqueViolation(error)) {
+        throw new ConflictException('Email already exists');
+      }
+      throw error;
+    }
   }
 
   // I check if the exiting email user
@@ -118,13 +128,21 @@ export class UserService {
     }
 
     // Hasheo la contraseña si se cambia la contraseña del usuario
-    if (toUpdate.password) {
+    if (toUpdate.password !== undefined) {
       const hashedPassword = await bcrypt.hash(toUpdate.password, 10);
       updateUser.password = hashedPassword;
     }
 
     // Update the user in the database
-    await this.userRepository.update(userId, updateUser);
+    try {
+      await this.userRepository.update(userId, updateUser);
+    } catch (error) {
+      // Si otro usuario coge el mismo email a la vez lo para el indice unico
+      if (isUniqueViolation(error)) {
+        throw new ConflictException('Email already exists');
+      }
+      throw error;
+    }
 
     // Search the user by id and send it the user update
     const newUpdateUser = await this.getByIdUser(userId);

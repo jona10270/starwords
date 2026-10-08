@@ -1,36 +1,35 @@
-import { logoutUseCase } from "@/core/di/container";
-import { useAuthState } from "../hooks/useAuthState"
+import { Link } from "react-router-dom";
 
+import { useAuthState } from "../hooks/useAuthState";
+import { ROUTES } from "../navigation/routes";
 
+// Portada del archivo con un saludo y el nombre si hay sesion
 export const HomePage = () => {
     const authState = useAuthState();
-
-    const handleLogout = () => {
-        void logoutUseCase.execute();
-    };
-
-    if (authState.kind !== "AuthenticatedAuthState") {
-        return null;
-    }
+    const username = authState.kind === "AuthenticatedAuthState" ? authState.user.username : null;
 
     return (
-        <main className="mx-auto mt-16 flex max-w-sm flex-col gap-4 p-8">
-            <h1 className="text-2xl font-bold">Hola, {authState.user.username}</h1>
-            <p className="text-sm">Email: {authState.user.email}</p>
-            <p className="text-sm">Rol: {authState.user.role}</p>
-            <p className="text-sm break-all">
-                Token: {authState.session.accessToken.slice(0, 30)}...
+        <main className="relative z-10 mx-auto flex max-w-[1280px] flex-col items-center px-4 pt-24 pb-24 text-center sm:px-7">
+            <p className="font-terminal text-[10px] tracking-[0.42em] text-[#6f747c] uppercase">
+                SWAPI · Archivo central
             </p>
-            <p className="text-sm">
-                Caduca: {new Date(authState.session.expiresAt).toLocaleString()}
+            <h1 className="mt-4 text-[34px] leading-tight font-bold tracking-[0.14em] text-white uppercase sm:text-[48px]">
+                Bienvenido
+                {username && (
+                    <>
+                        , <span className="break-all text-accent">{username}</span>
+                    </>
+                )}
+            </h1>
+            <p className="mt-6 max-w-[52ch] font-terminal text-xs leading-relaxed tracking-[0.08em] text-dim">
+                La base de datos galáctica de Star Wars: personajes, películas, naves, vehículos, especies y planetas.
             </p>
-            <button
-                type="button"
-                onClick={handleLogout}
-                className="rounded bg-gray-800 px-4 py-2 text-white"
+            <Link
+                to={ROUTES.characters}
+                className="mt-10 bg-accent px-5 py-3 font-terminal text-[11px] font-medium tracking-[0.26em] text-black uppercase transition-shadow hover:shadow-[0_0_26px_rgba(247,217,43,0.5)]"
             >
-                Salir
-            </button>
+                Ver personajes ▸
+            </Link>
         </main>
     );
 };

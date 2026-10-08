@@ -6,6 +6,7 @@ import { registerSchema, type RegisterFormValue } from "../schemas/authSchema";
 import { useAuthPaths } from "../hooks/useAuthPaths";
 import { AuthCard } from "@/ui/organisms/AuthCard";
 import { Button, TextField } from "@/ui/atoms";
+import { PasswordField } from "@/ui/molecules";
 
 export const RegisterPage = () => {
     const registerUser = useRegister();
@@ -39,24 +40,26 @@ export const RegisterPage = () => {
                 <TextField
                     label="NOMBRE DE USUARIO"
                     type="text"
+                    autoComplete="nickname"
                     error={errors.username?.message}
                     {...register("username")}
                 />
                 <TextField
                     label="EMAIL"
                     type="email"
+                    autoComplete="username"
                     error={errors.email?.message}
                     {...register("email")}
                 />
-                <TextField
+                <PasswordField
                     label="CONTRASEÑA"
-                    type="password"
+                    autoComplete="new-password"
                     error={errors.password?.message}
                     {...register("password")}
                 />
-                <TextField
+                <PasswordField
                     label="CONFIRMAR CONTRASEÑA"
-                    type="password"
+                    autoComplete="new-password"
                     error={errors.confirmPassword?.message}
                     {...register("confirmPassword")}
                 />

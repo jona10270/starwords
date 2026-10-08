@@ -1,20 +1,25 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsOptional } from 'class-validator';
+import {
+  IsNewPassword,
+  IsUserEmail,
+  IsUsername,
+} from '@app/app/common/validation/user-fields.validation';
 
-// DTO for the edit users
+// DTO for the edit users con las mismas reglas que el registro
 export class UserEditDto {
   @ApiPropertyOptional({ type: String, example: 'example@gmail.com' })
   @IsOptional()
-  @IsEmail()
+  @IsUserEmail()
   public email?: string;
 
-  @ApiPropertyOptional({ type: String, example: 'Jorge' })
+  @ApiPropertyOptional({ type: String, example: 'jorge_99' })
   @IsOptional()
-  @IsString()
+  @IsUsername()
   public username?: string;
 
   @ApiPropertyOptional({ type: String, example: '123456' })
   @IsOptional()
-  @IsString()
+  @IsNewPassword()
   public password?: string;
 }

@@ -17,6 +17,8 @@ import { UserClientManyResponse } from './response/user.client.many.response';
 import { UserEditDto } from './request/user.edit.dto';
 import { CurrentUser } from '@app/shared/nestjs-auth/decorator/current-user.decorator';
 import type { UserModel } from '@app/modules/user/domain/user.model';
+import { Roles } from '@app/shared/nestjs-auth/decorator/roles.decorator';
+import { UserRole } from '@app/shared/nestjs-auth/domain/user-role';
 
 // Todas las rutas de este controller exigen token (el guard global es quien manda).
 @ApiTags('users')
@@ -25,7 +27,9 @@ import type { UserModel } from '@app/modules/user/domain/user.model';
 export class UserClientController {
   public constructor(private readonly userService: UserService) {}
 
+  // Solo un admin puede ver el listado con los emails de todos
   @Get()
+  @Roles(UserRole.ADMIN)
   @ApiOkResponse({ type: UserClientManyResponse })
   public async listUsers(
     @Query() query: PaginationQueryDto,
@@ -41,7 +45,9 @@ export class UserClientController {
     return new UsersClientResponse(user);
   }
 
+  // Un usuario normal se consulta con /users/me y el resto solo lo ve un admin
   @Get(':id')
+  @Roles(UserRole.ADMIN)
   @ApiOkResponse({ type: UsersClientResponse })
   public async getUser(
     @Param('id', ParseUUIDPipe) id: string,

@@ -14,7 +14,7 @@ export const AuthCard = ({ title, activeTab, loginPath, registerPath, children }
     const isLogin = activeTab === "login";
 
     return (
-        <main className="flex min-h-screen items-center justify-center px-4">
+        <main className="relative z-10 flex justify-center px-4 pt-16 pb-24">
             <div className="w-full max-w-[440px] border border-line bg-[linear-gradient(#080808,#030303)] p-8">
                 <h1 className="mb-6 font-display text-3xl font-bold tracking-[0.12em] text-accent uppercase">
                     {title}

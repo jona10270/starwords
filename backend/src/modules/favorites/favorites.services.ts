@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { FavoriteModel } from './model/favorites.model';
 import { FavoritesEntity } from './data/favorites.entity';
 import { ResourceTypeEnum } from './enum/resource-type.enum';
+import { isUniqueViolation } from '@app/infra/postgres/postgres-errors';
 // Services
 import { UserService } from '../user/user.service';
 import { PeopleService } from '../starwars/people/people.service';
@@ -65,7 +66,15 @@ export class FavoritesService {
       resourceType,
     });
 
-    return newFavorite.save();
+    try {
+      return await newFavorite.save();
+    } catch (error) {
+      // Si llegan dos peticiones iguales a la vez lo para el indice unico
+      if (isUniqueViolation(error)) {
+        throw new ConflictException('The favorite alredy exist');
+      }
+      throw error;
+    }
   }
 
   public async deleteFavorite(
