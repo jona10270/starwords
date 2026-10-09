@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { PeopleSingleDto } from '@app/modules/starwars/people/dto/people.single.dto';
 import { PeopleVM } from '../../../../model/people/people.view-model';
+import { PeopleWithIdDto } from '@app/modules/starwars/people/dto/people.all.dto';
 
 export class PeopleSingleResponse {
   @ApiProperty({
@@ -9,7 +9,7 @@ export class PeopleSingleResponse {
   })
   public readonly people: PeopleVM;
 
-  public constructor(data: PeopleSingleDto) {
+  public constructor(data: PeopleWithIdDto) {
     this.people = new PeopleVM(data);
   }
 }

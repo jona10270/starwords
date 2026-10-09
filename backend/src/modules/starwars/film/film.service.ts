@@ -4,6 +4,7 @@ import { FilmAllDto } from './dto/film.all.dto';
 import { FilmManyResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/film/film.client.many.response';
 import { FilmSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/film/film.client.single.response';
 import { FilmSingleDto } from './dto/film.single.dto';
+import { getIdFromUrl } from '../common/get-id-from-url';
 
 @Injectable()
 export class FilmService {
@@ -15,8 +16,8 @@ export class FilmService {
 
     const films = data.map((film) => ({
       ...film,
-      id: new URL(film.url).pathname.split("/").filter(Boolean).pop()!,
-    }))
+      id: getIdFromUrl(film.url),
+    }));
 
     return new FilmManyResponse(films);
   }
@@ -27,8 +28,8 @@ export class FilmService {
     );
     const film = {
       ...data,
-      id: new URL(data.url).pathname.split("/").filter(Boolean).pop()!,
-    }
+      id: getIdFromUrl(data.url),
+    };
     return new FilmSingleResponse(film);
   }
 }

@@ -1,4 +1,10 @@
-import { BadGatewayException, GatewayTimeoutException, HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadGatewayException,
+  GatewayTimeoutException,
+  HttpException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 const SWAPI_TIMEOUT_MS = 5000;
 
@@ -8,8 +14,10 @@ export class SwapiRequest {
   private readonly BASE_URL = 'https://swapi.info/api';
 
   public async request<T>(endpoint: string): Promise<T> {
-    try { 
-      const response = await fetch(this.BASE_URL + endpoint, {signal: AbortSignal.timeout(SWAPI_TIMEOUT_MS)});
+    try {
+      const response = await fetch(this.BASE_URL + endpoint, {
+        signal: AbortSignal.timeout(SWAPI_TIMEOUT_MS),
+      });
 
       if (response.status === 404) {
         throw new NotFoundException(
@@ -18,11 +26,12 @@ export class SwapiRequest {
       }
 
       if (!response.ok) {
-        throw new BadGatewayException(`SWAPI responded with status: ${response.status}`);
+        throw new BadGatewayException(
+          `SWAPI responded with status: ${response.status}`,
+        );
       }
 
-    return (await response.json()) as T;
-    
+      return (await response.json()) as T;
     } catch (error) {
       // Si es un error de nest los dejamos pasar y ya como el 404
       if (error instanceof HttpException) {
@@ -37,6 +46,5 @@ export class SwapiRequest {
       // Cualquier otro fallos lo cortamos y lo tratamos como un 502
       throw new BadGatewayException('Could no connect to SWAPI');
     }
-
   }
 }

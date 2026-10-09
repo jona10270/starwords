@@ -15,7 +15,7 @@ import { FilmManyResponse } from './response/film/film.client.many.response';
 import { StarshipManyResponse } from './response/starship/starship.client.many.response';
 import { VehiclesManyResponse } from './response/vehicle/vehicles.client.many.response';
 import { SpecieManyResponse } from './response/specie/specie.client.many.response';
-import { PlanerManyResponse } from './response/planet/planet.client.many.response';
+import { PlanetManyResponse } from './response/planet/planet.client.many.response';
 
 // Single response
 import { PeopleSingleResponse } from './response/people/swapi.client.single.response';
@@ -159,9 +159,9 @@ export class StarwarsController {
 
   @Get('planets')
   @ApiOkResponse({
-    type: PlanerManyResponse,
+    type: PlanetManyResponse,
   })
-  public async getAllPlanets(): Promise<PlanerManyResponse> {
+  public async getAllPlanets(): Promise<PlanetManyResponse> {
     return this.planet.getPlanets();
   }
 

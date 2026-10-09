@@ -14,7 +14,7 @@ export class VehiclesService {
     return new VehiclesManyResponse(data);
   }
 
-  public async getVehicle(vehicleId): Promise<VehicleSingleResponse> {
+  public async getVehicle(vehicleId: string): Promise<VehicleSingleResponse> {
     const data = await this.swapiRequest.request<VehicleAllDto>(
       `/vehicles/${vehicleId}`,
     );

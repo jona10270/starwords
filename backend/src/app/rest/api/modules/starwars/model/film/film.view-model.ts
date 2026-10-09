@@ -78,7 +78,7 @@ export class FilmVM {
   public readonly url: string;
 
   public constructor(film: FilmWithIdDto) {
-    this.id = film.id
+    this.id = film.id;
     this.title = film.title;
     this.episode_id = film.episode_id;
     this.opening_crawl = film.opening_crawl;

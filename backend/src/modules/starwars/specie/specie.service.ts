@@ -15,7 +15,7 @@ export class SpecieService {
     return new SpecieManyResponse(data);
   }
 
-  public async getSpecie(specieId): Promise<SpecieSingleResponse> {
+  public async getSpecie(specieId: string): Promise<SpecieSingleResponse> {
     const data = await this.swapiRequest.request<SpeciesSingleDto>(
       `/species/${specieId}`,
     );

@@ -6,6 +6,7 @@ import { RecordDetail } from "@/ui/organisms/RecordDetail";
 import type { Film } from "@/core/modules/film";
 
 import { useGetFilm } from "../../hooks/useGetFilm";
+import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
 const CATEGORY_LABEL = "Films";
@@ -44,6 +45,7 @@ const toDetail = (film: Film) => {
             { label: "Planetas", value: String(film.planets.length) },
             { label: "Naves", value: String(film.starships.length) },
             { label: "Especies", value: String(film.species.length) },
+            { label: "Vehículos", value: String(film.vehicles.length) },
         ],
     };
 };
@@ -63,7 +65,13 @@ export const FilmDetailPage = () => {
                 <ArchiveNote className="mt-12">Descodificando registro galáctico…</ArchiveNote>
             )}
 
-            {filmQuery.isError && <ErrorPanel message={filmQuery.error.message} />}
+            {filmQuery.isError && (
+                <ErrorPanel
+                    message={filmQuery.error.message}
+                    onRetry={isRetryable(filmQuery.error) ? () => filmQuery.refetch() : undefined}
+                    isRetrying={filmQuery.isFetching}
+                />
+            )}
 
             {film && (
                 <RecordDetail backPath={ROUTES.films} {...toDetail(film)}>

@@ -8,8 +8,12 @@ import { RecordGrid, type RecordItem } from "@/ui/organisms/RecordGrid";
 import type { Character } from "@/core/modules/character";
 
 import { useGetCharacter } from "../hooks/useCharacters";
+import { isRetryable } from "../hooks/retryResource";
 
 const CATEGORY_LABEL = "People";
+
+// Pongo la unidad solo si el dato existe
+const withUnit = (value: string | null, unit: string) => (value ? `${value} ${unit}` : "—");
 
 // Paso un personaje al formato de tarjeta que entiende la ui
 const toRecord = (character: Character, index: number): RecordItem => ({
@@ -19,15 +23,15 @@ const toRecord = (character: Character, index: number): RecordItem => ({
     stats: [
         { label: "Nacimiento", value: character.birthYear ?? "—" },
         { label: "Género", value: character.gender ?? "—" },
-        { label: "Altura", value: `${character.height ?? "—"} cm` },
-        { label: "Masa", value: `${character.mass ?? "—"} kg` },
+        { label: "Altura", value: withUnit(character.height, "cm") },
+        { label: "Masa", value: withUnit(character.mass, "kg") },
     ],
     detailPath: generatePath(ROUTES.characterDetail, { id: character.id }),
 });
 
 // Archivo de personajes con la cabecera fija y el contenido segun el estado de la peticion
 export const CharacterPage = () => {
-    const { data, isPending, isError, error } = useGetCharacter();
+    const { data, isPending, isError, error, refetch, isFetching } = useGetCharacter();
     const [view, setView] = useState<RecordView>("grid");
 
     let counter = `${data?.length ?? 0} registros descodificados`;
@@ -42,7 +46,13 @@ export const CharacterPage = () => {
 
             {isPending && <ArchiveNote className="mt-12">Descodificando base de datos galáctica…</ArchiveNote>}
 
-            {isError && <ErrorPanel message={error.message} />}
+            {isError && (
+                <ErrorPanel
+                    message={error.message}
+                    onRetry={isRetryable(error) ? () => refetch() : undefined}
+                    isRetrying={isFetching}
+                />
+            )}
 
             {data && (
                 <>

@@ -1,6 +1,5 @@
 // Dto Promise get all people swapi
 export interface PeopleAllDto {
-  id: string;
   name: string;
   height: string;
   mass: string;
@@ -16,3 +15,6 @@ export interface PeopleAllDto {
   starships: string[];
   url: string;
 }
+
+// Lo pongo para que cumpla el id
+export type PeopleWithIdDto = PeopleAllDto & { id: string };

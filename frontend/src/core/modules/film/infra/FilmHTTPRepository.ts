@@ -9,17 +9,17 @@ interface FilmHTTPRepositoryProps {
 }
 
 export class FilmHTTPRepository implements FilmRepository {
-    private readonly httplClient: HttpClient;
+    private readonly httpClient: HttpClient;
 
     constructor({ httpClient }: FilmHTTPRepositoryProps) {
-        this.httplClient = httpClient
+        this.httpClient = httpClient
     }
 
     async getAllFilms(): Promise<Film[]> {
         let data: FilmListResponseDTO; 
 
         try {
-            data = await this.httplClient.get<FilmListResponseDTO>(
+            data = await this.httpClient.get<FilmListResponseDTO>(
                 '/starwars/films'
             );
         } catch (error) {
@@ -31,11 +31,11 @@ export class FilmHTTPRepository implements FilmRepository {
     async getFilm(id: string): Promise<Film> {
         let data: FilmResponseDTO;
         try {
-            data = await this.httplClient.get<FilmResponseDTO>(
+            data = await this.httpClient.get<FilmResponseDTO>(
                 `/starwars/films/${id}`
             )
         } catch (error) {
-            throw ResourceErrorMapper.toDetailError(error, 'La pelicula no existe')
+            throw ResourceErrorMapper.toDetailError(error, 'La película no existe')
         }
         return FilmMapper.toFilm(data.film)
     }

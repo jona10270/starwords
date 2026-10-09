@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { generatePath } from "react-router-dom";
 
 import { ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ArchiveHeading, ErrorPanel, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
@@ -6,6 +7,8 @@ import { RecordGrid, type RecordItem } from "@/ui/organisms/RecordGrid";
 import type { Film } from "@/core/modules/film";
 
 import { useListFilms } from "@/app/hooks/useListFilms";
+import { isRetryable } from "@/app/hooks/retryResource";
+import { ROUTES } from "@/app/navigation/routes";
 
 const CATEGORY_LABEL = "Films";
 
@@ -20,11 +23,12 @@ const toRecord = (film: Film): RecordItem => ({
         { label: "Estreno", value: film.releaseDate || "—" },
         { label: "Personajes", value: String(film.characters.length) },
     ],
+    detailPath: generatePath(ROUTES.filmDetail, { id: film.id }),
 });
 
 // Archivo de peliculas con la cabecera fija y el contenido segun el estado de la peticion
 export const FilmsListPage = () => {
-    const { data, isPending, isError, error } = useListFilms();
+    const { data, isPending, isError, error, refetch, isFetching } = useListFilms();
     const [view, setView] = useState<RecordView>("grid");
 
     let counter = `${data?.length ?? 0} registros descodificados`;
@@ -39,7 +43,13 @@ export const FilmsListPage = () => {
 
             {isPending && <ArchiveNote className="mt-12">Descodificando base de datos galáctica…</ArchiveNote>}
 
-            {isError && <ErrorPanel message={error.message} />}
+            {isError && (
+                <ErrorPanel
+                    message={error.message}
+                    onRetry={isRetryable(error) ? () => refetch() : undefined}
+                    isRetrying={isFetching}
+                />
+            )}
 
             {data && (
                 <>

@@ -14,6 +14,7 @@ export const FilmMapper = {
         planets: dto.planets,
         starships: dto.starships,
         species: dto.species,
+        vehicles: dto.vehicles,
         urlFilm: dto.url,        
     })
 }

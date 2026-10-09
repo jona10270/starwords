@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { PeopleAllDto } from '@app/modules/starwars/people/dto/people.all.dto';
+import { PeopleWithIdDto } from '@app/modules/starwars/people/dto/people.all.dto';
 import { PeopleVM } from '../../../../model/people/people.view-model';
 
 export class PeopleManyResponse {
@@ -9,7 +9,7 @@ export class PeopleManyResponse {
   })
   public readonly people: PeopleVM[];
 
-  public constructor(data: PeopleAllDto[]) {
+  public constructor(data: PeopleWithIdDto[]) {
     this.people = data.map((person) => new PeopleVM(person));
   }
 }
