@@ -3,17 +3,17 @@ import { HttpClient } from "../../common"
 import type { CharacterResponseDTO, CharacterListResponseDTO } from "./CharacterDTO";
 import { CharacterMapper } from "./CharacterMapper";
 import type { Character } from "../domain/Character";
-import { CharacterErrorMapper } from "./CharacterErrorMapper";
+import { ResourceErrorMapper } from "../../common";
 
 // Lo que necesito para hablar con el backend
-interface AuthHTTPRepositoryProps {
+interface CharacterHTTPRepositoryProps {
     httpClient: HttpClient;
 }
 
 export class CharacterHTTPRepository implements CharacterRepository {
     private readonly httpClient: HttpClient;
 
-    constructor({ httpClient}: AuthHTTPRepositoryProps) {
+    constructor({ httpClient}: CharacterHTTPRepositoryProps) {
         this.httpClient = httpClient;
     }
 
@@ -24,7 +24,7 @@ export class CharacterHTTPRepository implements CharacterRepository {
             '/starwars/people'
         )
         } catch (error) {
-            throw CharacterErrorMapper.toListError(error)
+            throw ResourceErrorMapper.toListError(error)
         }
 
         return data.people.map((CharacterMapper.toCharacter));
@@ -35,9 +35,9 @@ export class CharacterHTTPRepository implements CharacterRepository {
         try {
             data = await this.httpClient.get<CharacterResponseDTO>(`/starwars/people/${id}`)
         } catch (error) {
-            throw CharacterErrorMapper.toDetailError(error)
+            throw ResourceErrorMapper.toDetailError(error, 'El personaje no existe')
         }
-        return CharacterMapper.toOneCharacter(data)
+        return CharacterMapper.toCharacter(data.people)
     }
 
 }

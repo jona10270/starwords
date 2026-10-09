@@ -72,7 +72,7 @@ export class StarwarsController {
   // Get all films of the swapi api
   @Get('films')
   @ApiOkResponse({
-    type: PeopleManyResponse,
+    type: FilmManyResponse,
   })
   public async getAllFilms(): Promise<FilmManyResponse> {
     return this.filmService.getAllFilms();

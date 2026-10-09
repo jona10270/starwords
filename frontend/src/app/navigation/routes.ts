@@ -5,6 +5,7 @@ export const ROUTES = {
     register: "/register",
     characters: "/characters",
     characterDetail: "/characters/:id",
+    films: "/films",
 } as const;
 
 // Nombre del parametro donde viaja la ruta a la que vuelvo tras el login

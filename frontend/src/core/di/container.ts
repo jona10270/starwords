@@ -16,6 +16,7 @@ import {
  } from "../modules/character";
 
 import { HttpClient } from "@/core/modules/common";
+import { FilmHTTPRepository, GetAllFilmsUseCase } from "../modules/film";
 
 export const authStore = createAuthStore();
 
@@ -35,7 +36,11 @@ const httpClient = new HttpClient({
 // Conecto el puerto authrepository con el adaptador que habla con el backend
 const authRepository = new AuthHTTPRepository({ httpClient });
 const characterRepository = new CharacterHTTPRepository({ httpClient });
+const filmRepository = new FilmHTTPRepository({ httpClient });
 
+// =====================================================
+// AUTH
+// =====================================================
 export const loginUseCase = new LoginUseCase({
     authRepository,
     authSessionStorage,
@@ -52,10 +57,20 @@ export const restoreSessionUseCase = new RestoreSessionUseCase({
     authRepository,
 })
 
+// =====================================================
+// GET CHRACTERS
+// =====================================================
 export const getCharacterUseCase = new GetCharacterUseCase({
     characterRepository
 })
 
 export const getOneCharacterUseCase = new GetOneCharacterUseCase({
     characterRepository
+})
+
+// =====================================================
+// GET FILMS
+// =====================================================
+export const getAllFilmsUseCase = new GetAllFilmsUseCase({
+    filmRepository
 })

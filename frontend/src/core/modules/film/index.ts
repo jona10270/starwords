@@ -1,0 +1,6 @@
+export * from './domain/Film'
+export * from './domain/FilmaRepository'
+export * from './app/GetAllFilmUseCase'
+export * from './infra/FilmDTO'
+export * from './infra/FilmHTTPRepository'
+export * from './infra/FilmMapper'

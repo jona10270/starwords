@@ -9,6 +9,7 @@ import { ROUTES } from "./navigation/routes";
 import { CharacterPage } from './pages/CharacterPage'
 import { CharacterDetailPage } from "./pages/CharacterDetailPage";
 import { AppLayout } from "./layouts/AppLayout";
+import { FilmsListPage } from "./pages/films/FilmsListPage";
 
 export const AppRoutes = () => (
     <Routes>
@@ -17,6 +18,7 @@ export const AppRoutes = () => (
             <Route path={ROUTES.home} element={<HomePage />} />
             <Route path={ROUTES.characters} element={<CharacterPage />} />
             <Route path={ROUTES.characterDetail} element={<CharacterDetailPage />} />
+            <Route path={ROUTES.films} element={<FilmsListPage />} />
             <Route
                 path={ROUTES.login}
                 element={

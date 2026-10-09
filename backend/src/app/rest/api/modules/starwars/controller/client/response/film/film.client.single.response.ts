@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 import { FilmVM } from '../../../../model/film/film.view-model';
-import { FilmSingleDto } from '@app/modules/starwars/film/dto/film.single.dto';
+import { FilmWithIdDto } from '@app/modules/starwars/film/dto/film.all.dto';
 
 export class FilmSingleResponse {
   @ApiProperty({
@@ -9,7 +9,7 @@ export class FilmSingleResponse {
   })
   public readonly film: FilmVM;
 
-  public constructor(data: FilmSingleDto) {
+  public constructor(data: FilmWithIdDto) {
     this.film = new FilmVM(data);
   }
 }

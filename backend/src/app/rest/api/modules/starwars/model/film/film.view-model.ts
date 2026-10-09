@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { FilmAllDto } from '@app/modules/starwars/film/dto/film.all.dto';
+import { FilmWithIdDto } from '@app/modules/starwars/film/dto/film.all.dto';
 
 export class FilmVM {
+  @ApiProperty({ type: String, example: '1' })
+  public readonly id: string;
+
   @ApiProperty({ type: String, example: 'A New Hope' })
   public readonly title: string;
 
@@ -74,7 +77,8 @@ export class FilmVM {
   })
   public readonly url: string;
 
-  public constructor(film: FilmAllDto) {
+  public constructor(film: FilmWithIdDto) {
+    this.id = film.id
     this.title = film.title;
     this.episode_id = film.episode_id;
     this.opening_crawl = film.opening_crawl;

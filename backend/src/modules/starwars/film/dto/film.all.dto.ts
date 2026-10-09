@@ -12,3 +12,6 @@ export interface FilmAllDto {
   species: string[];
   url: string;
 }
+
+// La pelicula despues de que le añado el id sacado de la url
+export type FilmWithIdDto = FilmAllDto & { id: string };

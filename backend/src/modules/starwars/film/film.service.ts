@@ -13,14 +13,22 @@ export class FilmService {
   public async getAllFilms(): Promise<FilmManyResponse> {
     const data = await this.swapiRequest.request<FilmAllDto[]>('/films');
 
-    return new FilmManyResponse(data);
+    const films = data.map((film) => ({
+      ...film,
+      id: new URL(film.url).pathname.split("/").filter(Boolean).pop()!,
+    }))
+
+    return new FilmManyResponse(films);
   }
 
   public async getFilm(filmId: string): Promise<FilmSingleResponse> {
     const data = await this.swapiRequest.request<FilmSingleDto>(
       `/films/${filmId}`,
     );
-
-    return new FilmSingleResponse(data);
+    const film = {
+      ...data,
+      id: new URL(data.url).pathname.split("/").filter(Boolean).pop()!,
+    }
+    return new FilmSingleResponse(film);
   }
 }
