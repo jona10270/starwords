@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 import type { RecordStat } from "../molecules";
@@ -11,10 +12,12 @@ interface RecordDetailProps {
     subtitle: string;
     highlights: RecordStat[];
     attributes: RecordStat[];
+    // Bloque extra entre la cabecera y los atributos para lo propio de cada recurso
+    children?: ReactNode;
 }
 
 // Ficha completa de un registro con sus datos destacados y todos sus atributos
-export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, highlights, attributes }: RecordDetailProps) => (
+export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, highlights, attributes, children }: RecordDetailProps) => (
     <article className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
@@ -49,6 +52,8 @@ export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, hig
                 ))}
             </dl>
         </header>
+
+        {children}
 
         <section className="border border-line bg-surface p-[22px]">
             <h2 className="mb-[18px] border-b border-[#161616] pb-3 font-terminal text-[10px] font-medium tracking-[0.3em] text-accent uppercase">

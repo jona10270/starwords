@@ -2,6 +2,7 @@ export * from "./ArchiveHeading";
 export * from "./AuthControl";
 export * from "./ErrorPanel";
 export * from "./MobileMenu";
+export * from "./OpeningCrawl";
 export * from "./PasswordField";
 export * from "./RecordCard";
 export * from "./ResourceIconNav";

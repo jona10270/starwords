@@ -17,6 +17,7 @@ import {
 
 import { HttpClient } from "@/core/modules/common";
 import { FilmHTTPRepository, GetAllFilmsUseCase } from "../modules/film";
+import { GetFilmUseCase } from "../modules/film/app/GetFilmUseCase";
 
 export const authStore = createAuthStore();
 
@@ -72,5 +73,9 @@ export const getOneCharacterUseCase = new GetOneCharacterUseCase({
 // GET FILMS
 // =====================================================
 export const getAllFilmsUseCase = new GetAllFilmsUseCase({
+    filmRepository
+})
+
+export const getFilmUseCase = new GetFilmUseCase({
     filmRepository
 })
