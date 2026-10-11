@@ -1,7 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { StarshipAllDto } from '@app/modules/starwars/starships/dto/starship.all.dto';
+import { StarshipWithIdDto } from '@app/modules/starwars/starships/dto/starship.all.dto';
 
 export class StarshipVM {
+  @ApiProperty({
+    type: String,
+    example: '1',
+  })
+  public readonly id: string;
+
   @ApiProperty({
     type: String,
     example: 'Death Star',
@@ -98,7 +104,8 @@ export class StarshipVM {
   })
   public readonly url: string;
 
-  public constructor(starship: StarshipAllDto) {
+  public constructor(starship: StarshipWithIdDto) {
+    this.id = starship.id;
     this.name = starship.name;
     this.model = starship.model;
     this.manufacturer = starship.manufacturer;

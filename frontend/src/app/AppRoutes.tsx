@@ -11,6 +11,8 @@ import { CharacterDetailPage } from "./pages/CharacterDetailPage";
 import { AppLayout } from "./layouts/AppLayout";
 import { FilmsListPage } from "./pages/films/FilmsListPage";
 import { FilmDetailPage } from "./pages/films/FilmDetailPage";
+import { StarshipsListPage } from "./pages/starships/StarshipsListPage";
+import { StarshipDetailPage } from "./pages/starships/StarshipDetailPage";
 
 export const AppRoutes = () => (
     <Routes>
@@ -21,6 +23,8 @@ export const AppRoutes = () => (
             <Route path={ROUTES.characterDetail} element={<CharacterDetailPage />} />
             <Route path={ROUTES.films} element={<FilmsListPage />} />
             <Route path={ROUTES.filmDetail} element={<FilmDetailPage />} />
+            <Route path={ROUTES.starships} element={<StarshipsListPage />} />
+            <Route path={ROUTES.starshipDetail} element={<StarshipDetailPage />} />
             <Route
                 path={ROUTES.login}
                 element={

@@ -16,3 +16,5 @@ export interface StarshipAllDto {
   films: string[];
   url: string;
 }
+
+export type StarshipWithIdDto = StarshipAllDto & { id: string };

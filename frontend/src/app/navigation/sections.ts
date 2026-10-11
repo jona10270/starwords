@@ -7,7 +7,7 @@ import { ROUTES } from "./routes";
 export const ARCHIVE_SECTIONS: NavItem[] = [
     { key: "people", label: "People", icon: PeopleIcon, to: ROUTES.characters },
     { key: "films", label: "Films", icon: FilmsIcon, to: ROUTES.films},
-    { key: "starships", label: "Starships", icon: StarshipsIcon },
+    { key: "starships", label: "Starships", icon: StarshipsIcon, to: ROUTES.starships },
     { key: "vehicles", label: "Vehicles", icon: VehiclesIcon },
     { key: "species", label: "Species", icon: SpeciesIcon },
     { key: "planets", label: "Planets", icon: PlanetsIcon },
