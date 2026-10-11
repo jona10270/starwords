@@ -4,7 +4,7 @@ import { VehicleWithIdDto } from '@app/modules/starwars/vehicles/dto/vehicles.al
 export class VehicleVM {
   @ApiProperty({
     type: String,
-    example: '6',
+    example: '4',
   })
   public readonly id: string;
 

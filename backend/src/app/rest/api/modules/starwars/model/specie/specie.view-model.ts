@@ -1,7 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SpeciesAllDto } from '@app/modules/starwars/specie/dto/specie.all.dto';
+import { SpecieWithIdDto } from '@app/modules/starwars/specie/dto/specie.all.dto';
 
 export class SpecieVM {
+  @ApiProperty({
+    type: String,
+    example: '3',
+  })
+  public readonly id: string;
+
   @ApiProperty({
     type: String,
     example: 'Wookie',
@@ -52,9 +58,10 @@ export class SpecieVM {
 
   @ApiProperty({
     type: String,
+    nullable: true,
     example: 'https://swapi.info/api/planets/14',
   })
-  public readonly homeworld: string;
+  public readonly homeworld: string | null;
 
   @ApiProperty({
     type: String,
@@ -88,7 +95,8 @@ export class SpecieVM {
   })
   public readonly url: string;
 
-  constructor(specie: SpeciesAllDto) {
+  constructor(specie: SpecieWithIdDto) {
+    this.id = specie.id;
     this.name = specie.name;
     this.classification = specie.classification;
     this.designation = specie.designation;

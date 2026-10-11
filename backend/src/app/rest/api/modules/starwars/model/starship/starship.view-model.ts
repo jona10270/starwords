@@ -4,7 +4,7 @@ import { StarshipWithIdDto } from '@app/modules/starwars/starships/dto/starship.
 export class StarshipVM {
   @ApiProperty({
     type: String,
-    example: '1',
+    example: '9',
   })
   public readonly id: string;
 

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PeopleWithIdDto } from '@app/modules/starwars/people/dto/people.all.dto';
 
 export class PeopleVM {
-  @ApiProperty({ type: String, example: '2' })
+  @ApiProperty({ type: String, example: '1' })
   public readonly id: string;
 
   @ApiProperty({ type: String, example: 'Luke Skywalker' })
