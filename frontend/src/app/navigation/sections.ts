@@ -9,6 +9,6 @@ export const ARCHIVE_SECTIONS: NavItem[] = [
     { key: "films", label: "Films", icon: FilmsIcon, to: ROUTES.films},
     { key: "starships", label: "Starships", icon: StarshipsIcon, to: ROUTES.starships },
     { key: "vehicles", label: "Vehicles", icon: VehiclesIcon, to: ROUTES.vehicles },
-    { key: "species", label: "Species", icon: SpeciesIcon },
+    { key: "species", label: "Species", icon: SpeciesIcon, to: ROUTES.species },
     { key: "planets", label: "Planets", icon: PlanetsIcon },
 ];

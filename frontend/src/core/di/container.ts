@@ -20,6 +20,7 @@ import { FilmHTTPRepository, GetAllFilmsUseCase } from "../modules/film";
 import { GetFilmUseCase } from "../modules/film/app/GetFilmUseCase";
 import { GetAllStarshipsUseCase, GetStarshipUseCase, StarshipHTTPRepository } from "../modules/starship";
 import { GetAllVehiclesUseCase, GetVehicleUseCase, VehicleHTTPRepository } from "../modules/vehicle";
+import { GetAllSpeciesUseCase, GetSpecieUseCase, SpecieHTTPRepository } from "../modules/specie";
 
 export const authStore = createAuthStore();
 
@@ -42,6 +43,7 @@ const characterRepository = new CharacterHTTPRepository({ httpClient });
 const filmRepository = new FilmHTTPRepository({ httpClient });
 const starshipRepository = new StarshipHTTPRepository({ httpClient });
 const vehicleRepository = new VehicleHTTPRepository({ httpClient });
+const specieRepository = new SpecieHTTPRepository({ httpClient });
 
 // =====================================================
 // AUTH
@@ -104,4 +106,16 @@ export const getAllVehiclesUseCase = new GetAllVehiclesUseCase({
 
 export const getVehicleUseCase = new GetVehicleUseCase({
     vehicleRepository
+})
+
+
+// =====================================================
+// GET SPECIES
+// =====================================================
+export const getAllSpeciesUseCase = new GetAllSpeciesUseCase({
+    specieRepository
+})
+
+export const getSpecieUseCase = new GetSpecieUseCase({
+    specieRepository
 })
