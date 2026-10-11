@@ -16,3 +16,6 @@ export interface VehicleAllDto {
   url: string;
   vehicle_class: string;
 }
+
+// Creo un tipo para el envio de datos al frontend
+export type VehicleWithIdDto = VehicleAllDto & { id: string };

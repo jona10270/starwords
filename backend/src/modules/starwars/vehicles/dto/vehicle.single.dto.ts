@@ -1,4 +1,4 @@
-export interface VehicleManyDto {
+export interface VehicleSingleDto {
   cargo_capacity: string;
   consumables: string;
   cost_in_credits: string;

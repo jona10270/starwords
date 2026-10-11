@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { VehicleVM } from '../../../../model/vehicle/vehicles.view-model';
-import { VehicleAllDto } from '@app/modules/starwars/vehicles/dto/vehicles.all.dto';
+import { VehicleWithIdDto } from '@app/modules/starwars/vehicles/dto/vehicles.all.dto';
 
 export class VehiclesManyResponse {
   @ApiProperty({
@@ -8,7 +8,7 @@ export class VehiclesManyResponse {
   })
   public readonly vehicles: VehicleVM[];
 
-  public constructor(data: VehicleAllDto[]) {
+  public constructor(data: VehicleWithIdDto[]) {
     this.vehicles = data.map((vehicle) => new VehicleVM(vehicle));
   }
 }

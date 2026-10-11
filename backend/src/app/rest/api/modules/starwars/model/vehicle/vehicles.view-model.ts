@@ -1,7 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { VehicleAllDto } from '@app/modules/starwars/vehicles/dto/vehicles.all.dto';
+import { VehicleWithIdDto } from '@app/modules/starwars/vehicles/dto/vehicles.all.dto';
 
 export class VehicleVM {
+  @ApiProperty({
+    type: String,
+    example: '6',
+  })
+  public readonly id: string;
+
   @ApiProperty({
     type: String,
     example: 'Sand Crawler',
@@ -86,7 +92,8 @@ export class VehicleVM {
   })
   public readonly vehicle_class: string;
 
-  public constructor(vehicle: VehicleAllDto) {
+  public constructor(vehicle: VehicleWithIdDto) {
+    this.id = vehicle.id;
     this.name = vehicle.name;
     this.model = vehicle.model;
     this.manufacturer = vehicle.manufacturer;
