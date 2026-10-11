@@ -9,6 +9,8 @@ export const ROUTES = {
     filmDetail: "/films/:id",
     starships: "/starships",
     starshipDetail: "/starships/:id",
+    vehicles: "/vehicles",
+    vehicleDetail: "/vehicles/:id",
 } as const;
 
 // Nombre del parametro donde viaja la ruta a la que vuelvo tras el login

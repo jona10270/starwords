@@ -13,6 +13,8 @@ import { FilmsListPage } from "./pages/films/FilmsListPage";
 import { FilmDetailPage } from "./pages/films/FilmDetailPage";
 import { StarshipsListPage } from "./pages/starships/StarshipsListPage";
 import { StarshipDetailPage } from "./pages/starships/StarshipDetailPage";
+import { VehiclesListPage } from "./pages/vehicles/VehiclesListPage";
+import { VehicleDetailPage } from "./pages/vehicles/VehicleDetailPage";
 
 export const AppRoutes = () => (
     <Routes>
@@ -25,6 +27,8 @@ export const AppRoutes = () => (
             <Route path={ROUTES.filmDetail} element={<FilmDetailPage />} />
             <Route path={ROUTES.starships} element={<StarshipsListPage />} />
             <Route path={ROUTES.starshipDetail} element={<StarshipDetailPage />} />
+            <Route path={ROUTES.vehicles} element={<VehiclesListPage />} />
+            <Route path={ROUTES.vehicleDetail} element={<VehicleDetailPage />} />
             <Route
                 path={ROUTES.login}
                 element={
