@@ -5,12 +5,16 @@ import { VehicleAllDto } from './dto/vehicles.all.dto';
 import { VehicleSingleDto } from './dto/vehicle.single.dto';
 import { VehicleSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/vehicle/vehicle.client.single.response';
 import { getIdFromUrl } from '../common/get-id-from-url';
+import { paginate } from '../common/paginate';
 
 @Injectable()
 export class VehiclesService {
   public constructor(private readonly swapiRequest: SwapiRequest) {}
 
-  public async getAllVehicles(): Promise<VehiclesManyResponse> {
+  public async getAllVehicles(
+    page: number,
+    limit: number,
+  ): Promise<VehiclesManyResponse> {
     const data = await this.swapiRequest.request<VehicleAllDto[]>('/vehicles');
 
     // Saco de cada vehicle su id y lo meto en el array
@@ -19,7 +23,8 @@ export class VehiclesService {
       id: getIdFromUrl(vehicle.url),
     }));
 
-    return new VehiclesManyResponse(vehicles);
+    const { items, total } = paginate(vehicles, page, limit);
+    return new VehiclesManyResponse(items, total, page, limit);
   }
 
   public async getVehicle(vehicleId: string): Promise<VehicleSingleResponse> {

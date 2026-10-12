@@ -5,12 +5,16 @@ import { StarshipAllDto } from './dto/starship.all.dto';
 import { StarshipSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/starship/starship.client.single.response';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { StarshipSingleDto } from './dto/starship.single.dto';
+import { paginate } from '../common/paginate';
 
 @Injectable()
 export class StarshipService {
   constructor(private readonly swapiRequest: SwapiRequest) {}
 
-  public async getAllStarships(): Promise<StarshipManyResponse> {
+  public async getAllStarships(
+    page: number,
+    limit: number,
+  ): Promise<StarshipManyResponse> {
     const data =
       await this.swapiRequest.request<StarshipAllDto[]>('/starships');
 
@@ -18,7 +22,9 @@ export class StarshipService {
       ...starship,
       id: getIdFromUrl(starship.url),
     }));
-    return new StarshipManyResponse(starships);
+
+    const { items, total } = paginate(starships, page, limit);
+    return new StarshipManyResponse(items, total, page, limit);
   }
 
   public async getSingleStarship(

@@ -20,7 +20,7 @@ import { FavoritesService } from '@app/modules/favorites/favorites.services';
 import { FavoriteManyResponse } from './response/favorite.client.many.response';
 import { CurrentUser } from '@app/shared/nestjs-auth/decorator/current-user.decorator';
 import type { UserModel } from '@app/modules/user/domain/user.model';
-import { PaginationFavoriteQueryDto } from './request/pagination.query.dto';
+import { PaginationQueryDto } from '@app/app/common/pagination/pagination.query.dto';
 
 @ApiTags('favorites')
 @ApiBearerAuth()
@@ -32,7 +32,7 @@ export class FavoriteController {
   @ApiOkResponse({ type: FavoriteManyResponse })
   public async listFavorites(
     @CurrentUser() user: UserModel,
-    @Query() query: PaginationFavoriteQueryDto,
+    @Query() query: PaginationQueryDto,
   ): Promise<FavoriteManyResponse> {
     const { page, limit } = query;
     const [favorites, total] = await this.favoriteService.paginationFavorite(

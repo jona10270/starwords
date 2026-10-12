@@ -5,19 +5,25 @@ import { PeopleManyResponse } from '@app/app/rest/api/modules/starwars/controlle
 import { PeopleSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/people/swapi.client.single.response';
 import { PeopleSingleDto } from './dto/people.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
+import { paginate } from '../common/paginate';
 
 @Injectable()
 export class PeopleService {
   constructor(private readonly swapiRequest: SwapiRequest) {}
 
   // Request for view all peoples
-  public async getAllPeople(): Promise<PeopleManyResponse> {
+  public async getAllPeople(
+    page: number,
+    limit: number,
+  ): Promise<PeopleManyResponse> {
     const data = await this.swapiRequest.request<PeopleAllDto[]>('/people');
     const characters = data.map((person) => ({
       ...person,
       id: getIdFromUrl(person.url),
     }));
-    return new PeopleManyResponse(characters);
+
+    const { items, total } = paginate(characters, page, limit);
+    return new PeopleManyResponse(items, total, page, limit);
   }
 
   // Request only one people

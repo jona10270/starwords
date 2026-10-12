@@ -1,5 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+
+import { PaginationQueryDto } from '@app/app/common/pagination/pagination.query.dto';
 
 // Services
 import { PeopleService } from '@app/modules/starwars/people/people.service';
@@ -50,8 +52,11 @@ export class StarwarsController {
   @ApiOkResponse({
     type: PeopleManyResponse,
   })
-  public async getAllPeople(): Promise<PeopleManyResponse> {
-    return this.peopleService.getAllPeople();
+  public async getAllPeople(
+    @Query() query: PaginationQueryDto,
+  ): Promise<PeopleManyResponse> {
+    const { page, limit } = query;
+    return this.peopleService.getAllPeople(page, limit);
   }
 
   // Get one people
@@ -74,8 +79,11 @@ export class StarwarsController {
   @ApiOkResponse({
     type: FilmManyResponse,
   })
-  public async getAllFilms(): Promise<FilmManyResponse> {
-    return this.filmService.getAllFilms();
+  public async getAllFilms(
+    @Query() query: PaginationQueryDto,
+  ): Promise<FilmManyResponse> {
+    const { page, limit } = query;
+    return this.filmService.getAllFilms(page, limit);
   }
 
   // Get one film
@@ -95,8 +103,11 @@ export class StarwarsController {
   @ApiOkResponse({
     type: StarshipManyResponse,
   })
-  public async getStarships(): Promise<StarshipManyResponse> {
-    return this.starship.getAllStarships();
+  public async getStarships(
+    @Query() query: PaginationQueryDto,
+  ): Promise<StarshipManyResponse> {
+    const { page, limit } = query;
+    return this.starship.getAllStarships(page, limit);
   }
 
   @Get('starships/:id')
@@ -117,8 +128,11 @@ export class StarwarsController {
   @ApiOkResponse({
     type: VehiclesManyResponse,
   })
-  public async getAllVehicles(): Promise<VehiclesManyResponse> {
-    return this.vehicle.getAllVehicles();
+  public async getAllVehicles(
+    @Query() query: PaginationQueryDto,
+  ): Promise<VehiclesManyResponse> {
+    const { page, limit } = query;
+    return this.vehicle.getAllVehicles(page, limit);
   }
 
   @Get('vehicles/:id')
@@ -139,8 +153,11 @@ export class StarwarsController {
   @ApiOkResponse({
     type: SpecieManyResponse,
   })
-  public async getAllSpecies(): Promise<SpecieManyResponse> {
-    return this.specie.getSpecies();
+  public async getAllSpecies(
+    @Query() query: PaginationQueryDto,
+  ): Promise<SpecieManyResponse> {
+    const { page, limit } = query;
+    return this.specie.getSpecies(page, limit);
   }
 
   @Get('species/:id')
@@ -161,8 +178,11 @@ export class StarwarsController {
   @ApiOkResponse({
     type: PlanetManyResponse,
   })
-  public async getAllPlanets(): Promise<PlanetManyResponse> {
-    return this.planet.getPlanets();
+  public async getAllPlanets(
+    @Query() query: PaginationQueryDto,
+  ): Promise<PlanetManyResponse> {
+    const { page, limit } = query;
+    return this.planet.getPlanets(page, limit);
   }
 
   @Get('planets/:id')

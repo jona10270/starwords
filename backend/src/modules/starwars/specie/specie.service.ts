@@ -5,12 +5,16 @@ import { SpeciesAllDto } from './dto/specie.all.dto';
 import { SpecieSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/specie/specie.client.single.response';
 import { SpeciesSingleDto } from './dto/specie.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
+import { paginate } from '../common/paginate';
 
 @Injectable()
 export class SpecieService {
   constructor(private readonly swapiRequest: SwapiRequest) {}
 
-  public async getSpecies(): Promise<SpecieManyResponse> {
+  public async getSpecies(
+    page: number,
+    limit: number,
+  ): Promise<SpecieManyResponse> {
     const data = await this.swapiRequest.request<SpeciesAllDto[]>('/species');
 
     const species = data.map((specie) => ({
@@ -18,7 +22,8 @@ export class SpecieService {
       id: getIdFromUrl(specie.url),
     }));
 
-    return new SpecieManyResponse(species);
+    const { items, total } = paginate(species, page, limit);
+    return new SpecieManyResponse(items, total, page, limit);
   }
 
   public async getSpecie(specieId: string): Promise<SpecieSingleResponse> {

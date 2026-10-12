@@ -5,12 +5,16 @@ import { PlanetAllDto } from './dto/planet.all.dto';
 import { PlanetSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/planet/planet.client.single.response';
 import { PlanetSingleDto } from './dto/planet.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
+import { paginate } from '../common/paginate';
 
 @Injectable()
 export class PlanetService {
   constructor(private readonly swapiRequest: SwapiRequest) {}
 
-  public async getPlanets(): Promise<PlanetManyResponse> {
+  public async getPlanets(
+    page: number,
+    limit: number,
+  ): Promise<PlanetManyResponse> {
     const data = await this.swapiRequest.request<PlanetAllDto[]>('/planets');
 
     const planets = data.map((planet) => ({
@@ -18,7 +22,9 @@ export class PlanetService {
       id: getIdFromUrl(planet.url),
     }));
 
-    return new PlanetManyResponse(planets);
+    const { items, total } = paginate(planets, page, limit);
+
+    return new PlanetManyResponse(items, total, page, limit);
   }
 
   public async getPlanet(planetId: string): Promise<PlanetSingleResponse> {

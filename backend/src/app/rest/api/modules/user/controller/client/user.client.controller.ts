@@ -12,7 +12,7 @@ import {
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UsersClientResponse } from './response/user.client.single.response';
 import { UserService } from '@app/modules/user/user.service';
-import { PaginationQueryDto } from './request/pagination.query.dto';
+import { PaginationQueryDto } from '@app/app/common/pagination/pagination.query.dto';
 import { UserClientManyResponse } from './response/user.client.many.response';
 import { UserEditDto } from './request/user.edit.dto';
 import { CurrentUser } from '@app/shared/nestjs-auth/decorator/current-user.decorator';

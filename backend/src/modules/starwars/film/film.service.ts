@@ -5,13 +5,17 @@ import { FilmManyResponse } from '@app/app/rest/api/modules/starwars/controller/
 import { FilmSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/film/film.client.single.response';
 import { FilmSingleDto } from './dto/film.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
+import { paginate } from '../common/paginate';
 
 @Injectable()
 export class FilmService {
   constructor(private readonly swapiRequest: SwapiRequest) {}
 
   // Get all films of the swapi
-  public async getAllFilms(): Promise<FilmManyResponse> {
+  public async getAllFilms(
+    page: number,
+    limit: number,
+  ): Promise<FilmManyResponse> {
     const data = await this.swapiRequest.request<FilmAllDto[]>('/films');
 
     const films = data.map((film) => ({
@@ -19,7 +23,9 @@ export class FilmService {
       id: getIdFromUrl(film.url),
     }));
 
-    return new FilmManyResponse(films);
+    const { items, total } = paginate(films, page, limit);
+
+    return new FilmManyResponse(items, total, page, limit);
   }
 
   public async getFilm(filmId: string): Promise<FilmSingleResponse> {

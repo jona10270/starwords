@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { PeopleWithIdDto } from '@app/modules/starwars/people/dto/people.all.dto';
 import { PeopleVM } from '../../../../model/people/people.view-model';
+import { PaginationMetaVM } from '@app/app/common/pagination/pagination-meta.view-model';
 
 export class PeopleManyResponse {
   @ApiProperty({
@@ -9,7 +10,18 @@ export class PeopleManyResponse {
   })
   public readonly people: PeopleVM[];
 
-  public constructor(data: PeopleWithIdDto[]) {
+  @ApiProperty({
+    type: PaginationMetaVM,
+  })
+  public readonly meta: PaginationMetaVM;
+
+  public constructor(
+    data: PeopleWithIdDto[],
+    total: number,
+    page: number,
+    limit: number,
+  ) {
     this.people = data.map((person) => new PeopleVM(person));
+    this.meta = new PaginationMetaVM(total, page, limit);
   }
 }
