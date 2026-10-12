@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { generatePath } from "react-router-dom";
+import { generatePath, useSearchParams } from "react-router-dom";
 import { ROUTES } from "../navigation/routes";
+import { PAGE_PARAM, PAGE_SIZE, readPageParam } from "../navigation/pagination";
 
 import { ArchiveNote, LoadingBar } from "@/ui/atoms";
-import { ArchiveHeading, ErrorPanel, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
+import { ArchiveHeading, ErrorPanel, Pagination, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
 import { RecordGrid, type RecordItem } from "@/ui/organisms/RecordGrid";
 import type { Character } from "@/core/modules/character";
 
@@ -16,10 +17,10 @@ const CATEGORY_LABEL = "People";
 const withUnit = (value: string | null, unit: string) => (value ? `${value} ${unit}` : "—");
 
 // Paso un personaje al formato de tarjeta que entiende la ui
-const toRecord = (character: Character, index: number): RecordItem => ({
-    key: character.name,
+const toRecord = (character: Character): RecordItem => ({
+    key: character.id,
     title: character.name,
-    badge: `#${String(index + 1).padStart(2, "0")} · ${CATEGORY_LABEL}`,
+    badge: `#${character.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
     stats: [
         { label: "Nacimiento", value: character.birthYear ?? "—" },
         { label: "Género", value: character.gender ?? "—" },
@@ -31,10 +32,22 @@ const toRecord = (character: Character, index: number): RecordItem => ({
 
 // Archivo de personajes con la cabecera fija y el contenido segun el estado de la peticion
 export const CharacterPage = () => {
-    const { data, isPending, isError, error, refetch, isFetching } = useGetCharacter();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = readPageParam(searchParams.get(PAGE_PARAM));
+
+    const { data, isPending, isError, error, refetch, isFetching } = useGetCharacter({ page, limit: PAGE_SIZE });
     const [view, setView] = useState<RecordView>("grid");
 
-    let counter = `${data?.length ?? 0} registros descodificados`;
+    // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
+    const goToPage = (nextPage: number) => {
+        setSearchParams((params) => {
+            params.set(PAGE_PARAM, String(nextPage));
+            return params;
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    let counter = data ? `${data.total} registros · página ${page} de ${data.totalPages}` : "";
     if (isPending) counter = "Descodificando...";
     if (isError && !data) counter = "Sin señal";
 
@@ -59,10 +72,11 @@ export const CharacterPage = () => {
                     <Toolbar>
                         <ViewToggle value={view} onChange={setView} />
                     </Toolbar>
-                    <RecordGrid records={data.map(toRecord)} view={view} />
-                    <ArchiveNote className="mt-8">
-                        Fin del volcado · {data.length} registros cargados
-                    </ArchiveNote>
+                    <RecordGrid records={data.items.map(toRecord)} view={view} />
+                    {data.items.length === 0 && (
+                        <ArchiveNote className="mt-12">No hay registros en esta página</ArchiveNote>
+                    )}
+                    <Pagination page={page} totalPages={data.totalPages} onPageChange={goToPage} />
                 </>
             )}
         </main>

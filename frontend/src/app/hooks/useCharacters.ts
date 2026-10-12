@@ -1,12 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { getCharacterUseCase } from "@/core/di/container";
+import type { PageRequest } from "@/core/modules/common";
 import { retryResource } from "./retryResource";
 
-// Pido la lista de personajes al abrir la pagina
-export const useGetCharacter = () =>
+// Pido una pagina de personajes
+export const useGetCharacter = ({ page, limit }: PageRequest) =>
     useQuery({
-        queryKey: ["characters"],
-        queryFn: () => getCharacterUseCase.execute(),
+        queryKey: ["characters", { page, limit }],
+        queryFn: () => getCharacterUseCase.execute({ page, limit }),
+        placeholderData: keepPreviousData,
         retry: retryResource,
     });

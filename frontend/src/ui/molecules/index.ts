@@ -3,6 +3,7 @@ export * from "./AuthControl";
 export * from "./ErrorPanel";
 export * from "./MobileMenu";
 export * from "./OpeningCrawl";
+export * from "./Pagination";
 export * from "./PasswordField";
 export * from "./RecordCard";
 export * from "./ResourceIconNav";

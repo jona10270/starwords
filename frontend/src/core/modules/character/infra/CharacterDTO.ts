@@ -1,3 +1,5 @@
+import type { PaginationMetaDTO } from "../../common";
+
 // Personaje tal como me lo manda el backend
 export interface CharacterDTO {
     id: string;
@@ -19,6 +21,7 @@ export interface CharacterDTO {
 
 export interface CharacterListResponseDTO {
     people: CharacterDTO[];
+    meta: PaginationMetaDTO;
 }
 
 export interface CharacterResponseDTO {
