@@ -10,7 +10,7 @@ import { useListStarship } from "@/app/hooks/useListStarship";
 import { isRetryable } from "@/app/hooks/retryResource";
 import { ROUTES } from "@/app/navigation/routes";
 
-import { formatStarshipValue } from "./formatStarshipValue";
+import { formatRecordValue } from "@/app/format/formatRecordValue";
 
 const CATEGORY_LABEL = "Starships";
 
@@ -20,10 +20,10 @@ const toRecord = (starship: Starship): RecordItem => ({
     title: starship.name,
     badge: `#${starship.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
     stats: [
-        { label: "Clase", value: formatStarshipValue(starship.starshipClass) },
-        { label: "Fabricante", value: formatStarshipValue(starship.manufacturer) },
-        { label: "Tripulación", value: formatStarshipValue(starship.crew) },
-        { label: "Longitud", value: formatStarshipValue(starship.length, "m") },
+        { label: "Clase", value: formatRecordValue(starship.starshipClass) },
+        { label: "Fabricante", value: formatRecordValue(starship.manufacturer) },
+        { label: "Tripulación", value: formatRecordValue(starship.crew) },
+        { label: "Longitud", value: formatRecordValue(starship.length, "m") },
     ],
     detailPath: generatePath(ROUTES.starshipDetail, { id: starship.id }),
 });

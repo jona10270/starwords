@@ -10,7 +10,7 @@ import { useListSpecies } from "@/app/hooks/useListSpecies";
 import { isRetryable } from "@/app/hooks/retryResource";
 import { ROUTES } from "@/app/navigation/routes";
 
-import { formatStarshipValue } from "../starships/formatStarshipValue";
+import { formatRecordValue } from "@/app/format/formatRecordValue";
 
 const CATEGORY_LABEL = "Species";
 
@@ -20,10 +20,10 @@ const toRecord = (specie: Specie): RecordItem => ({
     title: specie.name,
     badge: `#${specie.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
     stats: [
-        { label: "Clasificación", value: formatStarshipValue(specie.classification) },
-        { label: "Designación", value: formatStarshipValue(specie.designation) },
-        { label: "Idioma", value: formatStarshipValue(specie.language) },
-        { label: "Altura media", value: formatStarshipValue(specie.averageHeight, "cm") },
+        { label: "Clasificación", value: formatRecordValue(specie.classification) },
+        { label: "Designación", value: formatRecordValue(specie.designation) },
+        { label: "Idioma", value: formatRecordValue(specie.language) },
+        { label: "Altura media", value: formatRecordValue(specie.averageHeight, "cm") },
     ],
     detailPath: generatePath(ROUTES.specieDetail, { id: specie.id }),
 });

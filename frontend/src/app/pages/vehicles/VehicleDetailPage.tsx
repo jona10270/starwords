@@ -9,17 +9,17 @@ import { useGetVehicle } from "../../hooks/useGetVehicle";
 import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
-import { formatStarshipValue } from "../starships/formatStarshipValue";
+import { formatRecordValue } from "@/app/format/formatRecordValue";
 
 const CATEGORY_LABEL = "Vehicles";
 
 // Paso el vehiculo al formato de ficha que entiende la ui
 const toDetail = (vehicle: Vehicle) => {
     const highlights = [
-        { label: "Modelo", value: formatStarshipValue(vehicle.model) },
-        { label: "Clase", value: formatStarshipValue(vehicle.vehicleClass) },
-        { label: "Fabricante", value: formatStarshipValue(vehicle.manufacturer) },
-        { label: "Coste", value: formatStarshipValue(vehicle.costInCredits, "créditos") },
+        { label: "Modelo", value: formatRecordValue(vehicle.model) },
+        { label: "Clase", value: formatRecordValue(vehicle.vehicleClass) },
+        { label: "Fabricante", value: formatRecordValue(vehicle.manufacturer) },
+        { label: "Coste", value: formatRecordValue(vehicle.costInCredits, "créditos") },
     ];
 
     return {
@@ -31,12 +31,12 @@ const toDetail = (vehicle: Vehicle) => {
         attributes: [
             { label: "Registro", value: vehicle.id },
             ...highlights,
-            { label: "Longitud", value: formatStarshipValue(vehicle.length, "m") },
-            { label: "Velocidad atmosférica", value: formatStarshipValue(vehicle.maxAtmospheringSpeed, "km/h") },
-            { label: "Tripulación", value: formatStarshipValue(vehicle.crew) },
-            { label: "Pasajeros", value: formatStarshipValue(vehicle.passengers) },
-            { label: "Capacidad de carga", value: formatStarshipValue(vehicle.cargoCapacity, "kg") },
-            { label: "Autonomía", value: formatStarshipValue(vehicle.consumables) },
+            { label: "Longitud", value: formatRecordValue(vehicle.length, "m") },
+            { label: "Velocidad atmosférica", value: formatRecordValue(vehicle.maxAtmospheringSpeed, "km/h") },
+            { label: "Tripulación", value: formatRecordValue(vehicle.crew) },
+            { label: "Pasajeros", value: formatRecordValue(vehicle.passengers) },
+            { label: "Capacidad de carga", value: formatRecordValue(vehicle.cargoCapacity, "kg") },
+            { label: "Autonomía", value: formatRecordValue(vehicle.consumables) },
             { label: "Pilotos", value: String(vehicle.pilots.length) },
             { label: "Películas", value: String(vehicle.films.length) },
         ],

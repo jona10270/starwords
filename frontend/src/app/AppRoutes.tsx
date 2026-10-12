@@ -17,6 +17,8 @@ import { VehiclesListPage } from "./pages/vehicles/VehiclesListPage";
 import { VehicleDetailPage } from "./pages/vehicles/VehicleDetailPage";
 import { SpeciesListPage } from "./pages/species/SpeciesListPage";
 import { SpecieDetailPage } from "./pages/species/SpecieDetailPage";
+import { PlanetsListPage } from "./pages/planets/PlanetsListPage";
+import { PlanetDetailPage } from "./pages/planets/PlanetDetailPage";
 
 export const AppRoutes = () => (
     <Routes>
@@ -33,6 +35,8 @@ export const AppRoutes = () => (
             <Route path={ROUTES.vehicleDetail} element={<VehicleDetailPage />} />
             <Route path={ROUTES.species} element={<SpeciesListPage />} />
             <Route path={ROUTES.specieDetail} element={<SpecieDetailPage />} />
+            <Route path={ROUTES.planets} element={<PlanetsListPage />} />
+            <Route path={ROUTES.planetDetail} element={<PlanetDetailPage />} />
             <Route
                 path={ROUTES.login}
                 element={

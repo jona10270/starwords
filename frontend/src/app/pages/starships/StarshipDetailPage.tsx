@@ -9,17 +9,17 @@ import { useGetStarship } from "../../hooks/useGetStarship";
 import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
-import { formatStarshipValue } from "./formatStarshipValue";
+import { formatRecordValue } from "@/app/format/formatRecordValue";
 
 const CATEGORY_LABEL = "Starships";
 
 // Paso la nave al formato de ficha que entiende la ui
 const toDetail = (starship: Starship) => {
     const highlights = [
-        { label: "Modelo", value: formatStarshipValue(starship.model) },
-        { label: "Clase", value: formatStarshipValue(starship.starshipClass) },
-        { label: "Fabricante", value: formatStarshipValue(starship.manufacturer) },
-        { label: "Coste", value: formatStarshipValue(starship.costInCredits, "créditos") },
+        { label: "Modelo", value: formatRecordValue(starship.model) },
+        { label: "Clase", value: formatRecordValue(starship.starshipClass) },
+        { label: "Fabricante", value: formatRecordValue(starship.manufacturer) },
+        { label: "Coste", value: formatRecordValue(starship.costInCredits, "créditos") },
     ];
 
     return {
@@ -31,14 +31,14 @@ const toDetail = (starship: Starship) => {
         attributes: [
             { label: "Registro", value: starship.id },
             ...highlights,
-            { label: "Longitud", value: formatStarshipValue(starship.length, "m") },
-            { label: "Velocidad atmosférica", value: formatStarshipValue(starship.maxAtmospheringSpeed, "km/h") },
-            { label: "Tripulación", value: formatStarshipValue(starship.crew) },
-            { label: "Pasajeros", value: formatStarshipValue(starship.passengers) },
-            { label: "Capacidad de carga", value: formatStarshipValue(starship.cargoCapacity, "kg") },
-            { label: "Autonomía", value: formatStarshipValue(starship.consumables) },
-            { label: "Hiperimpulsor", value: formatStarshipValue(starship.hyperdriveRating) },
-            { label: "MGLT", value: formatStarshipValue(starship.mglt) },
+            { label: "Longitud", value: formatRecordValue(starship.length, "m") },
+            { label: "Velocidad atmosférica", value: formatRecordValue(starship.maxAtmospheringSpeed, "km/h") },
+            { label: "Tripulación", value: formatRecordValue(starship.crew) },
+            { label: "Pasajeros", value: formatRecordValue(starship.passengers) },
+            { label: "Capacidad de carga", value: formatRecordValue(starship.cargoCapacity, "kg") },
+            { label: "Autonomía", value: formatRecordValue(starship.consumables) },
+            { label: "Hiperimpulsor", value: formatRecordValue(starship.hyperdriveRating) },
+            { label: "MGLT", value: formatRecordValue(starship.mglt) },
             { label: "Pilotos", value: String(starship.pilots.length) },
             { label: "Películas", value: String(starship.films.length) },
         ],

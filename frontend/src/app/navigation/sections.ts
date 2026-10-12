@@ -6,9 +6,9 @@ import { ROUTES } from "./routes";
 // Secciones del archivo y las que aun no tienen pagina van sin ruta y salen apagadas
 export const ARCHIVE_SECTIONS: NavItem[] = [
     { key: "people", label: "People", icon: PeopleIcon, to: ROUTES.characters },
-    { key: "films", label: "Films", icon: FilmsIcon, to: ROUTES.films},
+    { key: "films", label: "Films", icon: FilmsIcon, to: ROUTES.films },
     { key: "starships", label: "Starships", icon: StarshipsIcon, to: ROUTES.starships },
     { key: "vehicles", label: "Vehicles", icon: VehiclesIcon, to: ROUTES.vehicles },
     { key: "species", label: "Species", icon: SpeciesIcon, to: ROUTES.species },
-    { key: "planets", label: "Planets", icon: PlanetsIcon },
+    { key: "planets", label: "Planets", icon: PlanetsIcon, to: ROUTES.planets },
 ];

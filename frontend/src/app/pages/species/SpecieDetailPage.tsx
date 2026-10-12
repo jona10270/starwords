@@ -9,17 +9,17 @@ import { useGetSpecie } from "../../hooks/useGetSpecie";
 import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
-import { formatStarshipValue } from "../starships/formatStarshipValue";
+import { formatRecordValue } from "@/app/format/formatRecordValue";
 
 const CATEGORY_LABEL = "Species";
 
 // Paso la especie al formato de ficha que entiende la ui
 const toDetail = (specie: Specie) => {
     const highlights = [
-        { label: "Clasificación", value: formatStarshipValue(specie.classification) },
-        { label: "Designación", value: formatStarshipValue(specie.designation) },
-        { label: "Idioma", value: formatStarshipValue(specie.language) },
-        { label: "Esperanza de vida", value: formatStarshipValue(specie.averageLifespan, "años") },
+        { label: "Clasificación", value: formatRecordValue(specie.classification) },
+        { label: "Designación", value: formatRecordValue(specie.designation) },
+        { label: "Idioma", value: formatRecordValue(specie.language) },
+        { label: "Esperanza de vida", value: formatRecordValue(specie.averageLifespan, "años") },
     ];
 
     return {
@@ -31,10 +31,10 @@ const toDetail = (specie: Specie) => {
         attributes: [
             { label: "Registro", value: specie.id },
             ...highlights,
-            { label: "Altura media", value: formatStarshipValue(specie.averageHeight, "cm") },
-            { label: "Color de piel", value: formatStarshipValue(specie.skinColors) },
-            { label: "Color de pelo", value: formatStarshipValue(specie.hairColors) },
-            { label: "Color de ojos", value: formatStarshipValue(specie.eyeColors) },
+            { label: "Altura media", value: formatRecordValue(specie.averageHeight, "cm") },
+            { label: "Color de piel", value: formatRecordValue(specie.skinColors) },
+            { label: "Color de pelo", value: formatRecordValue(specie.hairColors) },
+            { label: "Color de ojos", value: formatRecordValue(specie.eyeColors) },
             { label: "Planeta natal", value: specie.homeWorld ?? "—" },
             { label: "Personajes", value: String(specie.people.length) },
             { label: "Películas", value: String(specie.films.length) },
