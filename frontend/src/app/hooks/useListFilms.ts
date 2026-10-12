@@ -1,10 +1,14 @@
-import { retryResource } from "./retryResource"
-import { getAllFilmsUseCase } from "@/core/di/container"
-import { useQuery } from "@tanstack/react-query"
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-export const useListFilms = () => 
+import { getAllFilmsUseCase } from "@/core/di/container";
+import type { PageRequest } from "@/core/modules/common";
+import { retryResource } from "./retryResource";
+
+// Pido una pagina de peliculas
+export const useListFilms = ({ page, limit }: PageRequest) =>
     useQuery({
-        queryKey: ['films'],
-        queryFn: () => getAllFilmsUseCase.execute(),
+        queryKey: ['films', { page, limit }],
+        queryFn: () => getAllFilmsUseCase.execute({ page, limit }),
+        placeholderData: keepPreviousData,
         retry: retryResource,
-    })
+    });

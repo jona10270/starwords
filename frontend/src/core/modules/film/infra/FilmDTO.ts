@@ -1,3 +1,5 @@
+import type { PaginationMetaDTO } from "../../common";
+
 export interface FilmDTO {
     id: string;
     title: string;
@@ -16,6 +18,7 @@ export interface FilmDTO {
 
 export interface FilmListResponseDTO {
     film: FilmDTO[];
+    meta: PaginationMetaDTO;
 }
 
 export interface FilmResponseDTO {

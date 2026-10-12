@@ -34,7 +34,8 @@ const getPageItems = (page: number, totalPages: number): PageItem[] => {
 
 // Botones para moverme entre las paginas del listado
 export const Pagination = ({ page, totalPages, onPageChange }: PaginationProps) => {
-    if (totalPages <= 1) return null;
+    // Con una sola pagina no hace falta salvo que me haya pasado y tenga que volver
+    if (totalPages <= 1 && page <= 1) return null;
 
     const isFirst = page <= 1;
     const isLast = page >= totalPages;
