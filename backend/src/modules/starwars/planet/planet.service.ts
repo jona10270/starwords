@@ -4,6 +4,7 @@ import { PlanetManyResponse } from '@app/app/rest/api/modules/starwars/controlle
 import { PlanetAllDto } from './dto/planet.all.dto';
 import { PlanetSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/planet/planet.client.single.response';
 import { PlanetSingleDto } from './dto/planet.single.dto';
+import { getIdFromUrl } from '../common/get-id-from-url';
 
 @Injectable()
 export class PlanetService {
@@ -12,7 +13,12 @@ export class PlanetService {
   public async getPlanets(): Promise<PlanetManyResponse> {
     const data = await this.swapiRequest.request<PlanetAllDto[]>('/planets');
 
-    return new PlanetManyResponse(data);
+    const planets = data.map((planet) => ({
+      ...planet,
+      id: getIdFromUrl(planet.url),
+    }));
+
+    return new PlanetManyResponse(planets);
   }
 
   public async getPlanet(planetId: string): Promise<PlanetSingleResponse> {
@@ -20,6 +26,11 @@ export class PlanetService {
       `/planets/${planetId}`,
     );
 
-    return new PlanetSingleResponse(data);
+    const planet = {
+      ...data,
+      id: getIdFromUrl(data.url),
+    };
+
+    return new PlanetSingleResponse(planet);
   }
 }

@@ -1,7 +1,13 @@
-import { PlanetAllDto } from '@app/modules/starwars/planet/dto/planet.all.dto';
+import { PlanetWithIdDto } from '@app/modules/starwars/planet/dto/planet.all.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class PlanetVM {
+  @ApiProperty({
+    type: String,
+    example: '1',
+  })
+  public readonly id: string;
+
   @ApiProperty({
     type: String,
     example: 'Tatooine',
@@ -83,7 +89,8 @@ export class PlanetVM {
   })
   public readonly url: string;
 
-  constructor(planet: PlanetAllDto) {
+  constructor(planet: PlanetWithIdDto) {
+    this.id = planet.id;
     this.name = planet.name;
     this.rotation_period = planet.rotation_period;
     this.orbital_period = planet.orbital_period;

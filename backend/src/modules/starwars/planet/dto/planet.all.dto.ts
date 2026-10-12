@@ -12,3 +12,5 @@ export interface PlanetAllDto {
   films: string[];
   url: string;
 }
+
+export type PlanetWithIdDto = PlanetAllDto & { id: string };

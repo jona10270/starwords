@@ -10,6 +10,5 @@ export interface PlanetSingleDto {
   population: string;
   residents: string[];
   films: string[];
-
   url: string;
 }
