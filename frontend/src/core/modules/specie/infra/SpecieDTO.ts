@@ -1,3 +1,5 @@
+import type { PaginationMetaDTO } from "../../common";
+
 export interface SpecieDTO {
     id: string;
     name: string;
@@ -16,7 +18,8 @@ export interface SpecieDTO {
 }
 
 export interface SpecieListResponseDTO {
-    species: SpecieDTO[]
+    species: SpecieDTO[];
+    meta: PaginationMetaDTO;
 }
 export interface SpecieResponseDTO {
     specie: SpecieDTO
