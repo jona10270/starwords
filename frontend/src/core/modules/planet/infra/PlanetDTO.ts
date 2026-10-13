@@ -1,3 +1,5 @@
+import type { PaginationMetaDTO } from "../../common";
+
 // Como recibo los datos del backend
 export interface PlanetDTO {
     id: string;
@@ -17,6 +19,7 @@ export interface PlanetDTO {
 
 export interface PlanetListResponseDTO {
     planets: PlanetDTO[];
+    meta: PaginationMetaDTO;
 }
 
 export interface PlanetResponseDTO {

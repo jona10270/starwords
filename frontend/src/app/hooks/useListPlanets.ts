@@ -1,10 +1,14 @@
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+
 import { getAllPlanetsUseCase } from "@/core/di/container";
-import { useQuery } from "@tanstack/react-query";
+import type { PageRequest } from "@/core/modules/common";
 import { retryResource } from "./retryResource";
 
-export const useListPlanets = () =>
+// Pido una pagina de planetas
+export const useListPlanets = ({ page, limit }: PageRequest) =>
     useQuery({
-        queryKey: ['planets'],
-        queryFn: () => getAllPlanetsUseCase.execute(),
+        queryKey: ["planets", { page, limit }],
+        queryFn: () => getAllPlanetsUseCase.execute({ page, limit }),
+        placeholderData: keepPreviousData,
         retry: retryResource,
     });
