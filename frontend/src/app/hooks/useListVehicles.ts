@@ -1,10 +1,14 @@
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+
 import { getAllVehiclesUseCase } from "@/core/di/container";
-import { useQuery } from "@tanstack/react-query";
+import type { PageRequest } from "@/core/modules/common";
 import { retryResource } from "./retryResource";
 
-export const useListVehicles = () => 
+// Pido una pagina de vehiculos
+export const useListVehicles = ({ page, limit }: PageRequest) =>
     useQuery({
-        queryKey: ['vehicles'],
-        queryFn: () => getAllVehiclesUseCase.execute(),
-        retry: retryResource
-    })
+        queryKey: ["vehicles", { page, limit }],
+        queryFn: () => getAllVehiclesUseCase.execute({ page, limit }),
+        placeholderData: keepPreviousData,
+        retry: retryResource,
+    });

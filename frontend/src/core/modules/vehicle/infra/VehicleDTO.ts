@@ -1,3 +1,5 @@
+import type { PaginationMetaDTO } from "../../common";
+
 export interface VehicleDTO {
     id: string,
     name: string,
@@ -17,7 +19,8 @@ export interface VehicleDTO {
 }
 
 export interface VehicleListResponseDTO {
-    vehicles: VehicleDTO[]
+    vehicles: VehicleDTO[];
+    meta: PaginationMetaDTO;
 }
 
 export interface VehicleResponseDTO {
