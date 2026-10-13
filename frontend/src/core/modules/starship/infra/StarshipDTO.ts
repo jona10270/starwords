@@ -1,3 +1,5 @@
+import type { PaginationMetaDTO } from "../../common";
+
 // Los datos que me llegan del backend y que ecojo de los que llegan
 export interface StarshipDTO {
     id:string;
@@ -23,6 +25,7 @@ export interface StarshipDTO {
 // Una clave starship con muchos starshipdto
 export interface StarshipListResponseDTO {
     starship: StarshipDTO[];
+    meta: PaginationMetaDTO;
 }
 // Como debo de recibir los datos del backend si o si
 // Una clave starship con muchos starshipdto

@@ -1,10 +1,14 @@
-import { getAllStarshipUseCase } from "@/core/di/container"
-import { useQuery } from "@tanstack/react-query"
-import { retryResource } from "./retryResource"
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-export const useListStarship = () => 
+import { getAllStarshipUseCase } from "@/core/di/container";
+import type { PageRequest } from "@/core/modules/common";
+import { retryResource } from "./retryResource";
+
+// Pido una pagina de naves
+export const useListStarship = ({ page, limit }: PageRequest) =>
     useQuery({
-        queryKey: ["starships"],
-        queryFn: () => getAllStarshipUseCase.execute(),
-        retry: retryResource
-    })
+        queryKey: ["starships", { page, limit }],
+        queryFn: () => getAllStarshipUseCase.execute({ page, limit }),
+        placeholderData: keepPreviousData,
+        retry: retryResource,
+    });
