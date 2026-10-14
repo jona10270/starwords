@@ -6,6 +6,7 @@ import { SpecieSingleResponse } from '@app/app/rest/api/modules/starwars/control
 import { SpeciesSingleDto } from './dto/specie.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
+import { filterByText } from '../common/filter-by-text';
 
 @Injectable()
 export class SpecieService {
@@ -14,6 +15,7 @@ export class SpecieService {
   public async getSpecies(
     page: number,
     limit: number,
+    search?: string,
   ): Promise<SpecieManyResponse> {
     const data = await this.swapiRequest.request<SpeciesAllDto[]>('/species');
 
@@ -22,6 +24,7 @@ export class SpecieService {
       id: getIdFromUrl(specie.url),
     }));
 
+    const found = filterByText(species, search, (specie) => specie.name)
     const { items, total } = paginate(species, page, limit);
     return new SpecieManyResponse(items, total, page, limit);
   }

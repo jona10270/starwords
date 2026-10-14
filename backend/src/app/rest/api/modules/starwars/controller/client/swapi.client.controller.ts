@@ -155,10 +155,10 @@ export class StarwarsController {
     type: SpecieManyResponse,
   })
   public async getAllSpecies(
-    @Query() query: PaginationQueryDto,
+    @Query() query: SearchPaginationQueryDto,
   ): Promise<SpecieManyResponse> {
-    const { page, limit } = query;
-    return this.specie.getSpecies(page, limit);
+    const { page, limit, search } = query;
+    return this.specie.getSpecies(page, limit, search);
   }
 
   @Get('species/:id')
