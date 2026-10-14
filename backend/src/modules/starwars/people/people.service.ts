@@ -6,7 +6,7 @@ import { PeopleSingleResponse } from '@app/app/rest/api/modules/starwars/control
 import { PeopleSingleDto } from './dto/people.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
-import { filterByText } from '@app/modules/starwars/common/filter-by-text';
+import { filterByText } from '../common/filter-by-text';
 
 @Injectable()
 export class PeopleService {

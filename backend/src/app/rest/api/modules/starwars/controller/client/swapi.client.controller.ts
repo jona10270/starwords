@@ -1,8 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { PaginationQueryDto } from '@app/app/common/pagination/pagination.query.dto';
-
 // Services
 import { PeopleService } from '@app/modules/starwars/people/people.service';
 import { FilmService } from '@app/modules/starwars/film/film.service';

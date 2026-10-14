@@ -25,7 +25,9 @@ export class StarshipService {
       id: getIdFromUrl(starship.url),
     }));
 
-    const found = filterByText(starships, search, (starship) => starship.name)
+    // Filtro antes de paginar para que el total cuente solo lo encontrado
+
+    const found = filterByText(starships, search, (starship) => starship.name);
     const { items, total } = paginate(found, page, limit);
     return new StarshipManyResponse(items, total, page, limit);
   }

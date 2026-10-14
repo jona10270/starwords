@@ -25,7 +25,9 @@ export class VehiclesService {
       id: getIdFromUrl(vehicle.url),
     }));
 
-    const found = filterByText(vehicles, search, (vehicle) => vehicle.name)
+    // Filtro antes de paginar para que el total cuente solo lo encontrado
+
+    const found = filterByText(vehicles, search, (vehicle) => vehicle.name);
     const { items, total } = paginate(found, page, limit);
     return new VehiclesManyResponse(items, total, page, limit);
   }

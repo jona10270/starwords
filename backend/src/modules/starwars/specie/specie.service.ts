@@ -24,7 +24,9 @@ export class SpecieService {
       id: getIdFromUrl(specie.url),
     }));
 
-    const found = filterByText(species, search, (specie) => specie.name)
+    // Filtro antes de paginar para que el total cuente solo lo encontrado
+
+    const found = filterByText(species, search, (specie) => specie.name);
     const { items, total } = paginate(found, page, limit);
     return new SpecieManyResponse(items, total, page, limit);
   }

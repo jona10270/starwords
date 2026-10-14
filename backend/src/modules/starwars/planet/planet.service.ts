@@ -24,7 +24,9 @@ export class PlanetService {
       id: getIdFromUrl(planet.url),
     }));
 
-    const found = filterByText(planets, search, (planet) => planet.name)
+    // Filtro antes de paginar para que el total cuente solo lo encontrado
+
+    const found = filterByText(planets, search, (planet) => planet.name);
     const { items, total } = paginate(found, page, limit);
 
     return new PlanetManyResponse(items, total, page, limit);
