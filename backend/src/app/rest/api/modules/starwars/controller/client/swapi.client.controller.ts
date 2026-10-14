@@ -130,10 +130,10 @@ export class StarwarsController {
     type: VehiclesManyResponse,
   })
   public async getAllVehicles(
-    @Query() query: PaginationQueryDto,
+    @Query() query: SearchPaginationQueryDto,
   ): Promise<VehiclesManyResponse> {
-    const { page, limit } = query;
-    return this.vehicle.getAllVehicles(page, limit);
+    const { page, limit, search } = query;
+    return this.vehicle.getAllVehicles(page, limit, search);
   }
 
   @Get('vehicles/:id')

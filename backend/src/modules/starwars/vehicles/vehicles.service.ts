@@ -6,6 +6,7 @@ import { VehicleSingleDto } from './dto/vehicle.single.dto';
 import { VehicleSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/vehicle/vehicle.client.single.response';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
+import { filterByText } from '../common/filter-by-text';
 
 @Injectable()
 export class VehiclesService {
@@ -14,6 +15,7 @@ export class VehiclesService {
   public async getAllVehicles(
     page: number,
     limit: number,
+    search?: string,
   ): Promise<VehiclesManyResponse> {
     const data = await this.swapiRequest.request<VehicleAllDto[]>('/vehicles');
 
@@ -23,6 +25,7 @@ export class VehiclesService {
       id: getIdFromUrl(vehicle.url),
     }));
 
+    const found = filterByText(vehicles, search, (vehicle) => vehicle.name)
     const { items, total } = paginate(vehicles, page, limit);
     return new VehiclesManyResponse(items, total, page, limit);
   }
