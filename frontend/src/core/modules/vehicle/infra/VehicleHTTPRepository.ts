@@ -1,4 +1,4 @@
-import { PaginationMapper, ResourceErrorMapper, type HttpClient, type PageRequest, type Paginated } from "../../common";
+import { PaginationMapper, ResourceErrorMapper, type HttpClient, type Paginated, type SearchPageRequest } from "../../common";
 import type { Vehicle } from "../domain/Vehicle";
 import type { VehicleRepository } from "../domain/VehicleRepository";
 import type { VehicleListResponseDTO, VehicleResponseDTO } from "./VehicleDTO";
@@ -15,11 +15,11 @@ export class VehicleHTTPRepository implements VehicleRepository{
         this.httpClient = httpClient;
     }
 
-    async getAllVehicles({ page, limit }: PageRequest): Promise<Paginated<Vehicle>> {
+    async getAllVehicles({ page, limit, search }: SearchPageRequest): Promise<Paginated<Vehicle>> {
         let data: VehicleListResponseDTO
         try {
             data = await this.httpClient.get<VehicleListResponseDTO>(
-                '/starwars/vehicles', { page, limit }
+                '/starwars/vehicles', { page, limit, search }
             )
         } catch (error) {
             throw ResourceErrorMapper.toListError(error);
