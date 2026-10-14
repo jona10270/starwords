@@ -25,7 +25,7 @@ export class SpecieService {
     }));
 
     const found = filterByText(species, search, (specie) => specie.name)
-    const { items, total } = paginate(species, page, limit);
+    const { items, total } = paginate(found, page, limit);
     return new SpecieManyResponse(items, total, page, limit);
   }
 

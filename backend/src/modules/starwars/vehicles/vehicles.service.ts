@@ -26,7 +26,7 @@ export class VehiclesService {
     }));
 
     const found = filterByText(vehicles, search, (vehicle) => vehicle.name)
-    const { items, total } = paginate(vehicles, page, limit);
+    const { items, total } = paginate(found, page, limit);
     return new VehiclesManyResponse(items, total, page, limit);
   }
 

@@ -26,7 +26,7 @@ export class StarshipService {
     }));
 
     const found = filterByText(starships, search, (starship) => starship.name)
-    const { items, total } = paginate(starships, page, limit);
+    const { items, total } = paginate(found, page, limit);
     return new StarshipManyResponse(items, total, page, limit);
   }
 

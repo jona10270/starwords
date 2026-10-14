@@ -180,10 +180,10 @@ export class StarwarsController {
     type: PlanetManyResponse,
   })
   public async getAllPlanets(
-    @Query() query: PaginationQueryDto,
+    @Query() query: SearchPaginationQueryDto,
   ): Promise<PlanetManyResponse> {
-    const { page, limit } = query;
-    return this.planet.getPlanets(page, limit);
+    const { page, limit, search } = query;
+    return this.planet.getPlanets(page, limit, search);
   }
 
   @Get('planets/:id')

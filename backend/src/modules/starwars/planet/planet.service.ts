@@ -6,6 +6,7 @@ import { PlanetSingleResponse } from '@app/app/rest/api/modules/starwars/control
 import { PlanetSingleDto } from './dto/planet.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
+import { filterByText } from '../common/filter-by-text';
 
 @Injectable()
 export class PlanetService {
@@ -14,6 +15,7 @@ export class PlanetService {
   public async getPlanets(
     page: number,
     limit: number,
+    search?: string,
   ): Promise<PlanetManyResponse> {
     const data = await this.swapiRequest.request<PlanetAllDto[]>('/planets');
 
@@ -22,7 +24,8 @@ export class PlanetService {
       id: getIdFromUrl(planet.url),
     }));
 
-    const { items, total } = paginate(planets, page, limit);
+    const found = filterByText(planets, search, (planet) => planet.name)
+    const { items, total } = paginate(found, page, limit);
 
     return new PlanetManyResponse(items, total, page, limit);
   }
