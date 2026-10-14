@@ -1,4 +1,4 @@
-import { PaginationMapper, ResourceErrorMapper, type HttpClient, type PageRequest, type Paginated } from "../../common";
+import { PaginationMapper, ResourceErrorMapper, type HttpClient, type Paginated, type SearchPageRequest } from "../../common";
 import type { Planet } from "../domain/Planet";
 import type { PlanetRepository } from "../domain/PlanetRepository";
 import type { PlanetListResponseDTO, PlanetResponseDTO } from "./PlanetDTO";
@@ -15,11 +15,11 @@ export class PlanetHTTPRepository implements PlanetRepository {
         this.httpClient = httpClient;
     }
 
-    async getAllPlanets({ page, limit }: PageRequest): Promise<Paginated<Planet>> {
+    async getAllPlanets({ page, limit, search }: SearchPageRequest): Promise<Paginated<Planet>> {
         let data: PlanetListResponseDTO;
         try {
             data = await this.httpClient.get<PlanetListResponseDTO>(
-                '/starwars/planets', { page, limit }
+                '/starwars/planets', { page, limit, search }
             );
         } catch (error) {
             throw ResourceErrorMapper.toListError(error);

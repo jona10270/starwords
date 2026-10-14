@@ -1,10 +1,10 @@
-import type { PageRequest, Paginated } from "../../common";
+import type { Paginated, SearchPageRequest } from "../../common";
 import type { Planet } from "./Planet";
 
 // Creo el puerto de planets
 export interface PlanetRepository {
     // Funcion para pedir todos los planetas
-    getAllPlanets(request: PageRequest): Promise<Paginated<Planet>>;
+    getAllPlanets(request: SearchPageRequest): Promise<Paginated<Planet>>;
 
     // Funcion para pedir solo un planeta
     getPlanet(id: string): Promise<Planet>;

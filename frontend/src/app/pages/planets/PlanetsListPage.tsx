@@ -2,14 +2,16 @@ import { useState } from "react";
 import { generatePath, useSearchParams } from "react-router-dom";
 
 import { ArchiveNote, LoadingBar } from "@/ui/atoms";
-import { ArchiveHeading, ErrorPanel, Pagination, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
+import { ArchiveHeading, ErrorPanel, Pagination, SearchField, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
 import { RecordGrid, type RecordItem } from "@/ui/organisms/RecordGrid";
 import type { Planet } from "@/core/modules/planet";
 
 import { useListPlanets } from "@/app/hooks/useListPlanets";
 import { isRetryable } from "@/app/hooks/retryResource";
+import { useUrlSearch } from "@/app/hooks/useUrlSearch";
 import { ROUTES } from "@/app/navigation/routes";
 import { PAGE_PARAM, PAGE_SIZE, readPageParam } from "@/app/navigation/pagination";
+import { SEARCH_MAX_LENGTH } from "@/app/navigation/search";
 
 import { formatRecordValue } from "@/app/format/formatRecordValue";
 
@@ -33,8 +35,13 @@ const toRecord = (planet: Planet): RecordItem => ({
 export const PlanetsListPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = readPageParam(searchParams.get(PAGE_PARAM));
+    const { searchText, search, changeSearch } = useUrlSearch();
 
-    const { data, isPending, isError, error, refetch, isFetching } = useListPlanets({ page, limit: PAGE_SIZE });
+    const { data, isPending, isPlaceholderData, isError, error, refetch, isFetching } = useListPlanets({
+        page,
+        limit: PAGE_SIZE,
+        search: search || undefined,
+    });
     const [view, setView] = useState<RecordView>("grid");
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
@@ -46,13 +53,14 @@ export const PlanetsListPage = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    let counter = data ? `${data.total} registros · página ${page} de ${data.totalPages}` : "";
+    let counter = "";
+    if (data) counter = data.total ? `${data.total} registros · página ${page} de ${data.totalPages}` : "0 registros";
     if (isPending) counter = "Descodificando...";
     if (isError && !data) counter = "Sin señal";
 
     return (
         <main className="relative z-10 mx-auto max-w-[1280px] px-4 pt-12 pb-24 sm:px-7">
-            {isPending && <LoadingBar />}
+            {(isPending || isPlaceholderData) && <LoadingBar />}
 
             <ArchiveHeading eyebrow="SWAPI · Archivo central" title={CATEGORY_LABEL} counter={counter} />
 
@@ -69,11 +77,20 @@ export const PlanetsListPage = () => {
             {data && (
                 <>
                     <Toolbar>
+                        <SearchField
+                            value={searchText}
+                            onChange={changeSearch}
+                            label="Buscar planetas por nombre"
+                            placeholder="Buscar por nombre"
+                            maxLength={SEARCH_MAX_LENGTH}
+                        />
                         <ViewToggle value={view} onChange={setView} />
                     </Toolbar>
                     <RecordGrid records={data.items.map(toRecord)} view={view} />
                     {data.items.length === 0 && (
-                        <ArchiveNote className="mt-12">No hay registros en esta página</ArchiveNote>
+                        <ArchiveNote className="mt-12">
+                            {search ? `Ningún registro coincide con «${search}»` : "No hay registros en esta página"}
+                        </ArchiveNote>
                     )}
                     <Pagination page={page} totalPages={data.totalPages} onPageChange={goToPage} />
                 </>
