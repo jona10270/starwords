@@ -24,8 +24,8 @@ export class PeopleService {
       id: getIdFromUrl(person.url),
     }));
 
-    // Filtros de titulo antes de paginar 
-    const found = filterByText(characters, search, (characters => characters.name))
+    // Filtro antes de paginar para que el total cuente solo lo encontrado
+    const found = filterByText(characters, search, (person) => person.name);
 
     const { items, total } = paginate(found, page, limit);
     return new PeopleManyResponse(items, total, page, limit);

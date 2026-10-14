@@ -1,5 +1,5 @@
 import type { CharacterRepository } from "../domain/CharacterRepository";
-import { HttpClient, PaginationMapper, ResourceErrorMapper, type PageRequest, type Paginated } from "../../common";
+import { HttpClient, PaginationMapper, ResourceErrorMapper, type SearchPageRequest, type Paginated } from "../../common";
 import type { CharacterResponseDTO, CharacterListResponseDTO } from "./CharacterDTO";
 import { CharacterMapper } from "./CharacterMapper";
 import type { Character } from "../domain/Character";
@@ -16,10 +16,10 @@ export class CharacterHTTPRepository implements CharacterRepository {
         this.httpClient = httpClient;
     }
 
-    async getAll({ page, limit }: PageRequest): Promise<Paginated<Character>> {
+    async getAll({ page, limit, search }: SearchPageRequest): Promise<Paginated<Character>> {
         let data: CharacterListResponseDTO;
         try {
-            data = await this.httpClient.get<CharacterListResponseDTO>('/starwars/people', { page, limit });
+            data = await this.httpClient.get<CharacterListResponseDTO>('/starwars/people', { page, limit, search });
         } catch (error) {
             throw ResourceErrorMapper.toListError(error);
         }

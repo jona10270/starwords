@@ -15,8 +15,8 @@ interface HttpClientProps {
 
 type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
-// Filtros que van en la url como ?search=luke&page=2
-type HttpParams = Record<string, string | number | boolean>;
+// Filtros que van en la url como ?search=luke&page=2 y axios no manda los undefined
+type HttpParams = Record<string, string | number | boolean | undefined>;
 
 // Lo que necesita el metodo privado para hacer cualquier peticion
 interface RequestOptions {

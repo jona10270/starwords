@@ -82,3 +82,10 @@ export const MenuIcon = (props: IconProps) => (
         <line x1="3" y1="17" x2="21" y2="17" />
     </LineIcon>
 );
+
+export const SearchIcon = (props: IconProps) => (
+    <LineIcon width="14" height="14" strokeWidth={2} {...props}>
+        <circle cx="11" cy="11" r="7" />
+        <line x1="16.5" y1="16.5" x2="21" y2="21" />
+    </LineIcon>
+);

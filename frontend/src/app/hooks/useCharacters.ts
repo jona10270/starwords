@@ -1,14 +1,14 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { getCharacterUseCase } from "@/core/di/container";
-import type { PageRequest } from "@/core/modules/common";
+import type { SearchPageRequest } from "@/core/modules/common";
 import { retryResource } from "./retryResource";
 
 // Pido una pagina de personajes
-export const useGetCharacter = ({ page, limit }: PageRequest) =>
+export const useGetCharacter = ({ page, limit, search }: SearchPageRequest) =>
     useQuery({
-        queryKey: ["characters", { page, limit }],
-        queryFn: () => getCharacterUseCase.execute({ page, limit }),
+        queryKey: ["characters", { page, limit, search }],
+        queryFn: () => getCharacterUseCase.execute({ page, limit, search }),
         placeholderData: keepPreviousData,
         retry: retryResource,
     });

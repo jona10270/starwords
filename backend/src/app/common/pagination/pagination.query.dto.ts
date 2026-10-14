@@ -25,7 +25,7 @@ export class PaginationQueryDto {
     description: 'Number of items per page',
     default: 10,
     minimum: 1,
-    maximum: 10,
+    maximum: 50,
   })
   @Type(() => Number)
   @IsOptional()
