@@ -1,4 +1,4 @@
-import { HttpClient, PaginationMapper, ResourceErrorMapper, type PageRequest, type Paginated } from "../../common";
+import { HttpClient, PaginationMapper, ResourceErrorMapper, type Paginated, type SearchPageRequest } from "../../common";
 import type { Starship } from "../domain/Starship";
 import type { StarshipRepository } from "../domain/StarshipRepository";
 import type { StarshipListResponseDTO, StarshipResponseDTO } from "./StarshipDTO";
@@ -16,11 +16,11 @@ export class StarshipHTTPRepository implements StarshipRepository {
         this.httpClient = httpClient;
     }
 
-    async getAllStarships({page, limit}: PageRequest): Promise<Paginated<Starship>> {
+    async getAllStarships({ page, limit, search }: SearchPageRequest): Promise<Paginated<Starship>> {
         let data: StarshipListResponseDTO;
         try {
             data = await this.httpClient.get<StarshipListResponseDTO>(
-                '/starwars/starships', { page, limit}
+                '/starwars/starships', { page, limit, search }
             );
         } catch (error) {
             throw ResourceErrorMapper.toListError(error);
