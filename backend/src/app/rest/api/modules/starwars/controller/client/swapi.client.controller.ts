@@ -28,6 +28,7 @@ import { SpecieSingleResponse } from './response/specie/specie.client.single.res
 import { PlanetSingleResponse } from './response/planet/planet.client.single.response';
 
 import { Public } from '@app/shared/nestjs-auth/decorator/public.decorator';
+import { SearchPaginationQueryDto } from '@app/app/common/pagination/search-pagination.query.dto';
 
 @Public()
 @ApiBearerAuth()
@@ -53,10 +54,10 @@ export class StarwarsController {
     type: PeopleManyResponse,
   })
   public async getAllPeople(
-    @Query() query: PaginationQueryDto,
+    @Query() query: SearchPaginationQueryDto,
   ): Promise<PeopleManyResponse> {
-    const { page, limit } = query;
-    return this.peopleService.getAllPeople(page, limit);
+    const { page, limit, search } = query;
+    return this.peopleService.getAllPeople(page, limit, search);
   }
 
   // Get one people

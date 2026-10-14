@@ -6,6 +6,7 @@ import { PeopleSingleResponse } from '@app/app/rest/api/modules/starwars/control
 import { PeopleSingleDto } from './dto/people.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
+import { filterByText } from '@app/modules/starwars/common/filter-by-text';
 
 @Injectable()
 export class PeopleService {
@@ -15,6 +16,7 @@ export class PeopleService {
   public async getAllPeople(
     page: number,
     limit: number,
+    search?: string,
   ): Promise<PeopleManyResponse> {
     const data = await this.swapiRequest.request<PeopleAllDto[]>('/people');
     const characters = data.map((person) => ({
@@ -22,7 +24,10 @@ export class PeopleService {
       id: getIdFromUrl(person.url),
     }));
 
-    const { items, total } = paginate(characters, page, limit);
+    // Filtros de titulo antes de paginar 
+    const found = filterByText(characters, search, (characters => characters.name))
+
+    const { items, total } = paginate(found, page, limit);
     return new PeopleManyResponse(items, total, page, limit);
   }
 
