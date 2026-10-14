@@ -1,4 +1,4 @@
-import { PaginationMapper, ResourceErrorMapper, type HttpClient, type PageRequest, type Paginated } from "../../common";
+import { PaginationMapper, ResourceErrorMapper, type HttpClient, type Paginated, type SearchPageRequest } from "../../common";
 import type { Specie } from "../domain/Specie";
 import type { SpecieRepository } from "../domain/SpecieRepository";
 import type { SpecieListResponseDTO, SpecieResponseDTO } from "./SpecieDTO";
@@ -15,11 +15,11 @@ export class SpecieHTTPRepository implements SpecieRepository {
         this.httpClient = httpClient;
     }
 
-    async getAllSpecies({ page, limit }: PageRequest): Promise<Paginated<Specie>> {
+    async getAllSpecies({ page, limit, search }: SearchPageRequest): Promise<Paginated<Specie>> {
         let data: SpecieListResponseDTO
         try {
             data = await this.httpClient.get<SpecieListResponseDTO>(
-                '/starwars/species', { page, limit }
+                '/starwars/species', { page, limit, search }
             );
         } catch (error) {
             throw ResourceErrorMapper.toListError(error);

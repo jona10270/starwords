@@ -1,14 +1,14 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { getAllSpeciesUseCase } from "@/core/di/container";
-import type { PageRequest } from "@/core/modules/common";
+import type { SearchPageRequest } from "@/core/modules/common";
 import { retryResource } from "./retryResource";
 
 // Pido una pagina de especies
-export const useListSpecies = ({ page, limit }: PageRequest) =>
+export const useListSpecies = ({ page, limit, search }: SearchPageRequest) =>
     useQuery({
-        queryKey: ["species", { page, limit }],
-        queryFn: () => getAllSpeciesUseCase.execute({ page, limit }),
+        queryKey: ["species", { page, limit, search }],
+        queryFn: () => getAllSpeciesUseCase.execute({ page, limit, search }),
         placeholderData: keepPreviousData,
         retry: retryResource,
     });
