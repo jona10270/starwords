@@ -6,6 +6,7 @@ import { FilmSingleResponse } from '@app/app/rest/api/modules/starwars/controlle
 import { FilmSingleDto } from './dto/film.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
+import { filterByText } from '../common/filter-by-text';
 
 @Injectable()
 export class FilmService {
@@ -15,6 +16,7 @@ export class FilmService {
   public async getAllFilms(
     page: number,
     limit: number,
+    search?: string,
   ): Promise<FilmManyResponse> {
     const data = await this.swapiRequest.request<FilmAllDto[]>('/films');
 
@@ -23,7 +25,9 @@ export class FilmService {
       id: getIdFromUrl(film.url),
     }));
 
-    const { items, total } = paginate(films, page, limit);
+    // Filtro antes de paginar para que el total cuente solo lo encontrado
+    const found = filterByText(films, search, (film) => film.title);
+    const { items, total } = paginate(found, page, limit);
 
     return new FilmManyResponse(items, total, page, limit);
   }

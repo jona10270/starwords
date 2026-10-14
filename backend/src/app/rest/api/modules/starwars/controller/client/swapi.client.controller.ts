@@ -81,10 +81,10 @@ export class StarwarsController {
     type: FilmManyResponse,
   })
   public async getAllFilms(
-    @Query() query: PaginationQueryDto,
+    @Query() query: SearchPaginationQueryDto,
   ): Promise<FilmManyResponse> {
-    const { page, limit } = query;
-    return this.filmService.getAllFilms(page, limit);
+    const { page, limit, search } = query;
+    return this.filmService.getAllFilms(page, limit, search);
   }
 
   // Get one film
