@@ -105,10 +105,10 @@ export class StarwarsController {
     type: StarshipManyResponse,
   })
   public async getStarships(
-    @Query() query: PaginationQueryDto,
+    @Query() query: SearchPaginationQueryDto,
   ): Promise<StarshipManyResponse> {
-    const { page, limit } = query;
-    return this.starship.getAllStarships(page, limit);
+    const { page, limit, search } = query;
+    return this.starship.getAllStarships(page, limit, search);
   }
 
   @Get('starships/:id')

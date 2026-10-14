@@ -6,6 +6,7 @@ import { StarshipSingleResponse } from '@app/app/rest/api/modules/starwars/contr
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { StarshipSingleDto } from './dto/starship.single.dto';
 import { paginate } from '../common/paginate';
+import { filterByText } from '../common/filter-by-text';
 
 @Injectable()
 export class StarshipService {
@@ -14,6 +15,7 @@ export class StarshipService {
   public async getAllStarships(
     page: number,
     limit: number,
+    search?: string,
   ): Promise<StarshipManyResponse> {
     const data =
       await this.swapiRequest.request<StarshipAllDto[]>('/starships');
@@ -23,6 +25,7 @@ export class StarshipService {
       id: getIdFromUrl(starship.url),
     }));
 
+    const found = filterByText(starships, search, (starship) => starship.name)
     const { items, total } = paginate(starships, page, limit);
     return new StarshipManyResponse(items, total, page, limit);
   }
