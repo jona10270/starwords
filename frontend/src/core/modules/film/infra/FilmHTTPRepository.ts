@@ -1,7 +1,7 @@
 import type { Film } from "../domain/Film";
 import type { FilmRepository } from "../domain/FilmsRepository";
 import type { FilmResponseDTO, FilmListResponseDTO } from "./FilmDTO";
-import { PaginationMapper, ResourceErrorMapper, type HttpClient, type PageRequest, type Paginated } from "../../common";
+import { PaginationMapper, ResourceErrorMapper, type HttpClient, type Paginated, type SearchPageRequest } from "../../common";
 import { FilmMapper } from "./FilmMapper";
 
 interface FilmHTTPRepositoryProps {
@@ -15,10 +15,10 @@ export class FilmHTTPRepository implements FilmRepository {
         this.httpClient = httpClient
     }
 
-    async getAllFilms({ page, limit }: PageRequest): Promise<Paginated<Film>> {
+    async getAllFilms({ page, limit, search }: SearchPageRequest): Promise<Paginated<Film>> {
         let data: FilmListResponseDTO;
         try {
-            data = await this.httpClient.get<FilmListResponseDTO>('/starwars/films', { page, limit });
+            data = await this.httpClient.get<FilmListResponseDTO>('/starwars/films', { page, limit, search });
         } catch (error) {
             throw ResourceErrorMapper.toListError(error);
         }
