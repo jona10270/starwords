@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PlanetVM } from '../../../../model/planet/planet.view-model';
-import { PlanetWithIdDto } from '@app/modules/starwars/planet/dto/planet.all.dto';
+import { PlanetDetailDto } from '@app/modules/starwars/planet/dto/planet.all.dto';
 
 export class PlanetSingleResponse {
   @ApiProperty({
@@ -8,7 +8,7 @@ export class PlanetSingleResponse {
   })
   public readonly planet: PlanetVM;
 
-  public constructor(planet: PlanetWithIdDto) {
+  public constructor(planet: PlanetDetailDto) {
     this.planet = new PlanetVM(planet);
   }
 }

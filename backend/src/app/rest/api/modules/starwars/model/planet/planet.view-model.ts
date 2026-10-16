@@ -1,6 +1,7 @@
-import { PlanetWithIdDto } from '@app/modules/starwars/planet/dto/planet.all.dto';
 import { ApiProperty } from '@nestjs/swagger';
-
+import { ResourceRefDto } from '@app/modules/starwars/common/resource-ref.dto';
+import { PlanetDetailDto } from '@app/modules/starwars/planet/dto/planet.all.dto';
+import { ResourceRefVM } from '../common/resource-ref.view-model';
 export class PlanetVM {
   @ApiProperty({
     type: String,
@@ -72,7 +73,7 @@ export class PlanetVM {
   public readonly residents: string[];
 
   @ApiProperty({
-    type: [String],
+    type: ResourceRefVM,
     example: [
       'https://swapi.info/api/films/1',
       'https://swapi.info/api/films/3',
@@ -81,7 +82,7 @@ export class PlanetVM {
       'https://swapi.info/api/films/6',
     ],
   })
-  public readonly films: string[];
+  public readonly films: ResourceRefDto[];
 
   @ApiProperty({
     type: String,
@@ -89,7 +90,7 @@ export class PlanetVM {
   })
   public readonly url: string;
 
-  constructor(planet: PlanetWithIdDto) {
+  constructor(planet: PlanetDetailDto) {
     this.id = planet.id;
     this.name = planet.name;
     this.rotation_period = planet.rotation_period;
