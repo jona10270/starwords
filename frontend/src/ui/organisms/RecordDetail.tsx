@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-import type { RecordStat } from "../molecules";
+import { RecordRelations, type RecordRelationGroup, type RecordStat } from "../molecules";
 
 interface RecordDetailProps {
     // Recibo la ruta de vuelta de fuera para que la ui no dependa del router de la app
@@ -14,10 +14,12 @@ interface RecordDetailProps {
     attributes: RecordStat[];
     // Bloque extra entre la cabecera y los atributos para lo propio de cada recurso
     children?: ReactNode;
+    // Registros vinculados que pinto al final con enlace a su detalle
+    relations?: RecordRelationGroup[];
 }
 
 // Ficha completa de un registro con sus datos destacados y todos sus atributos
-export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, highlights, attributes, children }: RecordDetailProps) => (
+export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, highlights, attributes, children, relations }: RecordDetailProps) => (
     <article className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
@@ -68,5 +70,7 @@ export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, hig
                 ))}
             </dl>
         </section>
+
+        {relations && <RecordRelations groups={relations} />}
     </article>
 );

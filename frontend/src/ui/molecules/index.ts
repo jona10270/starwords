@@ -6,6 +6,7 @@ export * from "./OpeningCrawl";
 export * from "./Pagination";
 export * from "./PasswordField";
 export * from "./RecordCard";
+export * from "./RecordRelations";
 export * from "./SearchField";
 export * from "./ResourceIconNav";
 export * from "./SectionNav";

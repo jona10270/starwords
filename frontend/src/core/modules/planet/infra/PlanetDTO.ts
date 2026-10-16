@@ -1,4 +1,6 @@
 import type { PaginationMetaDTO } from "../../common";
+import type { ResourceRefDto } from "../../common/domain/ResourceDetailPlanet";
+import type { ResourceResidentDto } from "../../common/domain/ResourceDetailPlanet";
 
 // Como recibo los datos del backend
 export interface PlanetDTO {
@@ -12,8 +14,8 @@ export interface PlanetDTO {
     terrain: string;
     surface_water: string;
     population: string;
-    residents: string[];
-    films: string[];
+    residents: ResourceResidentDto[];
+    films: ResourceRefDto[];
     url: string;
 }
 

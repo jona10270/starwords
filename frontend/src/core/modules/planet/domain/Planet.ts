@@ -1,3 +1,6 @@
+import type { ResourceRefDto } from "../../common/domain/ResourceDetailPlanet";
+import type { ResourceResidentDto } from "../../common/domain/ResourceDetailPlanet";
+
 export interface Planet {
     id: string;
     name: string;
@@ -9,7 +12,7 @@ export interface Planet {
     terrain: string;
     surfaceWater: string;
     population: string;
-    residents: string[];
-    films: string[];
+    residents: ResourceResidentDto[];
+    films: ResourceRefDto[];
     url: string;
 }

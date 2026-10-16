@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { generatePath, useParams } from "react-router-dom";
 
 import { ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel } from "@/ui/molecules";
@@ -37,6 +37,24 @@ const toDetail = (planet: Planet) => {
             { label: "Agua superficial", value: formatRecordValue(planet.surfaceWater, "%") },
             { label: "Residentes", value: String(planet.residents.length) },
             { label: "Películas", value: String(planet.films.length) },
+        ],
+        relations: [
+            {
+                title: "Residentes",
+                links: planet.residents.map((resident) => ({
+                    id: resident.id,
+                    label: resident.name,
+                    to: generatePath(ROUTES.characterDetail, { id: resident.id }),
+                })),
+            },
+            {
+                title: "Películas",
+                links: planet.films.map((film) => ({
+                    id: film.id,
+                    label: film.title,
+                    to: generatePath(ROUTES.filmDetail, { id: film.id }),
+                })),
+            },
         ],
     };
 };
