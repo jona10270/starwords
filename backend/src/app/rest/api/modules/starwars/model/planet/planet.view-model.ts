@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ResourceRefDto } from '@app/modules/starwars/common/resource-ref.dto';
 import { PlanetDetailDto } from '@app/modules/starwars/planet/dto/planet.all.dto';
 import { ResourceRefVM } from '../common/resource-ref.view-model';
+import { ResourceResidentVM } from '../common/resource-ref.view-model';
+import { ResourceResidentDto } from '@app/modules/starwars/common/resource-ref.dto';
+
 export class PlanetVM {
   @ApiProperty({
     type: String,
@@ -64,13 +67,13 @@ export class PlanetVM {
   public readonly population: string;
 
   @ApiProperty({
-    type: [String],
+    type: ResourceResidentVM,
     example: [
       'https://swapi.info/api/people/1',
       'https://swapi.info/api/people/2',
     ],
   })
-  public readonly residents: string[];
+  public readonly residents: ResourceResidentDto[];
 
   @ApiProperty({
     type: ResourceRefVM,

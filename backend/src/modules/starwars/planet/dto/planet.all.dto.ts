@@ -1,4 +1,5 @@
-import type { ResourceRefDto } from "../../common/resource-ref.dto";
+import type { ResourceRefDto } from '../../common/resource-ref.dto';
+import type { ResourceResidentDto } from '../../common/resource-ref.dto';
 
 export interface PlanetAllDto {
   name: string;
@@ -18,4 +19,7 @@ export interface PlanetAllDto {
 export type PlanetWithIdDto = PlanetAllDto & { id: string };
 
 // El planeta del detalle con las peliculas ya resueltas
-export type PlanetDetailDto = Omit<PlanetWithIdDto, 'films'> & { films: ResourceRefDto[] };
+export type PlanetDetailDto = Omit<PlanetWithIdDto, 'films' | 'residents'> & {
+  films: ResourceRefDto[];
+  residents: ResourceResidentDto[];
+};
