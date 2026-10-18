@@ -7,6 +7,7 @@ import { StarshipService } from './starships/starship.service';
 import { VehiclesService } from './vehicles/vehicles.service';
 import { SpecieService } from './specie/specie.service';
 import { PlanetService } from './planet/planet.service';
+import { ResourceRefService } from './common/resource-ref.service';
 
 @Module({
   providers: [
@@ -17,6 +18,7 @@ import { PlanetService } from './planet/planet.service';
     VehiclesService,
     SpecieService,
     PlanetService,
+    ResourceRefService,
   ],
   controllers: [StarwarsController],
   exports: [

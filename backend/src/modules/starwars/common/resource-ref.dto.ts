@@ -7,3 +7,8 @@ export interface ResourceResidentDto {
   id: string;
   name: string;
 }
+
+export interface ResourceNameDto {
+  id: string;
+  name: string;
+}

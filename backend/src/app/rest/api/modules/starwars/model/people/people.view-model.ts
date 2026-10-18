@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PeopleWithIdDto } from '@app/modules/starwars/people/dto/people.all.dto';
+import type { PeopleDetailDto } from '@app/modules/starwars/people/dto/people.all.dto';
+import type { ResourceNameDto } from '@app/modules/starwars/common/resource-ref.dto';
+import { ResourceNameVM } from '../common/resource-ref.view-model';
 
 export class PeopleVM {
   @ApiProperty({ type: String, example: '1' })
@@ -30,10 +32,10 @@ export class PeopleVM {
   public readonly gender: string;
 
   @ApiProperty({
-    type: String,
-    example: 'https://swapi.info/api/planets/1',
+    type: ResourceNameVM,
+    example: { id: '1', name: 'Tatooine' },
   })
-  public readonly homeworld: string;
+  public readonly homeworld: ResourceNameDto;
 
   @ApiProperty({
     type: [String],
@@ -65,7 +67,7 @@ export class PeopleVM {
   })
   public readonly url: string;
 
-  public constructor(people: PeopleWithIdDto) {
+  public constructor(people: PeopleDetailDto) {
     this.id = people.id;
     this.name = people.name;
     this.height = people.height;

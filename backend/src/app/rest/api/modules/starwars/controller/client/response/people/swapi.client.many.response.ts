@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { PeopleWithIdDto } from '@app/modules/starwars/people/dto/people.all.dto';
+import { PeopleDetailDto } from '@app/modules/starwars/people/dto/people.all.dto';
 import { PeopleVM } from '../../../../model/people/people.view-model';
 import { PaginationMetaVM } from '@app/app/common/pagination/pagination-meta.view-model';
 
@@ -16,7 +16,7 @@ export class PeopleManyResponse {
   public readonly meta: PaginationMetaVM;
 
   public constructor(
-    data: PeopleWithIdDto[],
+    data: PeopleDetailDto[],
     total: number,
     page: number,
     limit: number,

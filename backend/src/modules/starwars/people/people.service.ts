@@ -7,10 +7,14 @@ import { PeopleSingleDto } from './dto/people.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
 import { filterByText } from '../common/filter-by-text';
+import { ResourceRefService } from '../common/resource-ref.service';
 
 @Injectable()
 export class PeopleService {
-  constructor(private readonly swapiRequest: SwapiRequest) {}
+  constructor(
+    private readonly swapiRequest: SwapiRequest,
+    private readonly resolveRelations: ResourceRefService,
+  ) {}
 
   // Request for view all peoples
   public async getAllPeople(
@@ -19,6 +23,7 @@ export class PeopleService {
     search?: string,
   ): Promise<PeopleManyResponse> {
     const data = await this.swapiRequest.request<PeopleAllDto[]>('/people');
+
     const characters = data.map((person) => ({
       ...person,
       id: getIdFromUrl(person.url),
@@ -28,7 +33,17 @@ export class PeopleService {
     const found = filterByText(characters, search, (person) => person.name);
 
     const { items, total } = paginate(found, page, limit);
-    return new PeopleManyResponse(items, total, page, limit);
+
+    const peoples = await Promise.all(
+      items.map(async (person) => ({
+        ...person,
+        homeworld: await this.resolveRelations.getNameRef(
+          'planets',
+          person.homeworld,
+        ),
+      })),
+    );
+    return new PeopleManyResponse(peoples, total, page, limit);
   }
 
   // Request only one people
@@ -40,6 +55,10 @@ export class PeopleService {
     const character = {
       ...people,
       id: getIdFromUrl(people.url),
+      homeworld: await this.resolveRelations.getNameRef(
+        'planets',
+        people.homeworld,
+      ),
     };
 
     return new PeopleSingleResponse(character);
