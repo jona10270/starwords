@@ -1,3 +1,5 @@
+import type { ResourceDetailName } from "../../common";
+
 // Como son mis datos en el fronted
 export interface Character {
     id: string
@@ -6,5 +8,5 @@ export interface Character {
     gender: string | null;
     height: string | null;
     mass: string | null;
-    homeWorld: string;
+    homeWorld: ResourceDetailName;
 }

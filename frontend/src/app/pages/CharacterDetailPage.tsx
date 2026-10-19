@@ -32,7 +32,7 @@ const toDetail = (character: Character) => {
         attributes: [
             { label: "Registro", value: character.id },
             ...highlights,
-            { label: "Planeta natal", value: character.homeWorld },
+            { label: "Planeta natal", value: character.homeWorld.name },
         ],
     };
 };

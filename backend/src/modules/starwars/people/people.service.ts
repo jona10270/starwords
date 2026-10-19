@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { SwapiRequest } from '../common/swapi.service';
-import { PeopleAllDto } from './dto/people.all.dto';
+import {
+  PeopleAllDto,
+  PeopleDetailDto,
+  PeopleWithIdDto,
+} from './dto/people.all.dto';
 import { PeopleManyResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/people/swapi.client.many.response';
 import { PeopleSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/people/swapi.client.single.response';
 import { PeopleSingleDto } from './dto/people.single.dto';
@@ -13,7 +17,7 @@ import { ResourceRefService } from '../common/resource-ref.service';
 export class PeopleService {
   constructor(
     private readonly swapiRequest: SwapiRequest,
-    private readonly resolveRelations: ResourceRefService,
+    private readonly resourceRefService: ResourceRefService,
   ) {}
 
   // Request for view all peoples
@@ -34,16 +38,9 @@ export class PeopleService {
 
     const { items, total } = paginate(found, page, limit);
 
-    const peoples = await Promise.all(
-      items.map(async (person) => ({
-        ...person,
-        homeworld: await this.resolveRelations.getNameRef(
-          'planets',
-          person.homeworld,
-        ),
-      })),
-    );
-    return new PeopleManyResponse(peoples, total, page, limit);
+    const resolvedPeople = await this.resolveHomeworlds(items);
+
+    return new PeopleManyResponse(resolvedPeople, total, page, limit);
   }
 
   // Request only one people
@@ -55,12 +52,27 @@ export class PeopleService {
     const character = {
       ...people,
       id: getIdFromUrl(people.url),
-      homeworld: await this.resolveRelations.getNameRef(
+      homeworld: await this.resourceRefService.getNameRef(
         'planets',
         people.homeworld,
       ),
     };
 
     return new PeopleSingleResponse(character);
+  }
+
+  // Cambio la url del planeta natal por su id y nombre
+  private async resolveHomeworlds(
+    people: PeopleWithIdDto[],
+  ): Promise<PeopleDetailDto[]> {
+    return Promise.all(
+      people.map(async (person) => ({
+        ...person,
+        homeworld: await this.resourceRefService.getNameRef(
+          'planets',
+          person.homeworld,
+        ),
+      })),
+    );
   }
 }

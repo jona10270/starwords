@@ -1,4 +1,4 @@
-import type { PaginationMetaDTO } from "../../common";
+import type { PaginationMetaDTO, ResourceDetailName } from "../../common";
 
 // Personaje tal como me lo manda el backend
 export interface CharacterDTO {
@@ -11,7 +11,7 @@ export interface CharacterDTO {
     eye_color: string;
     birth_year: string;
     gender: string;
-    homeworld: string;
+    homeworld: ResourceDetailName;
     films: string[];
     species: string[];
     vehicles: string[];
