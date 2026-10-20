@@ -40,7 +40,7 @@ export class FilmService {
     return new FilmManyResponse(detailFilms, total, page, limit);
   }
 
-  // Get one film
+  // Get one filmm
   public async getFilm(filmId: string): Promise<FilmSingleResponse> {
     const data = await this.swapiRequest.request<FilmSingleDto>(
       `/films/${filmId}`,
