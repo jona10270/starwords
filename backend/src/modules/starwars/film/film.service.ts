@@ -34,7 +34,7 @@ export class FilmService {
     const { items, total } = paginate(found, page, limit);
 
     const detailFilms = await Promise.all(
-      items.map((film) => this.resolveRelation(film))
+      items.map((film) => this.resolveRelation(film)),
     );
 
     return new FilmManyResponse(detailFilms, total, page, limit);
@@ -47,20 +47,28 @@ export class FilmService {
     );
     const film = await this.resolveRelation({
       ...data,
-      id: getIdFromUrl(data.url)
-    })
+      id: getIdFromUrl(data.url),
+    });
     return new FilmSingleResponse(film);
   }
 
-  private async resolveRelation(
-    film: FilmWithIdDto,
-  ): Promise<FilmDetailDto> {
+  private async resolveRelation(film: FilmWithIdDto): Promise<FilmDetailDto> {
+    const [characters, planets] = await Promise.all([
+      Promise.all(
+        film.characters.map((url) =>
+          this.resourceRefService.getNameRef('people', url),
+        ),
+      ),
+      Promise.all(
+        film.planets.map((url) =>
+          this.resourceRefService.getNameRef('planets', url),
+        ),
+      ),
+    ]);
     return {
       ...film,
-      characters: await Promise.all(
-        film.characters.map((url) => this.resourceRefService.getNameRef('people', url))
-      ),
-    }
+      characters,
+      planets,
+    };
   }
-
 }

@@ -1,4 +1,4 @@
-import { ResourceNameDto } from "../../common/resource-ref.dto";
+import { ResourceNameDto } from '../../common/resource-ref.dto';
 
 export interface FilmAllDto {
   title: string;
@@ -17,9 +17,7 @@ export interface FilmAllDto {
 
 // La pelicula despues de que le añado el id sacado de la url
 export type FilmWithIdDto = FilmAllDto & { id: string };
-export type FilmDetailDto = Omit<
-FilmWithIdDto,
-'characters'
-> & { 
-  characters: ResourceNameDto[],
-}
+export type FilmDetailDto = Omit<FilmWithIdDto, 'characters' | 'planets'> & {
+  characters: ResourceNameDto[];
+  planets: ResourceNameDto[];
+};

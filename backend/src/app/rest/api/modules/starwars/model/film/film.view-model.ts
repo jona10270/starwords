@@ -31,20 +31,20 @@ export class FilmVM {
   @ApiProperty({
     type: [ResourceNameVM],
     example: [
-      'https://swapi.info/api/people/1',
-      'https://swapi.info/api/people/2',
+      { id: '1', name: 'Luke Skywalker' },
+      { id: '2', name: 'C-3PO' },
     ],
   })
   public readonly characters: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceNameVM],
     example: [
-      'https://swapi.info/api/planets/1',
-      'https://swapi.info/api/planets/2',
+      { id: '1', name: 'Tatooine' },
+      { id: '2', name: 'Alderaan' },
     ],
   })
-  public readonly planets: string[];
+  public readonly planets: ResourceNameDto[];
 
   @ApiProperty({
     type: [String],
