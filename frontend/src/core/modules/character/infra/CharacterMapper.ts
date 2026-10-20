@@ -18,5 +18,6 @@ export const CharacterMapper = {
         height: toKnownValue(dto.height),
         mass: toKnownValue(dto.mass),
         homeWorld: dto.homeworld,
+        films: dto.films,
     }),
 }

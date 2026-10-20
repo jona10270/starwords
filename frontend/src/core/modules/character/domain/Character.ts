@@ -1,4 +1,4 @@
-import type { ResourceDetailName } from "../../common";
+import type { ResourceDetailName, ResourceDetailTitle } from "../../common";
 
 // Como son mis datos en el fronted
 export interface Character {
@@ -9,4 +9,5 @@ export interface Character {
     height: string | null;
     mass: string | null;
     homeWorld: ResourceDetailName;
+    films: ResourceDetailTitle[];
 }
