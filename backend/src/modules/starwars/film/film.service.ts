@@ -53,26 +53,41 @@ export class FilmService {
   }
 
   private async resolveRelation(film: FilmWithIdDto): Promise<FilmDetailDto> {
-    const [characters, planets, starships] = await Promise.all([
-      Promise.all(
-        film.characters.map((url) =>
-          this.resourceRefService.getNameRef('people', url),
+    const [characters, planets, starships, vehicles, species] =
+      await Promise.all([
+        Promise.all(
+          film.characters.map((url) =>
+            this.resourceRefService.getNameRef('people', url),
+          ),
         ),
-      ),
-      Promise.all(
-        film.planets.map((url) =>
-          this.resourceRefService.getNameRef('planets', url),
+        Promise.all(
+          film.planets.map((url) =>
+            this.resourceRefService.getNameRef('planets', url),
+          ),
         ),
-      ),
-      Promise.all(
-        film.starships.map((url) => this.resourceRefService.getNameRef('starships', url))
-      )
-    ]);
+        Promise.all(
+          film.starships.map((url) =>
+            this.resourceRefService.getNameRef('starships', url),
+          ),
+        ),
+        Promise.all(
+          film.vehicles.map((url) =>
+            this.resourceRefService.getNameRef('vehicles', url),
+          ),
+        ),
+        Promise.all(
+          film.species.map((url) =>
+            this.resourceRefService.getNameRef('species', url),
+          ),
+        ),
+      ]);
     return {
       ...film,
       characters,
       planets,
       starships,
+      vehicles,
+      species,
     };
   }
 }

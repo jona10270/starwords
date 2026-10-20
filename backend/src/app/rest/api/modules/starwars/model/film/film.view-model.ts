@@ -49,29 +49,29 @@ export class FilmVM {
   @ApiProperty({
     type: [ResourceNameVM],
     example: [
-      'https://swapi.info/api/starships/2',
-      'https://swapi.info/api/starships/3',
+      { id: '2', name: 'CR90 corvette' },
+      { id: '3', name: 'Star Destroyer' },
     ],
   })
   public readonly starships: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceNameVM],
     example: [
-      'https://swapi.info/api/vehicles/4',
-      'https://swapi.info/api/vehicles/6',
+      { id: '4', name: 'Sand Crawler' },
+      { id: '6', name: 'T-16 skyhopper' },
     ],
   })
-  public readonly vehicles: string[];
+  public readonly vehicles: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceNameVM],
     example: [
-      'https://swapi.info/api/species/1',
-      'https://swapi.info/api/species/2',
+      { id: '1', name: 'Human' },
+      { id: '2', name: 'Droid' },
     ],
   })
-  public readonly species: string[];
+  public readonly species: ResourceNameDto[];
 
   @ApiProperty({
     type: String,

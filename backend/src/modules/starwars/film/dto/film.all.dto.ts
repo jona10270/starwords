@@ -18,12 +18,12 @@ export interface FilmAllDto {
 // La pelicula despues de que le añado el id sacado de la url
 export type FilmWithIdDto = FilmAllDto & { id: string };
 export type FilmDetailDto = Omit<
-FilmWithIdDto,
-'characters'
-| 'planets'
-| 'starships'
+  FilmWithIdDto,
+  'characters' | 'planets' | 'starships' | 'vehicles' | 'species'
 > & {
   characters: ResourceNameDto[];
   planets: ResourceNameDto[];
   starships: ResourceNameDto[];
+  vehicles: ResourceNameDto[];
+  species: ResourceNameDto[];
 };
