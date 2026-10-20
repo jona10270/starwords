@@ -47,13 +47,13 @@ export class FilmVM {
   public readonly planets: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceNameVM],
     example: [
       'https://swapi.info/api/starships/2',
       'https://swapi.info/api/starships/3',
     ],
   })
-  public readonly starships: string[];
+  public readonly starships: ResourceNameDto[];
 
   @ApiProperty({
     type: [String],

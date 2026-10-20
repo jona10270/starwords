@@ -53,7 +53,7 @@ export class FilmService {
   }
 
   private async resolveRelation(film: FilmWithIdDto): Promise<FilmDetailDto> {
-    const [characters, planets] = await Promise.all([
+    const [characters, planets, starships] = await Promise.all([
       Promise.all(
         film.characters.map((url) =>
           this.resourceRefService.getNameRef('people', url),
@@ -64,11 +64,15 @@ export class FilmService {
           this.resourceRefService.getNameRef('planets', url),
         ),
       ),
+      Promise.all(
+        film.starships.map((url) => this.resourceRefService.getNameRef('starships', url))
+      )
     ]);
     return {
       ...film,
       characters,
       planets,
+      starships,
     };
   }
 }
