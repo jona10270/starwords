@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { generatePath, useParams } from "react-router-dom";
 
 import { ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel } from "@/ui/molecules";
@@ -41,6 +41,24 @@ const toDetail = (starship: Starship) => {
             { label: "MGLT", value: formatRecordValue(starship.mglt) },
             { label: "Pilotos", value: String(starship.pilots.length) },
             { label: "Películas", value: String(starship.films.length) },
+        ],
+        relations: [
+            {
+                title: "Pilotos",
+                links: starship.pilots.map((pilot) => ({
+                    id: pilot.id,
+                    label: pilot.name,
+                    to: generatePath(ROUTES.characterDetail, { id: pilot.id }),
+                })),
+            },
+            {
+                title: "Películas",
+                links: starship.films.map((film) => ({
+                    id: film.id,
+                    label: film.title,
+                    to: generatePath(ROUTES.filmDetail, { id: film.id }),
+                })),
+            },
         ],
     };
 };

@@ -1,3 +1,5 @@
+import type { ResourceDetailName, ResourceDetailTitle } from "../../common";
+
 export interface Specie {
     id: string;
     name: string;
@@ -8,10 +10,10 @@ export interface Specie {
     hairColors: string;
     eyeColors: string;
     averageLifespan: string;
-    homeWorld: string | null;
+    homeWorld: ResourceDetailName | null;
     language: string;
-    people: string[];
-    films: string[];
+    people: ResourceDetailName[];
+    films: ResourceDetailTitle[];
     url: string;
 }
 

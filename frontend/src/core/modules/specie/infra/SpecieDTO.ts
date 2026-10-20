@@ -1,4 +1,4 @@
-import type { PaginationMetaDTO } from "../../common";
+import type { PaginationMetaDTO, ResourceDetailName, ResourceDetailTitle } from "../../common";
 
 export interface SpecieDTO {
     id: string;
@@ -10,10 +10,10 @@ export interface SpecieDTO {
     hair_colors: string;
     eye_colors: string;
     average_lifespan: string;
-    homeworld: string | null;
+    homeworld: ResourceDetailName | null;
     language: string;
-    people: string[];
-    films: string[];
+    people: ResourceDetailName[];
+    films: ResourceDetailTitle[];
     url: string;
 }
 

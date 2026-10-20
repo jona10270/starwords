@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { generatePath, useParams } from "react-router-dom";
 
 import { ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel } from "@/ui/molecules";
@@ -35,9 +35,27 @@ const toDetail = (specie: Specie) => {
             { label: "Color de piel", value: formatRecordValue(specie.skinColors) },
             { label: "Color de pelo", value: formatRecordValue(specie.hairColors) },
             { label: "Color de ojos", value: formatRecordValue(specie.eyeColors) },
-            { label: "Planeta natal", value: specie.homeWorld ?? "—" },
+            { label: "Planeta natal", value: specie.homeWorld?.name ?? "—" },
             { label: "Personajes", value: String(specie.people.length) },
             { label: "Películas", value: String(specie.films.length) },
+        ],
+        relations: [
+            {
+                title: "Personajes",
+                links: specie.people.map((person) => ({
+                    id: person.id,
+                    label: person.name,
+                    to: generatePath(ROUTES.characterDetail, { id: person.id }),
+                })),
+            },
+            {
+                title: "Películas",
+                links: specie.films.map((film) => ({
+                    id: film.id,
+                    label: film.title,
+                    to: generatePath(ROUTES.filmDetail, { id: film.id }),
+                })),
+            },
         ],
     };
 };

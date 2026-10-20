@@ -1,4 +1,4 @@
-import type { PaginationMetaDTO } from "../../common";
+import type { PaginationMetaDTO, ResourceDetailName, ResourceDetailTitle } from "../../common";
 
 // Los datos que me llegan del backend y que ecojo de los que llegan
 export interface StarshipDTO {
@@ -16,8 +16,8 @@ export interface StarshipDTO {
     hyperdrive_rating: string;
     MGLT: string;
     starship_class: string;
-    pilots: string[];
-    films: string[];
+    pilots: ResourceDetailName[];
+    films: ResourceDetailTitle[];
     url: string;
 }
 

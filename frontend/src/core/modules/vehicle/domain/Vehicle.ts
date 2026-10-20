@@ -1,3 +1,5 @@
+import type { ResourceDetailName, ResourceDetailTitle } from "../../common";
+
 // Las claves que utilizamo en el frontend de los datos que recibimos del backend
 export interface Vehicle {
     id: string;
@@ -11,8 +13,8 @@ export interface Vehicle {
     passengers: string;
     cargoCapacity: string;
     consumables: string;
-    pilots: string[];
-    films: string[];
+    pilots: ResourceDetailName[];
+    films: ResourceDetailTitle[];
     url: string;
     vehicleClass: string;
 }

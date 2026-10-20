@@ -1,3 +1,5 @@
+import type { ResourceDetailName, ResourceDetailTitle } from "../../common";
+
 // Como llamo a los valores que llegan del backend
 export interface Starship {
     id: string;
@@ -14,7 +16,7 @@ export interface Starship {
     hyperdriveRating: string;
     mglt: string;
     starshipClass: string;
-    pilots: string[];
-    films: string[];
+    pilots: ResourceDetailName[];
+    films: ResourceDetailTitle[];
     url: string;
 }

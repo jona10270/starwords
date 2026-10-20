@@ -1,4 +1,4 @@
-import type { PaginationMetaDTO } from "../../common";
+import type { PaginationMetaDTO, ResourceDetailName, ResourceDetailTitle } from "../../common";
 
 export interface VehicleDTO {
     id: string,
@@ -12,8 +12,8 @@ export interface VehicleDTO {
     passengers: string,
     cargo_capacity: string,
     consumables: string,
-    pilots: string[],
-    films: string[]
+    pilots: ResourceDetailName[],
+    films: ResourceDetailTitle[]
     url: string,
     vehicle_class: string
 }
