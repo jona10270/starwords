@@ -25,9 +25,11 @@ export interface PeopleAllDto {
 export type PeopleWithIdDto = PeopleAllDto & { id: string };
 export type PeopleDetailDto = Omit<
   PeopleWithIdDto,
-  'homeworld' | 'films' | 'species'
+  'homeworld' | 'films' | 'species' | 'vehicles' | 'starships'
 > & {
   homeworld: ResourceNameDto;
   films: ResourceTitleDto[];
   species: ResourceNameDto[];
+  vehicles: ResourceNameDto[];
+  starships: ResourceNameDto[];
 };

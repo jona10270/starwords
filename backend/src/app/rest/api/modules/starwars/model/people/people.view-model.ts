@@ -58,16 +58,22 @@ export class PeopleVM {
   public readonly species: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
-    example: ['https://swapi.info/api/vehicles/14'],
+    type: [ResourceNameVM],
+    example: [
+      { id: '14', name: 'Snowspeeder' },
+      { id: '30', name: 'Imperial Speeder Bike' },
+    ],
   })
-  public readonly vehicles: string[];
+  public readonly vehicles: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
-    example: ['https://swapi.info/api/starships/12'],
+    type: [ResourceNameVM],
+    example: [
+      { id: '12', name: 'X-wing' },
+      { id: '22', name: 'Imperial shuttle' },
+    ],
   })
-  public readonly starships: string[];
+  public readonly starships: ResourceNameDto[];
 
   @ApiProperty({
     type: String,
