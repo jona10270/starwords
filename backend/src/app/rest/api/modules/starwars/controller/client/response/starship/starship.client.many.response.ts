@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { StarshipVM } from '../../../../model/starship/starship.view-model';
-import { StarshipWithIdDto } from '@app/modules/starwars/starships/dto/starship.all.dto';
+import { StarshipDetailDto } from '@app/modules/starwars/starships/dto/starship.all.dto';
 import { PaginationMetaVM } from '@app/app/common/pagination/pagination-meta.view-model';
 
 export class StarshipManyResponse {
@@ -15,7 +15,7 @@ export class StarshipManyResponse {
   public readonly meta: PaginationMetaVM;
 
   public constructor(
-    data: StarshipWithIdDto[],
+    data: StarshipDetailDto[],
     total: number,
     page: number,
     limit: number,

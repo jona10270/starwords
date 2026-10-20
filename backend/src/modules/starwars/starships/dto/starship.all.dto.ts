@@ -1,3 +1,8 @@
+import {
+  ResourceNameDto,
+  ResourceTitleDto,
+} from '../../common/resource-ref.dto';
+
 export interface StarshipAllDto {
   name: string;
   model: string;
@@ -18,3 +23,8 @@ export interface StarshipAllDto {
 }
 
 export type StarshipWithIdDto = StarshipAllDto & { id: string };
+
+export type StarshipDetailDto = Omit<StarshipWithIdDto, 'pilots' | 'films'> & {
+  pilots: ResourceNameDto[];
+  films: ResourceTitleDto[];
+};

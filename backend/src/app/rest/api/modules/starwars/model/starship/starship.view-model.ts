@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { StarshipWithIdDto } from '@app/modules/starwars/starships/dto/starship.all.dto';
+import { StarshipDetailDto } from '@app/modules/starwars/starships/dto/starship.all.dto';
+import {
+  ResourceNameVM,
+  ResourceTitleVM,
+} from '../common/resource-ref.view-model';
+import {
+  ResourceNameDto,
+  ResourceTitleDto,
+} from '@app/modules/starwars/common/resource-ref.dto';
 
 export class StarshipVM {
   @ApiProperty({
@@ -87,16 +95,16 @@ export class StarshipVM {
   public readonly starship_class: string;
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceNameVM],
     example: [],
   })
-  public readonly pilots: string[];
+  public readonly pilots: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
-    example: ['https://swapi.info/api/films/1'],
+    type: [ResourceTitleVM],
+    example: [{ id: '1', title: 'A New Hope' }],
   })
-  public readonly films: string[];
+  public readonly films: ResourceTitleDto[];
 
   @ApiProperty({
     type: String,
@@ -104,7 +112,7 @@ export class StarshipVM {
   })
   public readonly url: string;
 
-  public constructor(starship: StarshipWithIdDto) {
+  public constructor(starship: StarshipDetailDto) {
     this.id = starship.id;
     this.name = starship.name;
     this.model = starship.model;
