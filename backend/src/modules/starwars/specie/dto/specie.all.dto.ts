@@ -1,3 +1,8 @@
+import {
+  ResourceNameDto,
+  ResourceTitleDto,
+} from '../../common/resource-ref.dto';
+
 export interface SpeciesAllDto {
   name: string;
   classification: string;
@@ -15,3 +20,12 @@ export interface SpeciesAllDto {
 }
 
 export type SpecieWithIdDto = SpeciesAllDto & { id: string };
+
+export type SpecieDetailDto = Omit<
+  SpecieWithIdDto,
+  'homeworld' | 'people' | 'films'
+> & {
+  homeworld: ResourceNameDto | null;
+  people: ResourceNameDto[];
+  films: ResourceTitleDto[];
+};

@@ -1,16 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { SwapiRequest } from '../common/swapi.service';
 import { VehiclesManyResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/vehicle/vehicles.client.many.response';
-import { VehicleAllDto } from './dto/vehicles.all.dto';
+import {
+  VehicleAllDto,
+  VehicleDetailDto,
+  VehicleWithIdDto,
+} from './dto/vehicles.all.dto';
 import { VehicleSingleDto } from './dto/vehicle.single.dto';
 import { VehicleSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/vehicle/vehicle.client.single.response';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
 import { filterByText } from '../common/filter-by-text';
+import { ResourceRefService } from '../common/resource-ref.service';
 
 @Injectable()
 export class VehiclesService {
-  public constructor(private readonly swapiRequest: SwapiRequest) {}
+  public constructor(
+    private readonly swapiRequest: SwapiRequest,
+    private readonly resourceRefService: ResourceRefService,
+  ) {}
 
   public async getAllVehicles(
     page: number,
@@ -29,7 +37,12 @@ export class VehiclesService {
 
     const found = filterByText(vehicles, search, (vehicle) => vehicle.name);
     const { items, total } = paginate(found, page, limit);
-    return new VehiclesManyResponse(items, total, page, limit);
+
+    const detailVehicles = await Promise.all(
+      items.map((vehicle) => this.resolveRelation(vehicle)),
+    );
+
+    return new VehiclesManyResponse(detailVehicles, total, page, limit);
   }
 
   public async getVehicle(vehicleId: string): Promise<VehicleSingleResponse> {
@@ -38,11 +51,35 @@ export class VehiclesService {
     );
 
     // Añado al vehicle la clave id
-    const vehicle = {
+    const vehicle = await this.resolveRelation({
       ...data,
       id: getIdFromUrl(data.url),
-    };
+    });
 
     return new VehicleSingleResponse(vehicle);
+  }
+
+  // Ejecuto todas las peticiones en paralelo para ganar mas velocidad
+  private async resolveRelation(
+    vehicle: VehicleWithIdDto,
+  ): Promise<VehicleDetailDto> {
+    const [pilots, films] = await Promise.all([
+      Promise.all(
+        vehicle.pilots.map((url) =>
+          this.resourceRefService.getNameRef('people', url),
+        ),
+      ),
+      Promise.all(
+        vehicle.films.map((url) =>
+          this.resourceRefService.getTitleRef('films', url),
+        ),
+      ),
+    ]);
+
+    return {
+      ...vehicle,
+      pilots,
+      films,
+    };
   }
 }

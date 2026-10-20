@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { SpecieVM } from '../../../../model/specie/specie.view-model';
-import { SpecieWithIdDto } from '@app/modules/starwars/specie/dto/specie.all.dto';
+import { SpecieDetailDto } from '@app/modules/starwars/specie/dto/specie.all.dto';
 import { PaginationMetaVM } from '@app/app/common/pagination/pagination-meta.view-model';
 
 export class SpecieManyResponse {
@@ -15,7 +15,7 @@ export class SpecieManyResponse {
   public readonly meta: PaginationMetaVM;
 
   public constructor(
-    data: SpecieWithIdDto[],
+    data: SpecieDetailDto[],
     total: number,
     page: number,
     limit: number,

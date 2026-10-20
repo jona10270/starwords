@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { VehicleWithIdDto } from '@app/modules/starwars/vehicles/dto/vehicles.all.dto';
+import { VehicleDetailDto } from '@app/modules/starwars/vehicles/dto/vehicles.all.dto';
+import {
+  ResourceNameVM,
+  ResourceTitleVM,
+} from '../common/resource-ref.view-model';
+import {
+  ResourceNameDto,
+  ResourceTitleDto,
+} from '@app/modules/starwars/common/resource-ref.dto';
 
 export class VehicleVM {
   @ApiProperty({
@@ -69,16 +77,19 @@ export class VehicleVM {
   public readonly consumables: string;
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceNameVM],
     example: [],
   })
-  public readonly pilots: string[];
+  public readonly pilots: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
-    example: ['https://swapi.info/api/films/1'],
+    type: [ResourceTitleVM],
+    example: [
+      { id: '1', title: 'A New Hope' },
+      { id: '5', title: 'Attack of the Clones' },
+    ],
   })
-  public readonly films: string[];
+  public readonly films: ResourceTitleDto[];
 
   @ApiProperty({
     type: String,
@@ -92,7 +103,7 @@ export class VehicleVM {
   })
   public readonly vehicle_class: string;
 
-  public constructor(vehicle: VehicleWithIdDto) {
+  public constructor(vehicle: VehicleDetailDto) {
     this.id = vehicle.id;
     this.name = vehicle.name;
     this.model = vehicle.model;

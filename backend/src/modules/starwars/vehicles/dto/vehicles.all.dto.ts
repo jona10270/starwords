@@ -1,3 +1,8 @@
+import {
+  ResourceNameDto,
+  ResourceTitleDto,
+} from '../../common/resource-ref.dto';
+
 export interface VehicleAllDto {
   cargo_capacity: string;
   consumables: string;
@@ -19,3 +24,8 @@ export interface VehicleAllDto {
 
 // Creo un tipo para el envio de datos al frontend
 export type VehicleWithIdDto = VehicleAllDto & { id: string };
+
+export type VehicleDetailDto = Omit<VehicleWithIdDto, 'pilots' | 'films'> & {
+  pilots: ResourceNameDto[];
+  films: ResourceTitleDto[];
+};

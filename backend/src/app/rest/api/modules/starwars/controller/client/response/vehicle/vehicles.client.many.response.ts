@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { VehicleVM } from '../../../../model/vehicle/vehicles.view-model';
-import { VehicleWithIdDto } from '@app/modules/starwars/vehicles/dto/vehicles.all.dto';
+import { VehicleDetailDto } from '@app/modules/starwars/vehicles/dto/vehicles.all.dto';
 import { PaginationMetaVM } from '@app/app/common/pagination/pagination-meta.view-model';
 
 export class VehiclesManyResponse {
@@ -15,7 +15,7 @@ export class VehiclesManyResponse {
   public readonly meta: PaginationMetaVM;
 
   public constructor(
-    data: VehicleWithIdDto[],
+    data: VehicleDetailDto[],
     total: number,
     page: number,
     limit: number,

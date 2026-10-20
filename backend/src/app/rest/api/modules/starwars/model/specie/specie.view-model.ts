@@ -1,5 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { SpecieWithIdDto } from '@app/modules/starwars/specie/dto/specie.all.dto';
+import { SpecieDetailDto } from '@app/modules/starwars/specie/dto/specie.all.dto';
+import {
+  ResourceNameVM,
+  ResourceTitleVM,
+} from '../common/resource-ref.view-model';
+import {
+  ResourceNameDto,
+  ResourceTitleDto,
+} from '@app/modules/starwars/common/resource-ref.dto';
 
 export class SpecieVM {
   @ApiProperty({
@@ -57,11 +65,11 @@ export class SpecieVM {
   public readonly average_lifespan: string;
 
   @ApiProperty({
-    type: String,
+    type: ResourceNameVM,
     nullable: true,
-    example: 'https://swapi.info/api/planets/14',
+    example: { id: '14', name: 'Kashyyyk' },
   })
-  public readonly homeworld: string | null;
+  public readonly homeworld: ResourceNameDto | null;
 
   @ApiProperty({
     type: String,
@@ -70,24 +78,24 @@ export class SpecieVM {
   public readonly language: string;
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceNameVM],
     example: [
-      'https://swapi.info/api/people/13',
-      'https://swapi.info/api/people/80',
+      { id: '13', name: 'Chewbacca' },
+      { id: '80', name: 'Tarfful' },
     ],
   })
-  public readonly people: string[];
+  public readonly people: ResourceNameDto[];
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceTitleVM],
     example: [
-      'https://swapi.info/api/films/1',
-      'https://swapi.info/api/films/2',
-      'https://swapi.info/api/films/3',
-      'https://swapi.info/api/films/6',
+      { id: '1', title: 'A New Hope' },
+      { id: '2', title: 'The Empire Strikes Back' },
+      { id: '3', title: 'Return of the Jedi' },
+      { id: '6', title: 'Revenge of the Sith' },
     ],
   })
-  public readonly films: string[];
+  public readonly films: ResourceTitleDto[];
 
   @ApiProperty({
     type: String,
@@ -95,7 +103,7 @@ export class SpecieVM {
   })
   public readonly url: string;
 
-  constructor(specie: SpecieWithIdDto) {
+  constructor(specie: SpecieDetailDto) {
     this.id = specie.id;
     this.name = specie.name;
     this.classification = specie.classification;
