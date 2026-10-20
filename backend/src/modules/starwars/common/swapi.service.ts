@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-const SWAPI_TIMEOUT_MS = 100000;
+const SWAPI_TIMEOUT_MS = 5000;
 
 // General request for all calls to the SWAPI API.
 @Injectable()
