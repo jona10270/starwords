@@ -10,10 +10,10 @@ export interface FilmDTO {
     producer: string;
     release_date: string;
     characters: ResourceDetailName[];
-    planets: string[];
-    starships: string[];
-    vehicles: string[];
-    species: string[];
+    planets: ResourceDetailName[];
+    starships: ResourceDetailName[];
+    vehicles: ResourceDetailName[];
+    species: ResourceDetailName[];
     url: string;
 }
 

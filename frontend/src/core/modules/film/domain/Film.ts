@@ -8,9 +8,9 @@ export interface Film {
     producer: string;
     releaseDate: string;
     characters: ResourceDetailName[];
-    planets: string[];
-    starships: string[];
-    species: string[];
-    vehicles: string[];
+    planets: ResourceDetailName[];
+    starships: ResourceDetailName[];
+    species: ResourceDetailName[];
+    vehicles: ResourceDetailName[];
     urlFilm: string;
 }

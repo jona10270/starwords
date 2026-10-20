@@ -56,6 +56,38 @@ const toDetail = (film: Film) => {
                     to: generatePath(ROUTES.characterDetail, { id: character.id }),
                 })),
             },
+            {
+                title: "Planetas",
+                links: film.planets.map((planet) => ({
+                    id: planet.id,
+                    label: planet.name,
+                    to: generatePath(ROUTES.planetDetail, { id: planet.id }),
+                })),
+            },
+            {
+                title: "Naves",
+                links: film.starships.map((starship) => ({
+                    id: starship.id,
+                    label: starship.name,
+                    to: generatePath(ROUTES.starshipDetail, { id: starship.id }),
+                })),
+            },
+            {
+                title: "Especies",
+                links: film.species.map((specie) => ({
+                    id: specie.id,
+                    label: specie.name,
+                    to: generatePath(ROUTES.specieDetail, { id: specie.id }),
+                })),
+            },
+            {
+                title: "Vehículos",
+                links: film.vehicles.map((vehicle) => ({
+                    id: vehicle.id,
+                    label: vehicle.name,
+                    to: generatePath(ROUTES.vehicleDetail, { id: vehicle.id }),
+                })),
+            },
         ],
     };
 };
