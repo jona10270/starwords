@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { FilmWithIdDto } from '@app/modules/starwars/film/dto/film.all.dto';
+import { FilmDetailDto } from '@app/modules/starwars/film/dto/film.all.dto';
+import { ResourceNameVM } from '../common/resource-ref.view-model';
+import { ResourceNameDto } from '@app/modules/starwars/common/resource-ref.dto';
 
 export class FilmVM {
   @ApiProperty({ type: String, example: '1' })
@@ -27,13 +29,13 @@ export class FilmVM {
   public readonly release_date: string;
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceNameVM],
     example: [
       'https://swapi.info/api/people/1',
       'https://swapi.info/api/people/2',
     ],
   })
-  public readonly characters: string[];
+  public readonly characters: ResourceNameDto[];
 
   @ApiProperty({
     type: [String],
@@ -77,7 +79,7 @@ export class FilmVM {
   })
   public readonly url: string;
 
-  public constructor(film: FilmWithIdDto) {
+  public constructor(film: FilmDetailDto) {
     this.id = film.id;
     this.title = film.title;
     this.episode_id = film.episode_id;

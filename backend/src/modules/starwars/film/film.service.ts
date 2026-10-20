@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { SwapiRequest } from '../common/swapi.service';
-import { FilmAllDto } from './dto/film.all.dto';
+import { FilmAllDto, FilmWithIdDto, FilmDetailDto } from './dto/film.all.dto';
 import { FilmManyResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/film/film.client.many.response';
 import { FilmSingleResponse } from '@app/app/rest/api/modules/starwars/controller/client/response/film/film.client.single.response';
 import { FilmSingleDto } from './dto/film.single.dto';
 import { getIdFromUrl } from '../common/get-id-from-url';
 import { paginate } from '../common/paginate';
 import { filterByText } from '../common/filter-by-text';
+import { ResourceRefService } from '../common/resource-ref.service';
 
 @Injectable()
 export class FilmService {
-  constructor(private readonly swapiRequest: SwapiRequest) {}
+  constructor(
+    private readonly swapiRequest: SwapiRequest,
+    private readonly resourceRefService: ResourceRefService,
+  ) {}
 
   // Get all films of the swapi
   public async getAllFilms(
@@ -29,17 +33,34 @@ export class FilmService {
     const found = filterByText(films, search, (film) => film.title);
     const { items, total } = paginate(found, page, limit);
 
-    return new FilmManyResponse(items, total, page, limit);
+    const detailFilms = await Promise.all(
+      items.map((film) => this.resolveRelation(film))
+    );
+
+    return new FilmManyResponse(detailFilms, total, page, limit);
   }
 
+  // Get one film
   public async getFilm(filmId: string): Promise<FilmSingleResponse> {
     const data = await this.swapiRequest.request<FilmSingleDto>(
       `/films/${filmId}`,
     );
-    const film = {
+    const film = await this.resolveRelation({
       ...data,
-      id: getIdFromUrl(data.url),
-    };
+      id: getIdFromUrl(data.url)
+    })
     return new FilmSingleResponse(film);
   }
+
+  private async resolveRelation(
+    film: FilmWithIdDto,
+  ): Promise<FilmDetailDto> {
+    return {
+      ...film,
+      characters: await Promise.all(
+        film.characters.map((url) => this.resourceRefService.getNameRef('people', url))
+      ),
+    }
+  }
+
 }

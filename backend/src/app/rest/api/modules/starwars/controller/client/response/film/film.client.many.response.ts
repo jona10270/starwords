@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { FilmWithIdDto } from '@app/modules/starwars/film/dto/film.all.dto';
+import { FilmDetailDto } from '@app/modules/starwars/film/dto/film.all.dto';
 import { FilmVM } from '../../../../model/film/film.view-model';
 import { PaginationMetaVM } from '@app/app/common/pagination/pagination-meta.view-model';
 
@@ -16,7 +16,7 @@ export class FilmManyResponse {
   public readonly meta: PaginationMetaVM;
 
   public constructor(
-    data: FilmWithIdDto[],
+    data: FilmDetailDto[],
     total: number,
     page: number,
     limit: number,
