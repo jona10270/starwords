@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { generatePath, useParams } from "react-router-dom";
 
 import { ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel, OpeningCrawl } from "@/ui/molecules";
@@ -46,6 +46,16 @@ const toDetail = (film: Film) => {
             { label: "Naves", value: String(film.starships.length) },
             { label: "Especies", value: String(film.species.length) },
             { label: "Vehículos", value: String(film.vehicles.length) },
+        ],
+        relations: [
+            {
+                title: "Personajes",
+                links: film.characters.map((character) => ({
+                    id: character.id,
+                    label: character.name,
+                    to: generatePath(ROUTES.characterDetail, { id: character.id }),
+                })),
+            },
         ],
     };
 };

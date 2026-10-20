@@ -1,4 +1,5 @@
 import type { PaginationMetaDTO } from "../../common";
+import type { ResourceDetailName } from "../../common";
 
 export interface FilmDTO {
     id: string;
@@ -8,7 +9,7 @@ export interface FilmDTO {
     director: string;
     producer: string;
     release_date: string;
-    characters: string[];
+    characters: ResourceDetailName[];
     planets: string[];
     starships: string[];
     vehicles: string[];

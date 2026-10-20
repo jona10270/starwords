@@ -1,3 +1,4 @@
+import type { ResourceDetailName } from "../../common";
 export interface Film {
     id: string;
     title: string;
@@ -6,7 +7,7 @@ export interface Film {
     director: string;
     producer: string;
     releaseDate: string;
-    characters: string[];
+    characters: ResourceDetailName[];
     planets: string[];
     starships: string[];
     species: string[];
