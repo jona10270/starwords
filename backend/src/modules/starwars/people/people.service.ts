@@ -38,7 +38,9 @@ export class PeopleService {
 
     const { items, total } = paginate(found, page, limit);
 
-    const resolvedPeople = await this.resolveHomeworlds(items);
+    const resolvedPeople = await Promise.all(
+      items.map((person) => this.resolveRelations(person)),
+    );
 
     return new PeopleManyResponse(resolvedPeople, total, page, limit);
   }
@@ -49,30 +51,28 @@ export class PeopleService {
       `/people/${peopleId}`,
     );
 
-    const character = {
+    const character = await this.resolveRelations({
       ...people,
       id: getIdFromUrl(people.url),
-      homeworld: await this.resourceRefService.getNameRef(
-        'planets',
-        people.homeworld,
-      ),
-    };
+    });
 
     return new PeopleSingleResponse(character);
   }
 
-  // Cambio la url del planeta natal por su id y nombre
-  private async resolveHomeworlds(
-    people: PeopleWithIdDto[],
-  ): Promise<PeopleDetailDto[]> {
-    return Promise.all(
-      people.map(async (person) => ({
-        ...person,
-        homeworld: await this.resourceRefService.getNameRef(
-          'planets',
-          person.homeworld,
-        ),
-      })),
-    );
+
+  // Cambio las urls del planeta natal y de las películas por su id y nombre
+  private async resolveRelations(
+    person: PeopleWithIdDto,
+  ): Promise<PeopleDetailDto> {
+    return {
+      ...person,
+      homeworld: await this.resourceRefService.getNameRef(
+        'planets',
+        person.homeworld,
+      ),
+      films: await Promise.all(
+        person.films.map((url) => this.resourceRefService.getTitleRef(url)),
+      ),
+    };
   }
 }

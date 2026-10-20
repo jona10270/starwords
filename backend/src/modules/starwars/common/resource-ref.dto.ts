@@ -12,3 +12,8 @@ export interface ResourceNameDto {
   id: string;
   name: string;
 }
+
+export interface ResourceTitleDto {
+  id: string;
+  title: string;
+}

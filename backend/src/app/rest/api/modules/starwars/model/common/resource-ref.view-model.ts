@@ -1,7 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { ResourceRefDto } from '@app/modules/starwars/common/resource-ref.dto';
+import { ResourceRefDto, ResourceTitleDto } from '@app/modules/starwars/common/resource-ref.dto';
 import { ResourceResidentDto } from '@app/modules/starwars/common/resource-ref.dto';
 import { ResourceNameDto } from '@app/modules/starwars/common/resource-ref.dto';
+
 export class ResourceRefVM {
   @ApiPropertyOptional({ type: String, example: '1' })
   public readonly id: string;
@@ -38,5 +39,18 @@ export class ResourceNameVM {
   constructor(resourceName: ResourceNameDto) {
     this.id = resourceName.id;
     this.name = resourceName.name;
+  }
+}
+
+export class ResourceTitleVM {
+  @ApiPropertyOptional({ type: String, example: '1' })
+  public readonly id: string;
+
+  @ApiPropertyOptional({ type: String, example: 'hoka mo' })
+  public readonly title: string;
+
+  constructor(resourceTitle: ResourceTitleDto) {
+    this.id = resourceTitle.id;
+    this.title = resourceTitle.title;
   }
 }

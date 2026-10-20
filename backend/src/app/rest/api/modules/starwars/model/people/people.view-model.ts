@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import type { PeopleDetailDto } from '@app/modules/starwars/people/dto/people.all.dto';
 import type { ResourceNameDto } from '@app/modules/starwars/common/resource-ref.dto';
-import { ResourceNameVM } from '../common/resource-ref.view-model';
+import { ResourceNameVM, ResourceTitleVM } from '../common/resource-ref.view-model';
 
 export class PeopleVM {
   @ApiProperty({ type: String, example: '1' })
@@ -38,10 +38,10 @@ export class PeopleVM {
   public readonly homeworld: ResourceNameDto;
 
   @ApiProperty({
-    type: [String],
+    type: [ResourceTitleVM],
     example: ['https://swapi.info/api/films/1'],
   })
-  public readonly films: string[];
+  public readonly films: ResourceTitleVM[];
 
   @ApiProperty({
     type: [String],
