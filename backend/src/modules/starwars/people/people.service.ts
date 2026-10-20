@@ -59,7 +59,6 @@ export class PeopleService {
     return new PeopleSingleResponse(character);
   }
 
-
   // Cambio las urls del planeta natal y de las películas por su id y nombre
   private async resolveRelations(
     person: PeopleWithIdDto,
@@ -71,7 +70,14 @@ export class PeopleService {
         person.homeworld,
       ),
       films: await Promise.all(
-        person.films.map((url) => this.resourceRefService.getTitleRef(url)),
+        person.films.map((url) =>
+          this.resourceRefService.getTitleRef('films', url),
+        ),
+      ),
+      species: await Promise.all(
+        person.species.map((url) =>
+          this.resourceRefService.getNameRef('species', url),
+        ),
       ),
     };
   }

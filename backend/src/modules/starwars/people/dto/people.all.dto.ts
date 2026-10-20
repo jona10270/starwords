@@ -1,4 +1,7 @@
-import { ResourceNameDto, ResourceTitleDto } from '../../common/resource-ref.dto';
+import {
+  ResourceNameDto,
+  ResourceTitleDto,
+} from '../../common/resource-ref.dto';
 
 // Dto Promise get all people swapi
 export interface PeopleAllDto {
@@ -20,7 +23,11 @@ export interface PeopleAllDto {
 
 // Lo pongo para que cumpla el id
 export type PeopleWithIdDto = PeopleAllDto & { id: string };
-export type PeopleDetailDto = Omit<PeopleWithIdDto, 'homeworld' | 'films'> & {
+export type PeopleDetailDto = Omit<
+  PeopleWithIdDto,
+  'homeworld' | 'films' | 'species'
+> & {
   homeworld: ResourceNameDto;
   films: ResourceTitleDto[];
+  species: ResourceNameDto[];
 };

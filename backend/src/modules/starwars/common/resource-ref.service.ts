@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { SwapiRequest } from './swapi.service';
 import { ResourceNameDto, ResourceTitleDto } from './resource-ref.dto';
 import { getIdFromUrl } from './get-id-from-url';
-import { title } from 'process';
 
 type NamedResource =
   'people' | 'planets' | 'species' | 'vehicles' | 'starships' | 'films';
@@ -25,11 +24,14 @@ export class ResourceRefService {
   }
 
   // Saco el id y el título de una película a partir de su url
-  public async getTitleRef(url: string): Promise<ResourceTitleDto> {
+  public async getTitleRef(
+    resource: NamedResource,
+    url: string,
+  ): Promise<ResourceTitleDto> {
     const id = getIdFromUrl(url);
 
     const { title } = await this.swapiRequest.request<{ title: string }>(
-      `/films/${id}`,
+      `/${resource}/${id}`,
     );
 
     return { id, title };

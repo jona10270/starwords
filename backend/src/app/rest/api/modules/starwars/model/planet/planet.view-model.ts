@@ -67,22 +67,23 @@ export class PlanetVM {
   public readonly population: string;
 
   @ApiProperty({
-    type: ResourceResidentVM,
+    type: [ResourceResidentVM],
     example: [
-      'https://swapi.info/api/people/1',
-      'https://swapi.info/api/people/2',
+      { id: '1', name: 'Luke Skywalker' },
+      { id: '2', name: 'C-3PO' },
+      { id: '4', name: 'Darth Vader' },
     ],
   })
   public readonly residents: ResourceResidentDto[];
 
   @ApiProperty({
-    type: ResourceRefVM,
+    type: [ResourceRefVM],
     example: [
-      'https://swapi.info/api/films/1',
-      'https://swapi.info/api/films/3',
-      'https://swapi.info/api/films/4',
-      'https://swapi.info/api/films/5',
-      'https://swapi.info/api/films/6',
+      { id: '1', title: 'A New Hope' },
+      { id: '3', title: 'Return of the Jedi' },
+      { id: '4', title: 'The Phantom Menace' },
+      { id: '5', title: 'Attack of the Clones' },
+      { id: '6', title: 'Revenge of the Sith' },
     ],
   })
   public readonly films: ResourceRefDto[];
