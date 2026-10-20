@@ -13,7 +13,7 @@ export interface CharacterDTO {
     gender: string;
     homeworld: ResourceDetailName;
     films: ResourceDetailTitle[];
-    species: string[];
+    species: ResourceDetailName[];
     vehicles: string[];
     starships: string[];
     url: string;

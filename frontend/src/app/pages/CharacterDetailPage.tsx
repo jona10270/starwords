@@ -43,6 +43,14 @@ const toDetail = (character: Character) => {
                     to: generatePath(ROUTES.filmDetail, { id: film.id }),
                 })),
             },
+            {
+                title: "Especies",
+                links: character.species.map((specie) => ({
+                    id: specie.id,
+                    label: specie.name,
+                    to: generatePath(ROUTES.specieDetail, { id: specie.id }),
+                })),
+            },
         ],
     };
 };

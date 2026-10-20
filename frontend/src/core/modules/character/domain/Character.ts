@@ -10,4 +10,5 @@ export interface Character {
     mass: string | null;
     homeWorld: ResourceDetailName;
     films: ResourceDetailTitle[];
+    species: ResourceDetailName[];
 }
