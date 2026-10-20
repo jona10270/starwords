@@ -27,7 +27,7 @@ export const RecordRelations = ({ groups }: RecordRelationsProps) => {
             <p className="mb-5 font-terminal text-[10px] tracking-[0.22em] text-muted uppercase">
                 {total > 0
                     ? `${total} ${total === 1 ? "referencia cruzada" : "referencias cruzadas"} en ${groups.length} ${groups.length === 1 ? "bloque" : "bloques"}`
-                    : "Sin vínculos registrados"}
+                    : "No hay información relacionada"}
             </p>
 
             <div className="flex flex-col gap-[22px]">
@@ -51,7 +51,7 @@ export const RecordRelations = ({ groups }: RecordRelationsProps) => {
                                 ))}
                             </ul>
                         ) : (
-                            <p className="font-terminal text-[11px] tracking-[0.12em] text-faint">Sin registros vinculados</p>
+                            <p className="font-terminal text-[11px] tracking-[0.12em] text-faint">No hay información disponible</p>
                         )}
                     </div>
                 ))}

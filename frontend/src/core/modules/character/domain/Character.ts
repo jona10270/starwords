@@ -11,4 +11,6 @@ export interface Character {
     homeWorld: ResourceDetailName;
     films: ResourceDetailTitle[];
     species: ResourceDetailName[];
+    vehicles: ResourceDetailName[];
+    starships: ResourceDetailName[];
 }

@@ -20,5 +20,7 @@ export const CharacterMapper = {
         homeWorld: dto.homeworld,
         films: dto.films,
         species: dto.species,
+        vehicles: dto.vehicles,
+        starships: dto.starships,
     }),
 }

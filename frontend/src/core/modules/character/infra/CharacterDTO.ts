@@ -14,8 +14,8 @@ export interface CharacterDTO {
     homeworld: ResourceDetailName;
     films: ResourceDetailTitle[];
     species: ResourceDetailName[];
-    vehicles: string[];
-    starships: string[];
+    vehicles: ResourceDetailName[];
+    starships: ResourceDetailName[];
     url: string;
 }
 

@@ -51,6 +51,22 @@ const toDetail = (character: Character) => {
                     to: generatePath(ROUTES.specieDetail, { id: specie.id }),
                 })),
             },
+            {
+                title: "Vehículos",
+                links: character.vehicles.map((vehicle) => ({
+                    id: vehicle.id,
+                    label: vehicle.name,
+                    to: generatePath(ROUTES.vehicleDetail, { id: vehicle.id }),
+                })),
+            },
+            {
+                title: "Naves",
+                links: character.starships.map((starship) => ({
+                    id: starship.id,
+                    label: starship.name,
+                    to: generatePath(ROUTES.starshipDetail, { id: starship.id }),
+                })),
+            },
         ],
     };
 };
