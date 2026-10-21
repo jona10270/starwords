@@ -22,6 +22,7 @@ import { ResourceRefService } from './common/resource-ref.service';
   ],
   controllers: [StarwarsController],
   exports: [
+    SwapiRequest,
     PeopleService,
     FilmService,
     StarshipService,

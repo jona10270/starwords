@@ -18,6 +18,7 @@ import { PlanetService } from '../starwars/planet/planet.service';
 import { SpecieService } from '../starwars/specie/specie.service';
 import { VehiclesService } from '../starwars/vehicles/vehicles.service';
 import { StarshipService } from '../starwars/starships/starship.service';
+import { SwapiRequest } from '../starwars/common/swapi.service';
 
 @Injectable()
 export class FavoritesService {
@@ -31,6 +32,7 @@ export class FavoritesService {
     private readonly specieService: SpecieService,
     private readonly vehicleService: VehiclesService,
     private readonly starshipService: StarshipService,
+    private readonly swapiService: SwapiRequest,
   ) {}
 
   // =====================================================
@@ -143,22 +145,22 @@ export class FavoritesService {
   ): Promise<boolean> {
     switch (resourceType) {
       case ResourceTypeEnum.PEOPLE:
-        return !!(await this.peopleService.getPeople(resourceId));
+        return !!(await this.swapiService.request(`/people/${resourceId}`));
 
       case ResourceTypeEnum.FILM:
-        return !!(await this.filmService.getFilm(resourceId));
+        return !!(await this.swapiService.request(`/films/${resourceId}`));
 
       case ResourceTypeEnum.PLANET:
-        return !!(await this.planetService.getPlanet(resourceId));
+        return !!(await this.swapiService.request(`/planets/${resourceId}`));
 
       case ResourceTypeEnum.SPECIE:
-        return !!(await this.specieService.getSpecie(resourceId));
+        return !!(await this.swapiService.request(`/species/${resourceId}`));
 
       case ResourceTypeEnum.VEHICLE:
-        return !!(await this.vehicleService.getVehicle(resourceId));
+        return !!(await this.swapiService.request(`/vehicles/${resourceId}`));
 
       case ResourceTypeEnum.STARSHIP:
-        return !!(await this.starshipService.getSingleStarship(resourceId));
+        return !!(await this.swapiService.request(`/starships/${resourceId}`));
 
       default:
         throw new NotFoundException('Resource type not found');

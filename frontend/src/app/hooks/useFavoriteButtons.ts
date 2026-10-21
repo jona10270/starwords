@@ -19,6 +19,13 @@ export const useFavoriteButtons = (favoriteType: string) => {
     const markAsSaved = (favoriteId: string) =>
         setSavedIds((current) => new Set(current).add(favoriteId));
 
+    const unmarkAsSaved = (favoriteId: string) =>
+        setSavedIds((current) => {
+            const next = new Set(current);
+            next.delete(favoriteId);
+            return next;
+        });
+
     const save = (favoriteId: string) => {
         // Sin sesion le mando al login y luego vuelve a esta pagina
         if (authState.kind !== "AuthenticatedAuthState") {
@@ -29,13 +36,16 @@ export const useFavoriteButtons = (favoriteType: string) => {
         // Quitar de favoritos llegara con el delete
         if (savedIds.has(favoriteId)) return;
 
+        // Lo pinto en rojo al momento y si el backend falla lo vuelvo a quitar
+        markAsSaved(favoriteId);
+
         addFavorite.mutate(
             { favoriteId, favoriteType },
             {
-                onSuccess: () => markAsSaved(favoriteId),
-                // Si el backend dice que ya lo tengo lo pinto en rojo porque es verdad
+                // Si el backend dice que ya lo tengo lo dejo en rojo porque es verdad
                 onError: (error) => {
-                    if (error instanceof FavoriteError && error.code === "ALREADY_FAVORITE") markAsSaved(favoriteId);
+                    if (error instanceof FavoriteError && error.code === "ALREADY_FAVORITE") return;
+                    unmarkAsSaved(favoriteId);
                 },
             },
         );
@@ -43,7 +53,6 @@ export const useFavoriteButtons = (favoriteType: string) => {
 
     const getFavoriteButton = (favoriteId: string): FavoriteButtonProps => ({
         isFavorite: savedIds.has(favoriteId),
-        isSaving: addFavorite.isPending && addFavorite.variables.favoriteId === favoriteId,
         onClick: () => save(favoriteId),
     });
 
