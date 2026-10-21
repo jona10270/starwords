@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 
 import { FavoriteModel } from './model/favorites.model';
 import { FavoritesEntity } from './data/favorites.entity';
@@ -12,12 +12,6 @@ import { ResourceTypeEnum } from './enum/resource-type.enum';
 import { isUniqueViolation } from '@app/infra/postgres/postgres-errors';
 // Services
 import { UserService } from '../user/user.service';
-import { PeopleService } from '../starwars/people/people.service';
-import { FilmService } from '../starwars/film/film.service';
-import { PlanetService } from '../starwars/planet/planet.service';
-import { SpecieService } from '../starwars/specie/specie.service';
-import { VehiclesService } from '../starwars/vehicles/vehicles.service';
-import { StarshipService } from '../starwars/starships/starship.service';
 import { SwapiRequest } from '../starwars/common/swapi.service';
 
 @Injectable()
@@ -26,12 +20,6 @@ export class FavoritesService {
     @InjectRepository(FavoritesEntity)
     private readonly favoriteRepository: Repository<FavoritesEntity>,
     private readonly userRepository: UserService,
-    private readonly peopleService: PeopleService,
-    private readonly filmService: FilmService,
-    private readonly planetService: PlanetService,
-    private readonly specieService: SpecieService,
-    private readonly vehicleService: VehiclesService,
-    private readonly starshipService: StarshipService,
     private readonly swapiService: SwapiRequest,
   ) {}
 
@@ -116,6 +104,21 @@ export class FavoritesService {
       order: { createdAt: 'DESC' },
     });
     return pfavorites;
+  }
+
+  public async getFavoritesStatus(
+    userId: string,
+    resourceType: ResourceTypeEnum,
+    resourceIds: string[],
+  ): Promise<FavoriteModel[]> {
+    const favorites = this.favoriteRepository.find({
+      where: {
+        userId,
+        resourceType,
+        resourceId: In(resourceIds),
+      },
+    });
+    return favorites;
   }
 
   // =====================================================

@@ -21,6 +21,8 @@ import { FavoriteManyResponse } from './response/favorite.client.many.response';
 import { CurrentUser } from '@app/shared/nestjs-auth/decorator/current-user.decorator';
 import type { UserModel } from '@app/modules/user/domain/user.model';
 import { PaginationQueryDto } from '@app/app/common/pagination/pagination.query.dto';
+import { FavoriteStatusRequestDto } from './request/favorites.client.status.request';
+import { FavoriteStatusResponse } from './response/favorite.client.status.response';
 
 @ApiTags('favorites')
 @ApiBearerAuth()
@@ -41,6 +43,22 @@ export class FavoriteController {
       limit,
     );
     return new FavoriteManyResponse(favorites, total, page, limit);
+  }
+
+  @Get('status')
+  @ApiOkResponse({ type: FavoriterResponse })
+  public async statusFavorite(
+    @CurrentUser() user: UserModel,
+    @Query() query: FavoriteStatusRequestDto,
+  ): Promise<FavoriteStatusResponse> {
+    const { resourceIds, resourceType } = query;
+    const favorites = await this.favoriteService.getFavoritesStatus(
+      user.id,
+      resourceType,
+      resourceIds,
+    );
+
+    return new FavoriteStatusResponse(favorites);
   }
 
   @Post()
