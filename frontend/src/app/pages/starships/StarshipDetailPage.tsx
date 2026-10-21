@@ -1,11 +1,12 @@
 import { generatePath, useParams } from "react-router-dom";
 
-import { ArchiveNote, LoadingBar } from "@/ui/atoms";
+import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel } from "@/ui/molecules";
 import { RecordDetail } from "@/ui/organisms/RecordDetail";
 import type { Starship } from "@/core/modules/starship";
 
 import { useGetStarship } from "../../hooks/useGetStarship";
+import { useFavoriteButtons } from "../../hooks/useFavoriteButtons";
 import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
@@ -68,6 +69,7 @@ export const StarshipDetailPage = () => {
     const { id } = useParams();
 
     const starshipQuery = useGetStarship(id);
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("STARSHIP");
     const starship = starshipQuery.data;
 
     return (
@@ -86,7 +88,9 @@ export const StarshipDetailPage = () => {
                 />
             )}
 
-            {starship && <RecordDetail backPath={ROUTES.starships} {...toDetail(starship)} />}
+            {favoriteError && <AlertNote>{favoriteError}</AlertNote>}
+
+            {starship && <RecordDetail backPath={ROUTES.starships} {...toDetail(starship)} favorite={getFavoriteButton(starship.id)} />}
         </main>
     );
 };

@@ -1,11 +1,12 @@
 import { generatePath, useParams } from "react-router-dom";
 
-import { ArchiveNote, LoadingBar } from "@/ui/atoms";
+import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel } from "@/ui/molecules";
 import { RecordDetail } from "@/ui/organisms/RecordDetail";
 import type { Vehicle } from "@/core/modules/vehicle";
 
 import { useGetVehicle } from "../../hooks/useGetVehicle";
+import { useFavoriteButtons } from "../../hooks/useFavoriteButtons";
 import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
@@ -66,6 +67,7 @@ export const VehicleDetailPage = () => {
     const { id } = useParams();
 
     const vehicleQuery = useGetVehicle(id);
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("VEHICLE");
     const vehicle = vehicleQuery.data;
 
     return (
@@ -84,7 +86,9 @@ export const VehicleDetailPage = () => {
                 />
             )}
 
-            {vehicle && <RecordDetail backPath={ROUTES.vehicles} {...toDetail(vehicle)} />}
+            {favoriteError && <AlertNote>{favoriteError}</AlertNote>}
+
+            {vehicle && <RecordDetail backPath={ROUTES.vehicles} {...toDetail(vehicle)} favorite={getFavoriteButton(vehicle.id)} />}
         </main>
     );
 };

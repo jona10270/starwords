@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
+import { FavoriteButton, type FavoriteButtonProps } from "../atoms";
 import { RecordRelations, type RecordRelationGroup, type RecordStat } from "../molecules";
 
 interface RecordDetailProps {
@@ -16,10 +17,12 @@ interface RecordDetailProps {
     children?: ReactNode;
     // Registros vinculados que pinto al final con enlace a su detalle
     relations?: RecordRelationGroup[];
+    // Si me lo pasan pinto el corazon de favoritos junto al badge
+    favorite?: FavoriteButtonProps;
 }
 
 // Ficha completa de un registro con sus datos destacados y todos sus atributos
-export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, highlights, attributes, children, relations }: RecordDetailProps) => (
+export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, highlights, attributes, children, relations, favorite }: RecordDetailProps) => (
     <article className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
@@ -28,9 +31,12 @@ export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, hig
             >
                 ◄ Volver al archivo central
             </Link>
-            <span className="border border-field px-2.5 py-1.5 font-terminal text-[9px] tracking-[0.2em] whitespace-nowrap text-accent uppercase">
-                {badge}
-            </span>
+            <div className="flex items-center gap-2">
+                <span className="border border-field px-2.5 py-1.5 font-terminal text-[9px] tracking-[0.2em] whitespace-nowrap text-accent uppercase">
+                    {badge}
+                </span>
+                {favorite && <FavoriteButton {...favorite} />}
+            </div>
         </div>
 
         <p className="font-terminal text-[10px] tracking-[0.26em] break-words text-muted uppercase">{breadcrumb}</p>

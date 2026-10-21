@@ -1,11 +1,12 @@
 import { generatePath, useParams } from "react-router-dom";
 
-import { ArchiveNote, LoadingBar } from "@/ui/atoms";
+import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel, OpeningCrawl } from "@/ui/molecules";
 import { RecordDetail } from "@/ui/organisms/RecordDetail";
 import type { Film } from "@/core/modules/film";
 
 import { useGetFilm } from "../../hooks/useGetFilm";
+import { useFavoriteButtons } from "../../hooks/useFavoriteButtons";
 import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
@@ -97,6 +98,7 @@ export const FilmDetailPage = () => {
     const { id } = useParams();
 
     const filmQuery = useGetFilm(id);
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("FILM");
     const film = filmQuery.data;
 
     return (
@@ -115,8 +117,10 @@ export const FilmDetailPage = () => {
                 />
             )}
 
+            {favoriteError && <AlertNote>{favoriteError}</AlertNote>}
+
             {film && (
-                <RecordDetail backPath={ROUTES.films} {...toDetail(film)}>
+                <RecordDetail backPath={ROUTES.films} {...toDetail(film)} favorite={getFavoriteButton(film.id)}>
                     {film.openingCrawl && <OpeningCrawl text={film.openingCrawl} />}
                 </RecordDetail>
             )}

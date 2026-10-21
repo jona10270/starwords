@@ -22,6 +22,7 @@ import { GetAllStarshipsUseCase, GetStarshipUseCase, StarshipHTTPRepository } fr
 import { GetAllVehiclesUseCase, GetVehicleUseCase, VehicleHTTPRepository } from "../modules/vehicle";
 import { GetAllSpeciesUseCase, GetSpecieUseCase, SpecieHTTPRepository } from "../modules/specie";
 import { GetAllPlanetsUseCase, GetPlanetUseCase, PlanetHTTPRepository } from "../modules/planet";
+import { AddFavoriteUseCase, FavoriteHTTPRepository } from "../modules/favorite";
 
 export const authStore = createAuthStore();
 
@@ -46,6 +47,7 @@ const starshipRepository = new StarshipHTTPRepository({ httpClient });
 const vehicleRepository = new VehicleHTTPRepository({ httpClient });
 const specieRepository = new SpecieHTTPRepository({ httpClient });
 const planetRepository = new PlanetHTTPRepository({ httpClient });
+const favoriteRepository = new FavoriteHTTPRepository({ httpClient});
 
 // =====================================================
 // AUTH
@@ -110,7 +112,6 @@ export const getVehicleUseCase = new GetVehicleUseCase({
     vehicleRepository
 })
 
-
 // =====================================================
 // GET SPECIES
 // =====================================================
@@ -131,4 +132,11 @@ export const getAllPlanetsUseCase = new GetAllPlanetsUseCase({
 
 export const getPlanetUseCase = new GetPlanetUseCase({
     planetRepository
+})
+
+// =====================================================
+// FAVORITES
+// =====================================================
+export const addFavoriteUseCase = new AddFavoriteUseCase({
+    favoriteRepository
 })

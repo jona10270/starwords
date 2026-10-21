@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { generatePath, useSearchParams } from "react-router-dom";
 
-import { ArchiveNote, LoadingBar } from "@/ui/atoms";
+import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ArchiveHeading, ErrorPanel, Pagination, SearchField, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
 import { RecordGrid, type RecordItem } from "@/ui/organisms/RecordGrid";
 import type { Vehicle } from "@/core/modules/vehicle";
 
 import { useListVehicles } from "@/app/hooks/useListVehicles";
+import { useFavoriteButtons } from "@/app/hooks/useFavoriteButtons";
 import { isRetryable } from "@/app/hooks/retryResource";
 import { useUrlSearch } from "@/app/hooks/useUrlSearch";
 import { ROUTES } from "@/app/navigation/routes";
@@ -43,6 +44,7 @@ export const VehiclesListPage = () => {
         search: search || undefined,
     });
     const [view, setView] = useState<RecordView>("grid");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("VEHICLE");
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
     const goToPage = (nextPage: number) => {
@@ -86,7 +88,11 @@ export const VehiclesListPage = () => {
                         />
                         <ViewToggle value={view} onChange={setView} />
                     </Toolbar>
-                    <RecordGrid records={data.items.map(toRecord)} view={view} />
+                    {favoriteError && <AlertNote className="mt-4">{favoriteError}</AlertNote>}
+                    <RecordGrid
+                        records={data.items.map((vehicle) => ({ ...toRecord(vehicle), favorite: getFavoriteButton(vehicle.id) }))}
+                        view={view}
+                    />
                     {data.items.length === 0 && (
                         <ArchiveNote className="mt-12">
                             {search ? `Ningún registro coincide con «${search}»` : "No hay registros en esta página"}

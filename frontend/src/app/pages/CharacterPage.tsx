@@ -4,12 +4,13 @@ import { ROUTES } from "../navigation/routes";
 import { PAGE_PARAM, PAGE_SIZE, readPageParam } from "../navigation/pagination";
 import { SEARCH_MAX_LENGTH } from "../navigation/search";
 
-import { ArchiveNote, LoadingBar } from "@/ui/atoms";
+import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ArchiveHeading, ErrorPanel, Pagination, SearchField, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
 import { RecordGrid, type RecordItem } from "@/ui/organisms/RecordGrid";
 import type { Character } from "@/core/modules/character";
 
 import { useGetCharacter } from "../hooks/useCharacters";
+import { useFavoriteButtons } from "../hooks/useFavoriteButtons";
 import { isRetryable } from "../hooks/retryResource";
 import { useUrlSearch } from "../hooks/useUrlSearch";
 
@@ -44,6 +45,7 @@ export const CharacterPage = () => {
         search: search || undefined,
     });
     const [view, setView] = useState<RecordView>("grid");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PEOPLE");
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
     const goToPage = (nextPage: number) => {
@@ -87,7 +89,11 @@ export const CharacterPage = () => {
                         />
                         <ViewToggle value={view} onChange={setView} />
                     </Toolbar>
-                    <RecordGrid records={data.items.map(toRecord)} view={view} />
+                    {favoriteError && <AlertNote className="mt-4">{favoriteError}</AlertNote>}
+                    <RecordGrid
+                        records={data.items.map((character) => ({ ...toRecord(character), favorite: getFavoriteButton(character.id) }))}
+                        view={view}
+                    />
                     {data.items.length === 0 && (
                         <ArchiveNote className="mt-12">
                             {search ? `Ningún registro coincide con «${search}»` : "No hay registros en esta página"}

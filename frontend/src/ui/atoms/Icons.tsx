@@ -89,3 +89,9 @@ export const SearchIcon = (props: IconProps) => (
         <line x1="16.5" y1="16.5" x2="21" y2="21" />
     </LineIcon>
 );
+
+export const HeartIcon = (props: IconProps) => (
+    <LineIcon {...props}>
+        <path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z" />
+    </LineIcon>
+);

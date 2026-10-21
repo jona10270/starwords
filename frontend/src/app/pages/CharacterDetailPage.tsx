@@ -1,11 +1,12 @@
 import { generatePath, useParams } from "react-router-dom"
 
-import { ArchiveNote, LoadingBar } from "@/ui/atoms";
+import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel } from "@/ui/molecules";
 import { RecordDetail } from "@/ui/organisms/RecordDetail";
 import type { Character } from "@/core/modules/character";
 
 import { useOneGetCharacter } from "../hooks/useOneCharacter";
+import { useFavoriteButtons } from "../hooks/useFavoriteButtons";
 import { isRetryable } from "../hooks/retryResource";
 import { ROUTES } from "../navigation/routes";
 
@@ -75,6 +76,7 @@ export const CharacterDetailPage = () => {
     const { id } = useParams();
 
     const characterQuery = useOneGetCharacter(id);
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PEOPLE");
     const character = characterQuery.data
     return (
         <main className="relative z-10 mx-auto max-w-[1280px] px-4 pt-12 pb-24 sm:px-7">
@@ -92,7 +94,9 @@ export const CharacterDetailPage = () => {
                 />
             )}
 
-            {character && <RecordDetail backPath={ROUTES.characters} {...toDetail(character)} />}
+            {favoriteError && <AlertNote>{favoriteError}</AlertNote>}
+
+            {character && <RecordDetail backPath={ROUTES.characters} {...toDetail(character)} favorite={getFavoriteButton(character.id)} />}
         </main>
     );
 }

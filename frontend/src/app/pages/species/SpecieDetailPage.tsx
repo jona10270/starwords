@@ -1,11 +1,12 @@
 import { generatePath, useParams } from "react-router-dom";
 
-import { ArchiveNote, LoadingBar } from "@/ui/atoms";
+import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel } from "@/ui/molecules";
 import { RecordDetail } from "@/ui/organisms/RecordDetail";
 import type { Specie } from "@/core/modules/specie";
 
 import { useGetSpecie } from "../../hooks/useGetSpecie";
+import { useFavoriteButtons } from "../../hooks/useFavoriteButtons";
 import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
@@ -65,6 +66,7 @@ export const SpecieDetailPage = () => {
     const { id } = useParams();
 
     const specieQuery = useGetSpecie(id);
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("SPECIE");
     const specie = specieQuery.data;
 
     return (
@@ -83,7 +85,9 @@ export const SpecieDetailPage = () => {
                 />
             )}
 
-            {specie && <RecordDetail backPath={ROUTES.species} {...toDetail(specie)} />}
+            {favoriteError && <AlertNote>{favoriteError}</AlertNote>}
+
+            {specie && <RecordDetail backPath={ROUTES.species} {...toDetail(specie)} favorite={getFavoriteButton(specie.id)} />}
         </main>
     );
 };

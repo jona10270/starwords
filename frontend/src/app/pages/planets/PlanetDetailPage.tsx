@@ -1,11 +1,12 @@
 import { generatePath, useParams } from "react-router-dom";
 
-import { ArchiveNote, LoadingBar } from "@/ui/atoms";
+import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ErrorPanel } from "@/ui/molecules";
 import { RecordDetail } from "@/ui/organisms/RecordDetail";
 import type { Planet } from "@/core/modules/planet";
 
 import { useGetPlanet } from "../../hooks/useGetPlanet";
+import { useFavoriteButtons } from "../../hooks/useFavoriteButtons";
 import { isRetryable } from "../../hooks/retryResource";
 import { ROUTES } from "../../navigation/routes";
 
@@ -64,6 +65,7 @@ export const PlanetDetailPage = () => {
     const { id } = useParams();
 
     const planetQuery = useGetPlanet(id);
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PLANET");
     const planet = planetQuery.data;
 
     return (
@@ -82,7 +84,9 @@ export const PlanetDetailPage = () => {
                 />
             )}
 
-            {planet && <RecordDetail backPath={ROUTES.planets} {...toDetail(planet)} />}
+            {favoriteError && <AlertNote>{favoriteError}</AlertNote>}
+
+            {planet && <RecordDetail backPath={ROUTES.planets} {...toDetail(planet)} favorite={getFavoriteButton(planet.id)} />}
         </main>
     );
 };
