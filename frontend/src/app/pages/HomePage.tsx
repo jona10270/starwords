@@ -10,10 +10,7 @@ export const HomePage = () => {
 
     return (
         <main className="relative z-10 mx-auto flex max-w-[1280px] flex-col items-center px-4 pt-24 pb-24 text-center sm:px-7">
-            <p className="font-terminal text-[10px] tracking-[0.42em] text-[#6f747c] uppercase">
-                SWAPI · Archivo central
-            </p>
-            <h1 className="mt-4 text-[34px] leading-tight font-bold tracking-[0.14em] text-white uppercase sm:text-[48px]">
+            <h1 className="text-[34px] leading-tight font-bold tracking-[0.14em] text-white uppercase sm:text-[48px]">
                 Bienvenido
                 {username && (
                     <>
@@ -22,7 +19,7 @@ export const HomePage = () => {
                 )}
             </h1>
             <p className="mt-6 max-w-[52ch] font-terminal text-xs leading-relaxed tracking-[0.08em] text-dim">
-                La base de datos galáctica de Star Wars: personajes, películas, naves, vehículos, especies y planetas.
+                Explora el universo de Star Wars: personajes, películas, naves, vehículos, especies y planetas.
             </p>
             <Link
                 to={ROUTES.characters}

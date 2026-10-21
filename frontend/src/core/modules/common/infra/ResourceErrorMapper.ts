@@ -7,7 +7,7 @@ const toCommonError = (error: HttpError): ResourceError => {
     }
 
     if (error.status === 502 || error.status === 504) {
-        return new ResourceError('UPSTREAM_UNAVAILABLE', 'El archivo galáctico no responde, inténtalo en un momento');
+        return new ResourceError('UPSTREAM_UNAVAILABLE', 'Los datos no responden ahora mismo, inténtalo en un momento');
     }
 
     if (error.status === 429) {

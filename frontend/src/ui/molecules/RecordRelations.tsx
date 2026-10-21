@@ -15,20 +15,20 @@ interface RecordRelationsProps {
     groups: RecordRelationGroup[];
 }
 
-// Bloque de registros vinculados con un enlace al detalle de cada uno
+// Bloque de lo relacionado con un enlace a la ficha de cada uno
 export const RecordRelations = ({ groups }: RecordRelationsProps) => {
     const total = groups.reduce((sum, group) => sum + group.links.length, 0);
 
     return (
         <section className="border border-line bg-surface p-[22px] sm:p-6">
-            <h2 className="mb-1.5 text-[15px] font-bold tracking-[0.18em] text-white uppercase">
-                Archivos vinculados en la base de datos
+            <h2 className="mb-5 text-[15px] font-bold tracking-[0.18em] text-white uppercase">
+                Relacionado
             </h2>
-            <p className="mb-5 font-terminal text-[10px] tracking-[0.22em] text-muted uppercase">
-                {total > 0
-                    ? `${total} ${total === 1 ? "referencia cruzada" : "referencias cruzadas"} en ${groups.length} ${groups.length === 1 ? "bloque" : "bloques"}`
-                    : "No hay información relacionada"}
-            </p>
+            {total === 0 && (
+                <p className="mb-5 font-terminal text-[10px] tracking-[0.22em] text-muted uppercase">
+                    No hay información relacionada
+                </p>
+            )}
 
             <div className="flex flex-col gap-[22px]">
                 {groups.map(({ title, links }) => (

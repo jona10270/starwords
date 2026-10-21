@@ -8,7 +8,6 @@ interface RecordDetailProps {
     // Recibo la ruta de vuelta de fuera para que la ui no dependa del router de la app
     backPath: string;
     badge: string;
-    breadcrumb: string;
     title: string;
     subtitle: string;
     highlights: RecordStat[];
@@ -22,14 +21,14 @@ interface RecordDetailProps {
 }
 
 // Ficha completa de un registro con sus datos destacados y todos sus atributos
-export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, highlights, attributes, children, relations, favorite }: RecordDetailProps) => (
+export const RecordDetail = ({ backPath, badge, title, subtitle, highlights, attributes, children, relations, favorite }: RecordDetailProps) => (
     <article className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
                 to={backPath}
                 className="flex items-center gap-2.5 font-terminal text-[11px] tracking-[0.24em] text-dim uppercase transition-[color,text-shadow] duration-200 hover:text-accent hover:[text-shadow:0_0_12px_rgba(247,217,43,0.7)]"
             >
-                ◄ Volver al archivo central
+                ◄ Volver al listado
             </Link>
             <div className="flex items-center gap-2">
                 <span className="border border-field px-2.5 py-1.5 font-terminal text-[9px] tracking-[0.2em] whitespace-nowrap text-accent uppercase">
@@ -38,8 +37,6 @@ export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, hig
                 {favorite && <FavoriteButton {...favorite} />}
             </div>
         </div>
-
-        <p className="font-terminal text-[10px] tracking-[0.26em] break-words text-muted uppercase">{breadcrumb}</p>
 
         <header className="border border-line bg-[linear-gradient(#080808,#030303)] p-5 sm:p-[30px]">
             <h1 className="text-[30px] leading-[1.05] font-bold tracking-[0.1em] break-words text-accent uppercase [text-shadow:0_0_26px_rgba(247,217,43,0.25)] sm:text-[42px]">
@@ -65,7 +62,7 @@ export const RecordDetail = ({ backPath, badge, breadcrumb, title, subtitle, hig
 
         <section className="border border-line bg-surface p-[22px]">
             <h2 className="mb-[18px] border-b border-[#161616] pb-3 font-terminal text-[10px] font-medium tracking-[0.3em] text-accent uppercase">
-                Atributos técnicos completos
+                Todos los datos
             </h2>
             <dl className="grid grid-cols-[repeat(auto-fit,minmax(min(150px,100%),1fr))] gap-x-5 gap-y-4">
                 {attributes.map(({ label, value }) => (

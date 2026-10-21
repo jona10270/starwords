@@ -35,12 +35,10 @@ const toDetail = (film: Film) => {
 
     return {
         badge: `EP ${String(film.episodeId).padStart(2, "0")} · ${CATEGORY_LABEL}`,
-        breadcrumb: `SWAPI · Archivo central / ${CATEGORY_LABEL} / ${film.title}`,
         title: film.title,
         subtitle: highlights.slice(0, 2).map(({ label, value }) => `${label}: ${value}`).join(" · "),
         highlights,
         attributes: [
-            { label: "Registro", value: film.id },
             ...highlights,
             { label: "Personajes", value: String(film.characters.length) },
             { label: "Planetas", value: String(film.planets.length) },
@@ -106,7 +104,7 @@ export const FilmDetailPage = () => {
             {filmQuery.isPending && <LoadingBar />}
 
             {filmQuery.isPending && (
-                <ArchiveNote className="mt-12">Descodificando registro galáctico…</ArchiveNote>
+                <ArchiveNote className="mt-12">Cargando…</ArchiveNote>
             )}
 
             {filmQuery.isError && (

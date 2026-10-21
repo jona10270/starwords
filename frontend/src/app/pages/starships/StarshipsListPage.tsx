@@ -22,7 +22,6 @@ const CATEGORY_LABEL = "Starships";
 const toRecord = (starship: Starship): RecordItem => ({
     key: starship.id,
     title: starship.name,
-    badge: `#${starship.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
     stats: [
         { label: "Clase", value: formatRecordValue(starship.starshipClass) },
         { label: "Fabricante", value: formatRecordValue(starship.manufacturer) },
@@ -59,17 +58,17 @@ export const StarshipsListPage = () => {
     };
 
     let counter = "";
-    if (data) counter = data.total ? `${data.total} registros · página ${page} de ${data.totalPages}` : "0 registros";
-    if (isPending) counter = "Descodificando...";
+    if (data) counter = data.total ? `${data.total} resultados · página ${page} de ${data.totalPages}` : "0 resultados";
+    if (isPending) counter = "Cargando...";
     if (isError && !data) counter = "Sin señal";
 
     return (
         <main className="relative z-10 mx-auto max-w-[1280px] px-4 pt-12 pb-24 sm:px-7">
             {(isPending || isPlaceholderData) && <LoadingBar />}
 
-            <ArchiveHeading eyebrow="SWAPI · Archivo central" title={CATEGORY_LABEL} counter={counter} />
+            <ArchiveHeading title={CATEGORY_LABEL} counter={counter} />
 
-            {isPending && <ArchiveNote className="mt-12">Descodificando base de datos galáctica…</ArchiveNote>}
+            {isPending && <ArchiveNote className="mt-12">Cargando…</ArchiveNote>}
 
             {isError && (
                 <ErrorPanel
@@ -98,7 +97,7 @@ export const StarshipsListPage = () => {
                     />
                     {data.items.length === 0 && (
                         <ArchiveNote className="mt-12">
-                            {search ? `Ningún registro coincide con «${search}»` : "No hay registros en esta página"}
+                            {search ? `Nada coincide con «${search}»` : "No hay nada en esta página"}
                         </ArchiveNote>
                     )}
                     <Pagination page={page} totalPages={data.totalPages} onPageChange={goToPage} />

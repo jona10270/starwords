@@ -22,7 +22,7 @@ export const Header = ({ items, homePath, auth }: HeaderProps) => {
                 <div className="flex items-center justify-between gap-6 border-b border-[#111] px-4 py-3.5 sm:px-7">
                     <ResourceIconNav items={items} />
 
-                    <Wordmark to={homePath} title="SWAPI" tagline="Galactic database" />
+                    <Wordmark to={homePath} title="Nebulosa" />
 
                     <div className="flex flex-1 items-center justify-end gap-4">
                         <div className="hidden items-center gap-4 lg:flex">
@@ -52,15 +52,6 @@ export const Header = ({ items, homePath, auth }: HeaderProps) => {
                     />
                 )}
             </header>
-
-            <div className="relative z-10 flex items-center justify-center gap-2 border-b border-[#161616] bg-[#0a0a0a] px-5 py-[9px]">
-                <span className="font-terminal text-[10px] tracking-[0.3em] text-[#7d818a] uppercase">
-                    Star Wars on SWAPI database
-                </span>
-                <span aria-hidden="true" className="text-[10px] text-accent">
-                    ▸
-                </span>
-            </div>
         </>
     );
 };

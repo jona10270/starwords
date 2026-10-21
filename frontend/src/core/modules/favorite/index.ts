@@ -10,6 +10,7 @@ export * from './domain/DeleteFavorite';
 export * from './domain/Favorite';
 export * from './domain/FavoriteError';
 export * from './domain/FavoriteRepository';
+export * from './domain/FavoriteWithName';
 export * from './domain/StatusFavoriteRequest';
 
 // INFRA

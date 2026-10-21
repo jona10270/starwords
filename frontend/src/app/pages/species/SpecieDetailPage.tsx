@@ -24,13 +24,11 @@ const toDetail = (specie: Specie) => {
     ];
 
     return {
-        badge: `#${specie.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
-        breadcrumb: `SWAPI · Archivo central / ${CATEGORY_LABEL} / ${specie.name}`,
+        badge: CATEGORY_LABEL,
         title: specie.name,
         subtitle: highlights.slice(0, 2).map(({ label, value }) => `${label}: ${value}`).join(" · "),
         highlights,
         attributes: [
-            { label: "Registro", value: specie.id },
             ...highlights,
             { label: "Altura media", value: formatRecordValue(specie.averageHeight, "cm") },
             { label: "Color de piel", value: formatRecordValue(specie.skinColors) },
@@ -74,7 +72,7 @@ export const SpecieDetailPage = () => {
             {specieQuery.isPending && <LoadingBar />}
 
             {specieQuery.isPending && (
-                <ArchiveNote className="mt-12">Descodificando registro galáctico…</ArchiveNote>
+                <ArchiveNote className="mt-12">Cargando…</ArchiveNote>
             )}
 
             {specieQuery.isError && (

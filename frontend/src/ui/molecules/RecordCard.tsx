@@ -9,7 +9,8 @@ export interface RecordStat {
 
 export interface RecordCardProps {
     title: string;
-    badge: string;
+    // Etiqueta corta opcional como el episodio de una pelicula
+    badge?: string;
     stats: RecordStat[];
     // En la vista de lista reparto los datos en una sola fila
     wide?: boolean;
@@ -26,9 +27,11 @@ export const RecordCard = ({ title, badge, detailPath, stats, wide = false, favo
                 {title}
             </h2>
             <div className="flex shrink-0 items-center gap-2">
-                <span className="border border-field px-2 py-1 font-terminal text-[9px] tracking-[0.2em] whitespace-nowrap text-dim uppercase">
-                    {badge}
-                </span>
+                {badge && (
+                    <span className="border border-field px-2 py-1 font-terminal text-[9px] tracking-[0.2em] whitespace-nowrap text-dim uppercase">
+                        {badge}
+                    </span>
+                )}
                 {favorite && <FavoriteButton {...favorite} />}
             </div>
         </header>
@@ -49,7 +52,7 @@ export const RecordCard = ({ title, badge, detailPath, stats, wide = false, favo
                 tracking-[0.24em] text-dim uppercase transition-[color,text-shadow] duration-200 hover:text-accent
                 hover:[text-shadow:0_0_12px_rgba(247,217,43,0.6)]"
             >
-                Ver registro completo
+                Ver ficha
             </Link>
         )}
     </article>

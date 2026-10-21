@@ -24,13 +24,11 @@ const toDetail = (starship: Starship) => {
     ];
 
     return {
-        badge: `#${starship.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
-        breadcrumb: `SWAPI · Archivo central / ${CATEGORY_LABEL} / ${starship.name}`,
+        badge: CATEGORY_LABEL,
         title: starship.name,
         subtitle: highlights.slice(0, 2).map(({ label, value }) => `${label}: ${value}`).join(" · "),
         highlights,
         attributes: [
-            { label: "Registro", value: starship.id },
             ...highlights,
             { label: "Longitud", value: formatRecordValue(starship.length, "m") },
             { label: "Velocidad atmosférica", value: formatRecordValue(starship.maxAtmospheringSpeed, "km/h") },
@@ -77,7 +75,7 @@ export const StarshipDetailPage = () => {
             {starshipQuery.isPending && <LoadingBar />}
 
             {starshipQuery.isPending && (
-                <ArchiveNote className="mt-12">Descodificando registro galáctico…</ArchiveNote>
+                <ArchiveNote className="mt-12">Cargando…</ArchiveNote>
             )}
 
             {starshipQuery.isError && (

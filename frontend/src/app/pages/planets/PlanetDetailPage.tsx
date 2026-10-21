@@ -24,13 +24,11 @@ const toDetail = (planet: Planet) => {
     ];
 
     return {
-        badge: `#${planet.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
-        breadcrumb: `SWAPI · Archivo central / ${CATEGORY_LABEL} / ${planet.name}`,
+        badge: CATEGORY_LABEL,
         title: planet.name,
         subtitle: highlights.slice(0, 2).map(({ label, value }) => `${label}: ${value}`).join(" · "),
         highlights,
         attributes: [
-            { label: "Registro", value: planet.id },
             ...highlights,
             { label: "Periodo de rotación", value: formatRecordValue(planet.rotationPeriod, "horas") },
             { label: "Periodo orbital", value: formatRecordValue(planet.orbitalPeriod, "días") },
@@ -73,7 +71,7 @@ export const PlanetDetailPage = () => {
             {planetQuery.isPending && <LoadingBar />}
 
             {planetQuery.isPending && (
-                <ArchiveNote className="mt-12">Descodificando registro galáctico…</ArchiveNote>
+                <ArchiveNote className="mt-12">Cargando…</ArchiveNote>
             )}
 
             {planetQuery.isError && (

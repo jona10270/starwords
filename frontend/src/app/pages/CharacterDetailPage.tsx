@@ -25,13 +25,11 @@ const toDetail = (character: Character) => {
     ];
 
     return {
-        badge: `#${character.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
-        breadcrumb: `SWAPI · Archivo central / ${CATEGORY_LABEL} / ${character.name}`,
+        badge: CATEGORY_LABEL,
         title: character.name,
         subtitle: highlights.slice(0, 2).map(({ label, value }) => `${label}: ${value}`).join(" · "),
         highlights,
         attributes: [
-            { label: "Registro", value: character.id },
             ...highlights,
             { label: "Planeta natal", value: character.homeWorld.name },
         ],
@@ -83,7 +81,7 @@ export const CharacterDetailPage = () => {
             {characterQuery.isPending && <LoadingBar />}
 
             {characterQuery.isPending && (
-                <ArchiveNote className="mt-12">Descodificando registro galáctico…</ArchiveNote>
+                <ArchiveNote className="mt-12">Cargando…</ArchiveNote>
             )}
 
             {characterQuery.isError && (

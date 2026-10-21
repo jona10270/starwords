@@ -3,7 +3,7 @@ import { SwapiRequest } from './swapi.service';
 import { ResourceNameDto, ResourceTitleDto } from './resource-ref.dto';
 import { getIdFromUrl } from './get-id-from-url';
 
-type NamedResource =
+export type NamedResource =
   'people' | 'planets' | 'species' | 'vehicles' | 'starships' | 'films';
 
 // Lo minimo que necesito de cada registro de swapi para sacar su nombre
@@ -42,6 +42,16 @@ export class ResourceRefService {
     const item = await this.findById(resource, id);
 
     return { id, title: item.title ?? '' };
+  }
+
+  // Saco el nombre o el título de un registro cuando ya tengo su id
+  public async getNameById(
+    resource: NamedResource,
+    id: string,
+  ): Promise<string> {
+    const item = await this.findById(resource, id);
+
+    return item.name ?? item.title ?? '';
   }
 
   // Busco el registro en la coleccion entera en vez de pedirlo a swapi

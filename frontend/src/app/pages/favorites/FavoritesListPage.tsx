@@ -5,7 +5,7 @@ import { generatePath, useSearchParams } from "react-router-dom";
 import { AlertNote, ArchiveNote, LoadingBar } from "@/ui/atoms";
 import { ArchiveHeading, ErrorPanel, Pagination, Toolbar, ViewToggle, type RecordView } from "@/ui/molecules";
 import { RecordGrid, type RecordItem } from "@/ui/organisms/RecordGrid";
-import type { Favorite } from "@/core/modules/favorite";
+import type { FavoriteWithName } from "@/core/modules/favorite";
 
 import { useListFavorites } from "@/app/hooks/useListFavorites";
 import { useDeleteFavorite } from "@/app/hooks/useDeleteFavorite";
@@ -15,13 +15,13 @@ import { PAGE_PARAM, PAGE_SIZE, readPageParam } from "@/app/navigation/paginatio
 const CATEGORY_LABEL = "Favoritos";
 
 // Lo que necesito de cada tipo para pintar su tarjeta y enlazar a su ficha
-const RESOURCE_INFO: Record<string, { label: string; category: string; detailRoute: string }> = {
-    PEOPLE: { label: "Personaje", category: "People", detailRoute: ROUTES.characterDetail },
-    FILM: { label: "Película", category: "Films", detailRoute: ROUTES.filmDetail },
-    STARSHIP: { label: "Nave", category: "Starships", detailRoute: ROUTES.starshipDetail },
-    VEHICLE: { label: "Vehículo", category: "Vehicles", detailRoute: ROUTES.vehicleDetail },
-    SPECIE: { label: "Especie", category: "Species", detailRoute: ROUTES.specieDetail },
-    PLANET: { label: "Planeta", category: "Planets", detailRoute: ROUTES.planetDetail },
+const RESOURCE_INFO: Record<string, { label: string; detailRoute: string }> = {
+    PEOPLE: { label: "Personaje", detailRoute: ROUTES.characterDetail },
+    FILM: { label: "Película", detailRoute: ROUTES.filmDetail },
+    STARSHIP: { label: "Nave", detailRoute: ROUTES.starshipDetail },
+    VEHICLE: { label: "Vehículo", detailRoute: ROUTES.vehicleDetail },
+    SPECIE: { label: "Especie", detailRoute: ROUTES.specieDetail },
+    PLANET: { label: "Planeta", detailRoute: ROUTES.planetDetail },
 };
 
 // Paso la fecha del backend a 21 oct 2026
@@ -77,19 +77,16 @@ export const FavoritesListPage = () => {
     };
 
     // Paso un favorito al formato de tarjeta que entiende la ui
-    const toRecord = (favorite: Favorite): RecordItem => {
+    const toRecord = (favorite: FavoriteWithName): RecordItem => {
         const info = RESOURCE_INFO[favorite.favoriteType];
-        const number = favorite.favoriteId.padStart(2, "0");
+        const typeLabel = info?.label ?? favorite.favoriteType;
 
         return {
             key: favorite.id,
-            title: `${info?.label ?? favorite.favoriteType} #${number}`,
-            badge: `#${number} · ${info?.category ?? favorite.favoriteType}`,
-            stats: [
-                { label: "Tipo", value: info?.label ?? favorite.favoriteType },
-                { label: "Registro", value: `#${number}` },
-                { label: "Guardado", value: formatSavedDate(favorite.createdAt) },
-            ],
+            // Si el backend no encuentra el nombre enseño solo el tipo
+            title: favorite.name || `${typeLabel} sin nombre`,
+            badge: typeLabel,
+            stats: [{ label: "Guardado", value: formatSavedDate(favorite.createdAt) }],
             detailPath: info ? generatePath(info.detailRoute, { id: favorite.favoriteId }) : undefined,
             favorite: {
                 isFavorite: !removingIds.has(favorite.id),
@@ -99,17 +96,17 @@ export const FavoritesListPage = () => {
     };
 
     let counter = "";
-    if (data) counter = data.total ? `${data.total} registros · página ${page} de ${data.totalPages}` : "0 registros";
-    if (isPending) counter = "Descodificando...";
+    if (data) counter = data.total ? `${data.total} guardados · página ${page} de ${data.totalPages}` : "0 guardados";
+    if (isPending) counter = "Cargando...";
     if (isError && !data) counter = "Sin señal";
 
     return (
         <main className="relative z-10 mx-auto max-w-[1280px] px-4 pt-12 pb-24 sm:px-7">
             {(isPending || isPlaceholderData) && <LoadingBar />}
 
-            <ArchiveHeading eyebrow="SWAPI · Archivo personal" title={CATEGORY_LABEL} counter={counter} />
+            <ArchiveHeading title={CATEGORY_LABEL} counter={counter} />
 
-            {isPending && <ArchiveNote className="mt-12">Descodificando tus registros guardados…</ArchiveNote>}
+            {isPending && <ArchiveNote className="mt-12">Cargando tus favoritos…</ArchiveNote>}
 
             {isError && (
                 <ErrorPanel message={error.message} onRetry={() => refetch()} isRetrying={isFetching} />
@@ -125,8 +122,8 @@ export const FavoritesListPage = () => {
                     {data.items.length === 0 && (
                         <ArchiveNote className="mt-12">
                             {data.total === 0
-                                ? "Aún no tienes favoritos · pulsa el corazón de cualquier registro para guardarlo aquí"
-                                : "No hay registros en esta página"}
+                                ? "Aún no tienes favoritos · pulsa el corazón de un personaje, película o planeta para guardarlo aquí"
+                                : "No hay nada en esta página"}
                         </ArchiveNote>
                     )}
                     <Pagination page={page} totalPages={data.totalPages} onPageChange={goToPage} />

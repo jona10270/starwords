@@ -13,7 +13,7 @@ const toCommonError = (error: HttpError): FavoriteError => {
     }
 
     if (error.status === 502 || error.status === 504) {
-        return new FavoriteError('UPSTREAM_UNAVAILABLE', 'El archivo galáctico no responde, inténtalo en un momento');
+        return new FavoriteError('UPSTREAM_UNAVAILABLE', 'Los datos no responden ahora mismo, inténtalo en un momento');
     }
 
     if (error.status === 429) {
@@ -32,7 +32,7 @@ export const FavoriteErrorMapper = {
         if (!(error instanceof HttpError)) return toUnexpectedError(error);
 
         if (error.status === 404) {
-            return new FavoriteError('NOT_FOUND', 'Ese registro no existe');
+            return new FavoriteError('NOT_FOUND', 'Eso ya no existe');
         }
 
         if (error.status === 409) {

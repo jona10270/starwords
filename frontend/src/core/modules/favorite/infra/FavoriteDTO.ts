@@ -31,8 +31,12 @@ export interface FavoriteStatusResponseDTO {
     favorite: FavoriteDTO[],
 };
 
+export interface FavoriteWithNameDTO extends FavoriteDTO {
+    name: string | null;
+};
+
 // Una pagina de mis favoritos con su meta de paginacion
 export interface FavoriteListResponseDTO {
-    favorites: FavoriteDTO[];
+    favorites: FavoriteWithNameDTO[];
     meta: PaginationMetaDTO;
 };

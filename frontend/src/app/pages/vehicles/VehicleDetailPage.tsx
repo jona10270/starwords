@@ -24,13 +24,11 @@ const toDetail = (vehicle: Vehicle) => {
     ];
 
     return {
-        badge: `#${vehicle.id.padStart(2, "0")} · ${CATEGORY_LABEL}`,
-        breadcrumb: `SWAPI · Archivo central / ${CATEGORY_LABEL} / ${vehicle.name}`,
+        badge: CATEGORY_LABEL,
         title: vehicle.name,
         subtitle: highlights.slice(0, 2).map(({ label, value }) => `${label}: ${value}`).join(" · "),
         highlights,
         attributes: [
-            { label: "Registro", value: vehicle.id },
             ...highlights,
             { label: "Longitud", value: formatRecordValue(vehicle.length, "m") },
             { label: "Velocidad atmosférica", value: formatRecordValue(vehicle.maxAtmospheringSpeed, "km/h") },
@@ -75,7 +73,7 @@ export const VehicleDetailPage = () => {
             {vehicleQuery.isPending && <LoadingBar />}
 
             {vehicleQuery.isPending && (
-                <ArchiveNote className="mt-12">Descodificando registro galáctico…</ArchiveNote>
+                <ArchiveNote className="mt-12">Cargando…</ArchiveNote>
             )}
 
             {vehicleQuery.isError && (

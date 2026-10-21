@@ -6,13 +6,27 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 
-import { FavoriteModel } from './model/favorites.model';
+import { FavoriteModel, FavoriteWithNameModel } from './model/favorites.model';
 import { FavoritesEntity } from './data/favorites.entity';
 import { ResourceTypeEnum } from './enum/resource-type.enum';
 import { isUniqueViolation } from '@app/infra/postgres/postgres-errors';
 // Services
 import { UserService } from '../user/user.service';
 import { SwapiRequest } from '../starwars/common/swapi.service';
+import {
+  NamedResource,
+  ResourceRefService,
+} from '../starwars/common/resource-ref.service';
+
+// Coleccion de swapi donde busco el nombre de cada tipo de favorito
+const SWAPI_RESOURCES: Record<ResourceTypeEnum, NamedResource> = {
+  [ResourceTypeEnum.PEOPLE]: 'people',
+  [ResourceTypeEnum.FILM]: 'films',
+  [ResourceTypeEnum.PLANET]: 'planets',
+  [ResourceTypeEnum.SPECIE]: 'species',
+  [ResourceTypeEnum.VEHICLE]: 'vehicles',
+  [ResourceTypeEnum.STARSHIP]: 'starships',
+};
 
 @Injectable()
 export class FavoritesService {
@@ -21,6 +35,7 @@ export class FavoritesService {
     private readonly favoriteRepository: Repository<FavoritesEntity>,
     private readonly userRepository: UserService,
     private readonly swapiService: SwapiRequest,
+    private readonly resourceRefService: ResourceRefService,
   ) {}
 
   // =====================================================
@@ -96,14 +111,18 @@ export class FavoritesService {
     userId: string,
     page: number,
     limit: number,
-  ): Promise<[FavoriteModel[], number]> {
-    const pfavorites = this.favoriteRepository.findAndCount({
+  ): Promise<[FavoriteWithNameModel[], number]> {
+    const [favorites, total] = await this.favoriteRepository.findAndCount({
       where: { userId },
       skip: (page - 1) * limit,
       take: limit,
       order: { createdAt: 'DESC' },
     });
-    return pfavorites;
+
+    const favoritesWithName = await Promise.all(
+      favorites.map((favorite) => this.withName(favorite)),
+    );
+    return [favoritesWithName, total];
   }
 
   public async getFavoritesStatus(
@@ -124,6 +143,21 @@ export class FavoritesService {
   // =====================================================
   // PRIVATE FUNCTIONS
   // =====================================================
+
+  // Busco el nombre en las colecciones de swapi guardadas y si falla lo dejo a null para no tumbar la lista
+  private async withName(
+    favorite: FavoriteModel,
+  ): Promise<FavoriteWithNameModel> {
+    try {
+      const name = await this.resourceRefService.getNameById(
+        SWAPI_RESOURCES[favorite.resourceType],
+        favorite.resourceId,
+      );
+      return { ...favorite, name };
+    } catch {
+      return { ...favorite, name: null };
+    }
+  }
 
   // Verifico si le tengo ya en favoritos
   private async getFavorite(

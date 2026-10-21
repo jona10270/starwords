@@ -2,6 +2,7 @@ import { PaginationMapper, type HttpClient, type PageRequest, type Paginated } f
 import type { AddFavorite } from "../domain/AddFavorite";
 import type { DeleteFavoriteRequest } from "../domain/DeleteFavorite";
 import type { Favorite } from "../domain/Favorite";
+import type { FavoriteWithName } from "../domain/FavoriteWithName";
 import type { FavoriteRepository } from "../domain/FavoriteRepository";
 import type { StatusFavoriteRequest } from "../domain/StatusFavoriteRequest";
 import type { FavoriteListResponseDTO, FavoriteResponseDTO, FavoriteStatusResponseDTO } from "./FavoriteDTO";
@@ -56,7 +57,7 @@ export class FavoriteHTTPRepository implements FavoriteRepository {
         return FavoriteMapper.toFavorite(data.favorite);
     }
 
-    async getFavorites({ page, limit }: PageRequest): Promise<Paginated<Favorite>> {
+    async getFavorites({ page, limit }: PageRequest): Promise<Paginated<FavoriteWithName>> {
         let data: FavoriteListResponseDTO;
         try {
             data = await this.httpClient.get<FavoriteListResponseDTO>(
@@ -65,7 +66,7 @@ export class FavoriteHTTPRepository implements FavoriteRepository {
         } catch (error) {
             throw FavoriteErrorMapper.toListError(error);
         }
-        const favorites = data.favorites.map(FavoriteMapper.toFavorite);
+        const favorites = data.favorites.map(FavoriteMapper.toFavoriteWithName);
         return PaginationMapper.toPaginated(favorites, data.meta);
     }
 }

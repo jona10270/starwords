@@ -1,21 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { FavoriteVM } from '../../../model/favorite.view-model';
+import { FavoriteWithNameVM } from '../../../model/favorite.view-model';
 import { PaginationMetaVM } from '@app/app/common/pagination/pagination-meta.view-model';
+import { FavoriteWithNameModel } from '@app/modules/favorites/model/favorites.model';
 
 export class FavoriteManyResponse {
-  @ApiProperty({ type: [FavoriteVM] })
-  public favorites: FavoriteVM[];
+  @ApiProperty({ type: [FavoriteWithNameVM] })
+  public favorites: FavoriteWithNameVM[];
 
   @ApiProperty({ type: PaginationMetaVM })
   public meta: PaginationMetaVM;
 
   public constructor(
-    data: FavoriteVM[],
+    data: FavoriteWithNameModel[],
     total: number,
     page: number,
     limit: number,
   ) {
-    this.favorites = data.map((favorite) => new FavoriteVM(favorite));
+    this.favorites = data.map((favorite) => new FavoriteWithNameVM(favorite));
     this.meta = new PaginationMetaVM(total, page, limit);
   }
 }

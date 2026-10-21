@@ -11,7 +11,7 @@ export const NotFoundPage = () => (
                 Ruta perdida
             </h1>
             <p className="mt-4 font-terminal text-[11px] tracking-[0.16em] text-dim uppercase">
-                Este no es el archivo que buscas
+                Esta no es la página que buscas
             </p>
             <Link
                 to={ROUTES.home}
