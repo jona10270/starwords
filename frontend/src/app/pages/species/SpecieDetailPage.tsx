@@ -66,7 +66,7 @@ export const SpecieDetailPage = () => {
     const { id } = useParams();
 
     const specieQuery = useGetSpecie(id);
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("SPECIE");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("SPECIE", id ? [id] : []);
     const specie = specieQuery.data;
 
     return (

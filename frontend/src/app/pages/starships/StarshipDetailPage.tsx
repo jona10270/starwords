@@ -69,7 +69,7 @@ export const StarshipDetailPage = () => {
     const { id } = useParams();
 
     const starshipQuery = useGetStarship(id);
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("STARSHIP");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("STARSHIP", id ? [id] : []);
     const starship = starshipQuery.data;
 
     return (

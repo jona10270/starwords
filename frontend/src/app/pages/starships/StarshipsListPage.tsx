@@ -44,7 +44,10 @@ export const StarshipsListPage = () => {
         search: search || undefined,
     });
     const [view, setView] = useState<RecordView>("grid");
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("STARSHIP");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons(
+        "STARSHIP",
+        data?.items.map((starship) => starship.id) ?? [],
+    );
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
     const goToPage = (nextPage: number) => {

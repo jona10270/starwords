@@ -44,7 +44,10 @@ export const PlanetsListPage = () => {
         search: search || undefined,
     });
     const [view, setView] = useState<RecordView>("grid");
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PLANET");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons(
+        "PLANET",
+        data?.items.map((planet) => planet.id) ?? [],
+    );
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
     const goToPage = (nextPage: number) => {

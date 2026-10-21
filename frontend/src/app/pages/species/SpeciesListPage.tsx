@@ -44,7 +44,10 @@ export const SpeciesListPage = () => {
         search: search || undefined,
     });
     const [view, setView] = useState<RecordView>("grid");
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("SPECIE");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons(
+        "SPECIE",
+        data?.items.map((specie) => specie.id) ?? [],
+    );
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
     const goToPage = (nextPage: number) => {

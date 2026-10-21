@@ -45,7 +45,10 @@ export const CharacterPage = () => {
         search: search || undefined,
     });
     const [view, setView] = useState<RecordView>("grid");
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PEOPLE");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons(
+        "PEOPLE",
+        data?.items.map((character) => character.id) ?? [],
+    );
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
     const goToPage = (nextPage: number) => {

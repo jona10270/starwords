@@ -98,7 +98,7 @@ export const FilmDetailPage = () => {
     const { id } = useParams();
 
     const filmQuery = useGetFilm(id);
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("FILM");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("FILM", id ? [id] : []);
     const film = filmQuery.data;
 
     return (

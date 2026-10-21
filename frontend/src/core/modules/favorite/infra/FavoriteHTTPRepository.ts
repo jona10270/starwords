@@ -2,7 +2,8 @@ import type { HttpClient } from "../../common";
 import type { AddFavorite } from "../domain/AddFavorite";
 import type { Favorite } from "../domain/Favorite";
 import type { FavoriteRepository } from "../domain/FavoriteRepository";
-import type { FavoriteResponseDTO } from "./FavoriteDTO";
+import type { StatusFavoriteRequest } from "../domain/StatusFavoriteRequest";
+import type { FavoriteResponseDTO, FavoriteStatusResponseDTO } from "./FavoriteDTO";
 import { FavoriteErrorMapper } from "./FavoriteErrorMapper";
 import { FavoriteMapper } from "./FavoriteMapper";
 
@@ -27,5 +28,17 @@ export class FavoriteHTTPRepository implements FavoriteRepository {
             throw FavoriteErrorMapper.toAddError(error);
         }
         return FavoriteMapper.toFavorite(data.favorite);
+    }
+
+    public async getStatusFavorite(request: StatusFavoriteRequest): Promise<Favorite[]> {
+        let data: FavoriteStatusResponseDTO;
+        try {
+            data = await this.httpClient.get<FavoriteStatusResponseDTO>(
+                `/favorites/status`, FavoriteMapper.toStatusFavoriteDto(request)
+            )
+        } catch (error) {
+            throw FavoriteErrorMapper.toStatusError(error);
+        }
+        return data.favorite.map(FavoriteMapper.toFavorite)
     }
 }

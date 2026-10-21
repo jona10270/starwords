@@ -44,7 +44,10 @@ export const VehiclesListPage = () => {
         search: search || undefined,
     });
     const [view, setView] = useState<RecordView>("grid");
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("VEHICLE");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons(
+        "VEHICLE",
+        data?.items.map((vehicle) => vehicle.id) ?? [],
+    );
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
     const goToPage = (nextPage: number) => {

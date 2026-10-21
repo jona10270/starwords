@@ -4,6 +4,11 @@ export interface AddFavoriteDTO {
     resourceType: string;
 };
 
+export type StatusFavoriteDTO = {
+    resourceIds: string,
+    resourceType: string
+};
+
 export interface FavoriteDTO {
     id: string;
     userId: string;
@@ -14,4 +19,8 @@ export interface FavoriteDTO {
 
 export interface FavoriteResponseDTO {
     favorite: FavoriteDTO,
+};
+
+export interface FavoriteStatusResponseDTO {
+    favorite: FavoriteDTO[],
 };

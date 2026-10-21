@@ -67,7 +67,7 @@ export const VehicleDetailPage = () => {
     const { id } = useParams();
 
     const vehicleQuery = useGetVehicle(id);
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("VEHICLE");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("VEHICLE", id ? [id] : []);
     const vehicle = vehicleQuery.data;
 
     return (

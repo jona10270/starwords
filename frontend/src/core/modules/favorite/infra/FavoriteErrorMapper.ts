@@ -41,4 +41,10 @@ export const FavoriteErrorMapper = {
 
         return toCommonError(error);
     },
+
+    // Al pedir el estado no hay fallos propios solo los comunes
+    toStatusError: (error: unknown): Error => {
+        if (!(error instanceof HttpError)) return toUnexpectedError(error);
+        return toCommonError(error);
+    },
 };

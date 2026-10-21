@@ -65,7 +65,7 @@ export const PlanetDetailPage = () => {
     const { id } = useParams();
 
     const planetQuery = useGetPlanet(id);
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PLANET");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PLANET", id ? [id] : []);
     const planet = planetQuery.data;
 
     return (

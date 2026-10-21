@@ -76,7 +76,7 @@ export const CharacterDetailPage = () => {
     const { id } = useParams();
 
     const characterQuery = useOneGetCharacter(id);
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PEOPLE");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("PEOPLE", id ? [id] : []);
     const character = characterQuery.data
     return (
         <main className="relative z-10 mx-auto max-w-[1280px] px-4 pt-12 pb-24 sm:px-7">

@@ -42,7 +42,10 @@ export const FilmsListPage = () => {
         search: search || undefined,
     });
     const [view, setView] = useState<RecordView>("grid");
-    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons("FILM");
+    const { getFavoriteButton, errorMessage: favoriteError } = useFavoriteButtons(
+        "FILM",
+        data?.items.map((film) => film.id) ?? [],
+    );
 
     // Guardo la pagina en la url y subo arriba para empezar a leer la nueva
     const goToPage = (nextPage: number) => {
