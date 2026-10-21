@@ -9,6 +9,10 @@ export type StatusFavoriteDTO = {
     resourceType: string
 };
 
+export type DeleteFavoriteDTO = {
+    favoriteId: string;
+};
+
 export interface FavoriteDTO {
     id: string;
     userId: string;

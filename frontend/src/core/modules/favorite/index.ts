@@ -1,9 +1,11 @@
 // APP
 export * from './app/AddFavoriteUseCase';
 export * from './app/StatusFavoriteUseCase';
+export * from './app/DeleteFavoriteUseCase';
 
 // DOMAIN
 export * from './domain/AddFavorite';
+export * from './domain/DeleteFavorite';
 export * from './domain/Favorite';
 export * from './domain/FavoriteError';
 export * from './domain/FavoriteRepository';

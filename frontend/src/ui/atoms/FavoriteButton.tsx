@@ -11,8 +11,8 @@ export const FavoriteButton = ({ isFavorite, onClick }: FavoriteButtonProps) => 
         type="button"
         onClick={onClick}
         aria-pressed={isFavorite}
-        aria-label={isFavorite ? "En favoritos" : "Guardar en favoritos"}
-        title={isFavorite ? "En favoritos" : "Guardar en favoritos"}
+        aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
+        title={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
         className={`grid size-8 shrink-0 cursor-pointer place-items-center border transition-[color,border-color,box-shadow] duration-200 ${
             isFavorite
                 ? "border-danger/60 text-danger shadow-[0_0_14px_rgba(255,107,107,0.25)]"

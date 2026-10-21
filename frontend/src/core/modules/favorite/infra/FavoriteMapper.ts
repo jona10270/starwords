@@ -1,7 +1,8 @@
 import type { AddFavorite } from "../domain/AddFavorite";
 import type { StatusFavoriteRequest } from "../domain/StatusFavoriteRequest";
+import type { DeleteFavoriteRequest } from "../domain/DeleteFavorite";
 import type { Favorite } from "../domain/Favorite";
-import type { AddFavoriteDTO, FavoriteDTO, StatusFavoriteDTO } from "./FavoriteDTO";
+import type { AddFavoriteDTO, FavoriteDTO, StatusFavoriteDTO, DeleteFavoriteDTO } from "./FavoriteDTO";
 
 export const FavoriteMapper = {
 
@@ -14,6 +15,10 @@ export const FavoriteMapper = {
     toStatusFavoriteDto: (favorite: StatusFavoriteRequest): StatusFavoriteDTO => ({
         resourceIds: favorite.resourceIds.join(','),
         resourceType: favorite.resourceType
+    }),
+
+    toDeleteFavoriteDto: (deleteFavorite: DeleteFavoriteRequest): DeleteFavoriteDTO => ({
+        favoriteId: deleteFavorite.favoriteId
     }),
 
     toFavorite: (dto: FavoriteDTO): Favorite => ({
