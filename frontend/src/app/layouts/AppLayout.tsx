@@ -7,7 +7,7 @@ import type { HeaderAuth } from "@/ui/types";
 
 import { useAuthState } from "../hooks/useAuthState";
 import { ROUTES } from "../navigation/routes";
-import { ARCHIVE_SECTIONS } from "../navigation/sections";
+import { ARCHIVE_SECTIONS, FAVORITES_SECTION } from "../navigation/sections";
 
 // Traduzco el estado de la sesion a lo que necesita la cabecera
 const toHeaderAuth = (authState: AuthState): HeaderAuth => {
@@ -28,9 +28,12 @@ const toHeaderAuth = (authState: AuthState): HeaderAuth => {
 export const AppLayout = () => {
     const authState = useAuthState();
 
+    // Con sesion añado mis favoritos al final del menu
+    const sections = authState.kind === "AuthenticatedAuthState" ? [...ARCHIVE_SECTIONS, FAVORITES_SECTION] : ARCHIVE_SECTIONS;
+
     return (
         <div className="min-h-screen font-display text-white">
-            <Header items={ARCHIVE_SECTIONS} homePath={ROUTES.characters} auth={toHeaderAuth(authState)} />
+            <Header items={sections} homePath={ROUTES.characters} auth={toHeaderAuth(authState)} />
             <Outlet />
         </div>
     );

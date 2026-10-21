@@ -4,5 +4,6 @@ export interface Favorite {
     userId: string;
     favoriteId: string;
     favoriteType: string;
+    createdAt: string;
 };
 

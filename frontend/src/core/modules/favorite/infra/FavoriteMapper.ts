@@ -26,5 +26,6 @@ export const FavoriteMapper = {
         userId: dto.userId,
         favoriteId: dto.resourceId,
         favoriteType: dto.resourceType,
+        createdAt: dto.createdAt,
     }),
 }

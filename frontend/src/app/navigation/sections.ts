@@ -1,4 +1,4 @@
-import { FilmsIcon, PeopleIcon, PlanetsIcon, SpeciesIcon, StarshipsIcon, VehiclesIcon } from "@/ui/atoms";
+import { FilmsIcon, HeartIcon, PeopleIcon, PlanetsIcon, SpeciesIcon, StarshipsIcon, VehiclesIcon } from "@/ui/atoms";
 import type { NavItem } from "@/ui/types";
 
 import { ROUTES } from "./routes";
@@ -12,3 +12,6 @@ export const ARCHIVE_SECTIONS: NavItem[] = [
     { key: "species", label: "Species", icon: SpeciesIcon, to: ROUTES.species },
     { key: "planets", label: "Planets", icon: PlanetsIcon, to: ROUTES.planets },
 ];
+
+// Seccion de mis favoritos que solo enseño con la sesion iniciada
+export const FAVORITES_SECTION: NavItem = { key: "favorites", label: "Favoritos", icon: HeartIcon, to: ROUTES.favorites };

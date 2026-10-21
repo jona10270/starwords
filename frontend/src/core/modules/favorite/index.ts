@@ -2,6 +2,7 @@
 export * from './app/AddFavoriteUseCase';
 export * from './app/StatusFavoriteUseCase';
 export * from './app/DeleteFavoriteUseCase';
+export * from './app/GetFavoritesUseCase';
 
 // DOMAIN
 export * from './domain/AddFavorite';

@@ -4,7 +4,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
-import { GuestRoute } from "./ProtectedRoutes";
+import { AuthRoute, GuestRoute } from "./ProtectedRoutes";
 import { ROUTES } from "./navigation/routes";
 import { CharacterPage } from './pages/CharacterPage'
 import { CharacterDetailPage } from "./pages/CharacterDetailPage";
@@ -19,6 +19,7 @@ import { SpeciesListPage } from "./pages/species/SpeciesListPage";
 import { SpecieDetailPage } from "./pages/species/SpecieDetailPage";
 import { PlanetsListPage } from "./pages/planets/PlanetsListPage";
 import { PlanetDetailPage } from "./pages/planets/PlanetDetailPage";
+import { FavoritesListPage } from "./pages/favorites/FavoritesListPage";
 
 export const AppRoutes = () => (
     <Routes>
@@ -37,6 +38,14 @@ export const AppRoutes = () => (
             <Route path={ROUTES.specieDetail} element={<SpecieDetailPage />} />
             <Route path={ROUTES.planets} element={<PlanetsListPage />} />
             <Route path={ROUTES.planetDetail} element={<PlanetDetailPage />} />
+            <Route
+                path={ROUTES.favorites}
+                element={
+                    <AuthRoute>
+                        <FavoritesListPage />
+                    </AuthRoute>
+                }
+            />
             <Route
                 path={ROUTES.login}
                 element={

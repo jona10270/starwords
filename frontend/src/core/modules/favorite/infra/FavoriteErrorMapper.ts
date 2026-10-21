@@ -47,4 +47,10 @@ export const FavoriteErrorMapper = {
         if (!(error instanceof HttpError)) return toUnexpectedError(error);
         return toCommonError(error);
     },
+
+    // Al pedir mi listado tampoco hay fallos propios solo los comunes
+    toListError: (error: unknown): Error => {
+        if (!(error instanceof HttpError)) return toUnexpectedError(error);
+        return toCommonError(error);
+    },
 };

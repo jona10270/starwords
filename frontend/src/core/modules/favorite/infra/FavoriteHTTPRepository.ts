@@ -1,10 +1,10 @@
-import type { HttpClient } from "../../common";
+import { PaginationMapper, type HttpClient, type PageRequest, type Paginated } from "../../common";
 import type { AddFavorite } from "../domain/AddFavorite";
 import type { DeleteFavoriteRequest } from "../domain/DeleteFavorite";
 import type { Favorite } from "../domain/Favorite";
 import type { FavoriteRepository } from "../domain/FavoriteRepository";
 import type { StatusFavoriteRequest } from "../domain/StatusFavoriteRequest";
-import type { FavoriteResponseDTO, FavoriteStatusResponseDTO } from "./FavoriteDTO";
+import type { FavoriteListResponseDTO, FavoriteResponseDTO, FavoriteStatusResponseDTO } from "./FavoriteDTO";
 import { FavoriteErrorMapper } from "./FavoriteErrorMapper";
 import { FavoriteMapper } from "./FavoriteMapper";
 
@@ -54,5 +54,18 @@ export class FavoriteHTTPRepository implements FavoriteRepository {
         }
 
         return FavoriteMapper.toFavorite(data.favorite);
+    }
+
+    async getFavorites({ page, limit }: PageRequest): Promise<Paginated<Favorite>> {
+        let data: FavoriteListResponseDTO;
+        try {
+            data = await this.httpClient.get<FavoriteListResponseDTO>(
+                '/favorites', { page, limit }
+            );
+        } catch (error) {
+            throw FavoriteErrorMapper.toListError(error);
+        }
+        const favorites = data.favorites.map(FavoriteMapper.toFavorite);
+        return PaginationMapper.toPaginated(favorites, data.meta);
     }
 }

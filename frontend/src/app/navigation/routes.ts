@@ -15,6 +15,7 @@ export const ROUTES = {
     specieDetail: "/species/:id",
     planets: "/planets",
     planetDetail: "/planets/:id",
+    favorites: "/favorites",
 } as const;
 
 // Nombre del parametro donde viaja la ruta a la que vuelvo tras el login

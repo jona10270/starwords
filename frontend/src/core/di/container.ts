@@ -22,8 +22,13 @@ import { GetAllStarshipsUseCase, GetStarshipUseCase, StarshipHTTPRepository } fr
 import { GetAllVehiclesUseCase, GetVehicleUseCase, VehicleHTTPRepository } from "../modules/vehicle";
 import { GetAllSpeciesUseCase, GetSpecieUseCase, SpecieHTTPRepository } from "../modules/specie";
 import { GetAllPlanetsUseCase, GetPlanetUseCase, PlanetHTTPRepository } from "../modules/planet";
-import { AddFavoriteUseCase, FavoriteHTTPRepository, StatusFavoriteUseCase } from "../modules/favorite";
-import { DeleteFavoriteUseCase } from "../modules/favorite/app/DeleteFavoriteUseCase";
+import {
+    AddFavoriteUseCase,
+    DeleteFavoriteUseCase,
+    FavoriteHTTPRepository,
+    GetFavoritesUseCase,
+    StatusFavoriteUseCase,
+} from "../modules/favorite";
 
 export const authStore = createAuthStore();
 
@@ -143,6 +148,10 @@ export const addFavoriteUseCase = new AddFavoriteUseCase({
 })
 
 export const statusFavoriteUseCase = new StatusFavoriteUseCase({
+    favoriteRepository
+})
+
+export const getFavoritesUseCase = new GetFavoritesUseCase({
     favoriteRepository
 })
 
